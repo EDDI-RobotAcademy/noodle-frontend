@@ -1,5 +1,6 @@
 import SurveyRegisterPage from "@/survey/pages/register/SurveyRegisterPage.vue";
 import SurveyReadPage from "@/survey/pages/read/SurveyReadPage.vue";
+import SurveyListPage from "@/survey/pages/list/SurveyListPage.vue"
 
 const SurveyRoutes = [
     {
@@ -16,6 +17,11 @@ const SurveyRoutes = [
         props: {
             default: true
         }
+    },
+    {
+        path: '/survey/list',
+        name: 'SurveyListPage',
+        component: SurveyListPage,
     },
 ]
 
