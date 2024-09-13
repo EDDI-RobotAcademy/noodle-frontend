@@ -16,8 +16,13 @@
         <v-col cols="12"></v-col>
 
         <!-- 옵션 추가 -->
-        <v-text-field v-for="(idx, value) in question.options" :key="idx" :v-model="value" label="응답"
-          outlined></v-text-field>
+        <v-text-field 
+          v-for="(option, optionIndex) in question.options" 
+          :key="optionIndex" 
+          v-model="question.options[optionIndex]" 
+          :label="`응답${optionIndex + 1}`"
+          outlined
+        ></v-text-field>
 
         <v-btn color="red" @click="removeQuestion(index)">질문 제거</v-btn>
       </v-col>
