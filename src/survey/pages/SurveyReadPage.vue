@@ -22,8 +22,13 @@
                 v-for="option in question.options"
                 :key="option"
                 :label="option"
-                :value="option"
-              ></v-radio>
+                :value="option">
+              <template v-slot:label>
+                <span :class="{ 'selected-option': answers[question.id] === option }">
+                  {{ option }}
+                </span>
+              </template>
+              </v-radio>
             </v-radio-group>
           </v-card>
         </v-col>
@@ -103,3 +108,16 @@
     }
   };
   </script>
+
+<style scoped>
+.selected-option {
+  font-weight: 900;
+  color: #000000;
+  text-shadow: 0.5px 0.5px 1px rgba(0,0,0,0.1);
+  font-size: calc(1em + 2px);
+}
+
+.v-radio .v-label {
+  font-size: 1em;
+}
+</style>
