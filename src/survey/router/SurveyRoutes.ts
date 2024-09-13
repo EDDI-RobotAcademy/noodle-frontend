@@ -1,5 +1,5 @@
-import SurveyRegisterPage from "@/survey/pages/SurveyRegisterPage.vue";
-import SurveyReadPage from "@/survey/pages/SurveyReadPage.vue";
+import SurveyRegisterPage from "@/survey/pages/register/SurveyRegisterPage.vue";
+import SurveyReadPage from "@/survey/pages/read/SurveyReadPage.vue";
 
 const SurveyRoutes = [
     {
