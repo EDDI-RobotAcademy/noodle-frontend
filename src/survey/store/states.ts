@@ -4,9 +4,17 @@ export interface SurveyState{
 }
 
 export interface Survey{
-    surveyNumber: number
-    surveyQuestionNumber: number
-    surveySelectionNumber: number
+    surveyId: number,
+    questions: Question[],
+    answers: Answer[]
+}
+
+export interface Question{
+    question: string
+}
+
+export interface Answer{
+    answer: [string]
 }
 
 const state: SurveyState = {
