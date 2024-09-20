@@ -63,6 +63,7 @@ export default {
     ...mapState(surveyModule, ['survey'])
   },
   methods: {
+    ...mapActions(surveyModule, ['requestSurveyToDjango']),
     async submitSurvey() {
       console.log(this.answers)
       // try {
@@ -77,6 +78,9 @@ export default {
       //   console.error('Error submitting survey:', error);
       // }
     }
+  },
+  created () {
+    this.requestSurveyToDjango(this.surveyId)
   }
 };
 </script>
