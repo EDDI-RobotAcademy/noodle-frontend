@@ -63,8 +63,9 @@ export default {
     ...mapState(surveyModule, ['survey'])
   },
   methods: {
-    ...mapActions(surveyModule, ['requestSurveyToDjango']),
+    ...mapActions(surveyModule, ['requestSurveyToDjango','requestCreateAnswerToDjango']),
     async submitSurvey() {
+      this.requestCreateAnswerToDjango(this.surveyId),
       console.log(this.answers)
       // try {
       //   const response = await 
