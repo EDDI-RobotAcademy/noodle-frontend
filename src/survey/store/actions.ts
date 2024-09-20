@@ -8,8 +8,13 @@ export type SurveyActions = {
     requestCreateSurveyToDjango(context: ActionContext<SurveyState, any>, payload: {
         surveyId: number, questions: [string], answers: [[string]]
     }): Promise<AxiosResponse>
+    requestCreateAnswerSurveyToDjango(context: ActionContext<SurveyState, any>, payload: {
+        surveyId: number, answer: [string]
+    }): Promise<AxiosResponse>
+    requestCreateAnswerToDjango(context: ActionContext<SurveyState, any>, payload: {
+        surveyId: number, answer: [string]
+    }): Promise<AxiosResponse>
     
-
 }
 
 const actions: SurveyActions = {
@@ -36,9 +41,43 @@ const actions: SurveyActions = {
             console.log('res:', res.data)
             return res.data
         }catch(error){
-            alert('requestCreateBoardToDjango() 문제 발생!')
+            alert('requestCreateSurveyToDjango() 문제 발생!')
             throw error
         }      
+    },
+    async requestCreateAnswerSurveyToDjango(context: ActionContext<SurveyState, any>, payload: {
+        surveyId: number, answer: [string]
+    }): Promise<AxiosResponse>{
+        console.log("payload:", payload)
+        const {surveyId, answer} = payload
+        console.log('전송할 데이터:', {surveyId, answer})
+
+        try{
+            const res: AxiosResponse = await axiosInst.djangoAxiosInst.post('/survey/read/:surveyId', {surveyId, answer})
+
+            console.log('res:', res.data)
+            return res.data
+        }catch(error){
+            alert('requestCreateAnswerToDjango() 문제 발생!')
+            throw error
+        }    
+    },
+    async requestCreateAnswerToDjango(context: ActionContext<SurveyState, any>, payload: {
+        surveyId: number, answer: [string]
+    }): Promise<AxiosResponse>{
+        console.log("payload:", payload)
+        const {surveyId, answer} = payload
+        console.log('전송할 데이터:', {surveyId, answer})
+
+        try{
+            const res: AxiosResponse = await axiosInst.djangoAxiosInst.post('/survey/read/:surveyId', {surveyId, answer})
+
+            console.log('res:', res.data)
+            return res.data
+        }catch(error){
+            alert('requestCreateAnswerToDjango() 문제 발생!')
+            throw error
+        }
     }
 };
 
