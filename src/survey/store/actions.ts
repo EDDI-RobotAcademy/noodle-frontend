@@ -4,6 +4,7 @@ import { AxiosResponse } from "axios"
 import axiosInst from "@/utility/axiosInstance"
 
 export type SurveyActions = {
+    requestSurveyToDjango(context: ActionContext<SurveyState, any>, surveyId: number): Promise<void>
     requestCreateSurveyToDjango(context: ActionContext<SurveyState, any>, payload: {
         surveyId: number, questions: [string], answers: [[string]]
     }): Promise<AxiosResponse>
@@ -12,6 +13,16 @@ export type SurveyActions = {
 }
 
 const actions: SurveyActions = {
+    async requestSurveyToDjango(context: ActionContext<SurveyState, any>, surveyId: number): Promise<void>{
+        try {
+            const res: AxiosResponse<Survey> = await axiosInst.djangoAxiosInst.get(`/survey/read/${surveyId}`);
+            console.log('data:', res.data)
+            context.commit('REQUEST_SURVEY_TO_DJANGO', res.data);
+        } catch (error) {
+            console.error('requestSurveyToDjango() 문제 발생:', error);
+            throw error
+        }
+    },
     async requestCreateSurveyToDjango(context: ActionContext<SurveyState, any>, payload: {
         surveyId: number, questions: [string], answers: [[string]]
     }): Promise<AxiosResponse>{
