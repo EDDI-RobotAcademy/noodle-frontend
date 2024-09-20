@@ -6,8 +6,16 @@
       </v-col>
     </v-row>
 
+    <!-- 주차 정보 -->
+    <v-row>
+      <v-col cols="12">주차 정보</v-col>
+        <v-col>
+          <v-text-field label="몇주차임?" outlined  v-model="week" @input="convertToNumber"></v-text-field>
+        </v-col>
+    </v-row>
+
     <!-- 각 질문 추가 -->
-    <v-row v-for="(question, index) in questions" :key="index">
+    <v-row v-for="(question, index) in qna" :key="index">
       <v-col cols="12">질문 {{ index + 1 }}</v-col>
       <v-col>
         <v-text-field v-model="question.text" label="질문" outlined></v-text-field>
@@ -41,49 +49,65 @@
 </template>
 
 <script>
+import { toRaw } from 'vue';
+import { mapActions } from 'vuex'
+const surveyModule = 'surveyModule'
+
 export default {
   data() {
     return {
-      questions: [
+      week: "",
+      qna: [
         {
           text: "",
           options: [""]
         }
-      ]
+      ],
+      questions: [],
+      answers: []
     };
   },
+  
   methods: {
+    ...mapActions(surveyModule, ['requestCreateSurveyToDjango']),
+
     addQuestion() {
-      this.questions.push({ text: "", options: [""] });
+      this.qna.push({ text: "", options: [""] });
     },
     addOption(index) {
-      this.questions[index].options.push("");
+      this.qna[index].options.push("");
     },
     removeQuestion(index) {
-      this.questions.splice(index, 1);
+      this.qna.splice(index, 1);
     },
-    submitSurvey() {
-      const surveyData = {
-        title: this.surveyTitle,
-        questions: this.questions
-      };
-      console.log(surveyData);
+    convertToNumber() {
+      this.week = Number(this.week);
+    },
+    async submitSurvey() {
+      const rawData = toRaw(this.qna)
+      for (let i = 0; i < rawData.length; i++) {
+        console.log("qna:", rawData[i])
+        this.questions.push(rawData[i].text)
+        this.answers.push(rawData[i].options)
+      }
 
-      // Django로 데이터 전송하는 예시
-      // fetch("http://localhost:8000/api/surveys/", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json"
-      //   },
-      //   body: JSON.stringify(surveyData)
-      // })
-      //   .then(response => response.json())
-      //   .then(data => {
-      //     console.log("Survey Created:", data);
-      //   })
-      //   .catch(error => {
-      //     console.error("Error:", error);
-      //   });
+      const rawQ = toRaw(this.questions)
+      const rawA = toRaw(this.answers)
+      const surveyData = {
+        surveyId: this.week,
+        questions: rawQ,
+        answers: rawA,
+      };
+      console.log("surveyData:", surveyData);
+
+      const res = await this.requestCreateSurveyToDjango(surveyData)
+      const surveyId = res.response
+      console.log("survey:", surveyId)
+
+      await this.$router.push({
+        name: 'SurveyReadPage',
+        params: {surveyId: surveyId.toString()}
+      })
     }
   }
 };
