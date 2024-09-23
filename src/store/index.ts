@@ -1,3 +1,4 @@
+import authenticationModule from '@/authentication/store/authenticationModule'
 import surveyModule from '@/survey/store/surveyModule'
 import { createStore } from 'vuex'
 
@@ -12,5 +13,6 @@ export default createStore({
   },
   modules: {
     surveyModule,
+    authenticationModule,
   }
 })

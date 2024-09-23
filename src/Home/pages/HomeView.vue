@@ -8,7 +8,8 @@
            :key="icon.name" 
            :data-name="icon.name" 
            class="Icon material-icons">
-        {{ icon.icon }}
+          <div v-if="icon.name === 'Login'" @click="goToGithubLogin">{{ icon.icon }}</div>
+          <div v-else>{{ icon.icon }}</div>
       </div>
     </div>
     <div class="wrap">
@@ -23,7 +24,22 @@
 </template>
 
 <script>
+import { useStore } from 'vuex';
+
+const authenticationModule = 'authenticationModule'
+
 export default {
+  setup () {
+    const store = useStore()
+
+    const goToGithubLogin = async () => {
+      await store.dispatch("authenticationModule/requestGithubOauthRedirectionToDjango")
+    }
+
+    return {
+      goToGithubLogin
+    }
+  },
   data() {
     return {
       icons: [
