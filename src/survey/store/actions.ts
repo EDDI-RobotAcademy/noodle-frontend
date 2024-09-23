@@ -15,9 +15,7 @@ export type SurveyActions = {
     requestCreateAnswerToDjango(context: ActionContext<SurveyState, any>, payload: {
         surveyId: number, answer: [string]
     }): Promise<AxiosResponse>
-    requestSurveyListToDjango(context: ActionContext<SurveyState, any>, payload: {
-        surveyId: number
-    }): Promise<void>
+    requestSurveyListToDjango(context: ActionContext<SurveyState, any>): Promise<number[]>
     
 }
 
@@ -83,13 +81,11 @@ const actions: SurveyActions = {
             throw error
         }
     },
-    async requestSurveyListToDjango(context: ActionContext<SurveyState, any>, payload: {
-        surveyId: number
-    }): Promise<void>{
+    async requestSurveyListToDjango(context: ActionContext<SurveyState, any>): Promise<number[]>{
         try {
             const res: AxiosResponse<any, any> = await axiosInst.djangoAxiosInst.get('/board/list')
-            const data: Survey[]= res.data
-            context.commit(REQUEST_SURVEY_LIST_TO_DJANGO, data)
+            const data: [number]= res.data
+            return data
         }catch(error){
             console.error('requestBoardListToDjango(): '+ error)
             throw error
