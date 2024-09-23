@@ -11,6 +11,14 @@
         {{ icon.icon }}
       </div>
     </div>
+    <div class="wrap">
+      <div class="search">
+        <input type="text" class="searchTerm" v-model="searchQuery" placeholder="찾으시는 Backlog를 입력해주세요." />
+        <button type="submit" class="searchButton" @click="submitSearch">
+          <i class="material-icons">search</i>
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -24,10 +32,17 @@ export default {
         { name: '기능버튼3', icon: 'zoom_in' },
         { name: '기능버튼4', icon: 'wb_sunny' },
         { name: 'Login', icon: 'person' },
-      ]
+      ],
+      searchQuery: ''  // Model to hold the search input value
     };
+  },
+  methods: {
+    submitSearch() {
+      // 검색로직
+      console.log("Searching for:", this.searchQuery);
+    }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -52,11 +67,11 @@ export default {
   display: block;
   margin: 0 auto;
   /* 로고 크기 조절 가능 */
-  width: 400px;
-  height: 400px;
+  width: 450px;
+  height: 450px;
   /* 상하좌우 미세 조정 가능 */
   position: relative;
-  top: -100px;
+  top: -200px;
   left: -20px;
 }
 
@@ -173,5 +188,62 @@ export default {
   width: 10px;
   height: 10px;
   background: #eeeeee;
+}
+
+
+/* search bar관련 설정들 */
+
+/* 검색 창 위치 관련 설정 */
+.wrap {
+  width: 30%;
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.search {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+/* 검색 창 */
+.searchTerm {
+  width: 100%;
+  height: 50px;
+  border: 3px solid rgba(204, 159, 1);
+  border-right: none;
+  padding: 0 5px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  color: rgb(252, 235, 174); /* 검색창에 글이 입력된 후 포커스가 벗어났을 때 글자의 색 */
+  box-sizing: border-box;
+}
+
+/* 검색창에 입력하는 글자 색 */
+.searchTerm:focus {
+  color: rgb(252, 252, 252);
+}
+
+/* 검색 버튼 */
+.searchButton {
+  width: 40px;
+  height: 50px;
+  border: 1px solid rgba(204, 159, 1);
+  background: rgba(204, 159, 1);
+  color: #fff;
+  text-align: center;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.searchButton .material-icons {
+  
+  font-size: 30px;
+  line-height: 36px;
 }
 </style>
