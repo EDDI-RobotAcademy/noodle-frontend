@@ -5,6 +5,7 @@ import HomeRoutes from '@/Home/router/HomeRouters'
 
 const routes: Array<RouteRecordRaw> = [
   ...HomeRoutes,
+  ...SurveyRoutes
 ]
 
 const router = createRouter({
