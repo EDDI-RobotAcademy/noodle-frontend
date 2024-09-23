@@ -60,6 +60,14 @@ export default {
   methods: {
     ...mapActions(surveyModule, ['requestSurveyToDjango','requestCreateAnswerToDjango']),
     async submitSurvey() {
+
+      const allAnswered = this.survey.questions.every((_, index) => this.answers[index] !== undefined);
+
+      if (!allAnswered) {
+        alert("설문을 완료해주세요");
+        return; // 응답이 없으면 함수를 종료
+      }
+
       let answers = Object.values(this.answers)
       const payload = { "surveyId": this.surveyId, "answers": answers }
       console.log(answers)
