@@ -2,6 +2,7 @@ import { ActionContext } from "vuex"
 import { Survey, SurveyState } from "./states"
 import { AxiosResponse } from "axios"
 import axiosInst from "@/utility/axiosInstance"
+import { REQUEST_SURVEY_LIST_TO_DJANGO } from "./mutation-types"
 
 export type SurveyActions = {
     requestSurveyToDjango(context: ActionContext<SurveyState, any>, surveyId: number): Promise<void>
@@ -14,6 +15,9 @@ export type SurveyActions = {
     requestCreateAnswerToDjango(context: ActionContext<SurveyState, any>, payload: {
         surveyId: number, answer: [string]
     }): Promise<AxiosResponse>
+    requestSurveyListToDjango(context: ActionContext<SurveyState, any>, payload: {
+        surveyId: number
+    }): Promise<void>
     
 }
 
@@ -76,6 +80,18 @@ const actions: SurveyActions = {
             return res.data
         }catch(error){
             alert('requestCreateAnswerToDjango() 문제 발생!')
+            throw error
+        }
+    },
+    async requestSurveyListToDjango(context: ActionContext<SurveyState, any>, payload: {
+        surveyId: number
+    }): Promise<void>{
+        try {
+            const res: AxiosResponse<any, any> = await axiosInst.djangoAxiosInst.get('/board/list')
+            const data: Survey[]= res.data
+            context.commit(REQUEST_SURVEY_LIST_TO_DJANGO, data)
+        }catch(error){
+            console.error('requestBoardListToDjango(): '+ error)
             throw error
         }
     }
