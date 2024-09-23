@@ -2,7 +2,7 @@ version: "3.7"
 services:
   nginx:
     image: "nginx:latest"
-    container_name: frontend-deploy-nginx
+    container_name: noodle-frontend-deploy-nginx
     restart: unless-stopped
     volumes:
       - /home/ec2-user/noo/vue-frontend/conf:/etc/nginx/conf.d
