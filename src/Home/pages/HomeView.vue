@@ -72,7 +72,7 @@ export default {
   /* 상하좌우 미세 조정 가능 */
   position: relative;
   top: -200px;
-  left: -20px;
+  left: 0%;
 }
 
 .material-icons {
@@ -195,7 +195,7 @@ export default {
 
 /* 검색 창 위치 관련 설정 */
 .wrap {
-  width: 30%;
+  width: 450px;
   position: absolute;
   top: 65%;
   left: 50%;
@@ -210,7 +210,7 @@ export default {
 
 /* 검색 창 */
 .searchTerm {
-  width: 100%;
+  width: 410px;
   height: 50px;
   border: 3px solid rgba(204, 159, 1);
   border-right: none;
