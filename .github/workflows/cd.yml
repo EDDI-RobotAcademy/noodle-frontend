@@ -58,7 +58,7 @@ jobs:
         host: ${{ secrets.HOST_IP }}
         username: ec2-user
         key: ${{ secrets.PRIVATE_KEY }}
-        source: "./dist/**"
+        source: "./dist/*"
         target: "/home/ec2-user/noo/vue-frontend/html"
 
     - name: Remove Github Actions IP From Security Group
