@@ -7,9 +7,9 @@
       <div v-for="icon in icons" 
            :key="icon.name" 
            :data-name="icon.name" 
-           class="Icon material-icons">
-          <div v-if="icon.name === 'Login'" @click="goToGithubLogin">{{ icon.icon }}</div>
-          <div v-else>{{ icon.icon }}</div>
+           class="Icon material-icons"
+          @click="handleIconClick(icon.name)">
+          {{ icon.icon }}
       </div>
     </div>
     <div class="wrap">
@@ -44,7 +44,7 @@ export default {
     return {
       icons: [
         { name: '기능버튼1', icon: 'face' },
-        { name: '기능버튼2', icon: 'watch_later' },
+        { name: 'ProjectManage', icon: 'watch_later' },
         { name: '기능버튼3', icon: 'zoom_in' },
         { name: '기능버튼4', icon: 'wb_sunny' },
         { name: 'Login', icon: 'person' },
@@ -56,6 +56,16 @@ export default {
     submitSearch() {
       // 검색로직
       console.log("Searching for:", this.searchQuery);
+    },
+    async goToProjectManage() {
+      await this.$router.push({name: 'ProjectManage'})
+    },
+    handleIconClick(name) {
+      if (name === 'ProjectManage') {
+        this.goToProjectManage()
+      } else if (name === 'Login') {
+        this.goToGithubLogin()
+      }
     }
   }
 };
