@@ -3,12 +3,13 @@ import HomeView from '../views/HomeView.vue'
 import SurveyRoutes from '@/survey/router/SurveyRoutes'
 import HomeRoutes from '@/Home/router/HomeRouters'
 import project_manageRoutes from '@/project_manage/router/project_manageRouters'
+import AuthenticationRoutes from '@/authentication/router/AuthenticationRoutes'
 
 const routes: Array<RouteRecordRaw> = [
   ...HomeRoutes,
   ...SurveyRoutes,
-  ...project_manageRoutes
-  
+  ...project_manageRoutes,
+  ...AuthenticationRoutes,
 ]
 
 const router = createRouter({

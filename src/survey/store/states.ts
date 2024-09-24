@@ -5,8 +5,8 @@ export interface SurveyState{
 
 export interface Survey{
     surveyId: number,
-    questions: Question[],
-    answers: Answer[]
+    questions: string[],
+    answers: string[][]
 }
 
 export interface Question{
