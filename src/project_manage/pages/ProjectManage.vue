@@ -7,7 +7,7 @@
       <div class="container">
         <div class="leftbox">
           <div class="leftbox_title">
-            <span>Backlog 보드</span>
+            <span>Backlog Board</span>
             <div class="switch white">
               <input
                 type="radio"
@@ -41,14 +41,14 @@
         </div>
         <div class="rightbox">
           <div class="rightbox_title">
-            <span>커밋 리스트</span>
+            <span>Commit List</span>
           </div>
           <div class="select-container">
             <v-select label="repository" :items="[]" class="repository"></v-select>
-            <v-select label="branche" :items="[]" class="branche"></v-select>
+            <v-select label="branche" :items="[]" class="branches"></v-select>
           </div>
           <v-card class="commit-list-container">
-            ddd
+            
           </v-card>
         </div>
       </div>
@@ -72,6 +72,10 @@ export default {
 </script>
 
 <style scoped>
+
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Gothic+Coding:wght@400;700&family=Nanum+Myeongjo:wght@400;700;800&family=Orbit&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+
 html,body {
   height: 100%; /* HTML과 Body의 높이를 100%로 설정 (화면 전체) */
   width: 100%; /* HTML과 Body의 너비를 100%로 설정 */
@@ -93,7 +97,7 @@ html,body {
 .menubar {
   width: 100%; /* 메뉴바의 너비를 100%로 설정 */
   height: 7vh; /* 메뉴바의 높이를 전체 화면의 7%로 설정 */
-  border-bottom: 8px solid #e1f531; /* 아래쪽에 두께 8px의 노란색 테두리 추가 */
+  border-bottom: 8px solid rgba(204, 159, 1) /* 아래쪽에 두께 8px의 노란색 테두리 추가 */
 }
 
 /* 왼쪽 box */
@@ -101,8 +105,8 @@ html,body {
   position: relative;
   width: 75%; /* 왼쪽 박스의 너비를 75%로 설정 */
   height: 100%; /* 왼쪽 박스의 높이를 100%로 설정 (화면 전체 높이) */
-  background-color: #3498db; /* 왼쪽 박스의 배경색을 파란색으로 설정 */
-  border-right: 3px solid #e1f531; /* 오른쪽에 두께 3px의 노란색 테두리 추가 */
+  background-color: #1c1c1c; /* 왼쪽 박스의 배경색을 파란색으로 설정 */
+  border-right: 3px solid rgba(204, 159, 1); /* 오른쪽에 두께 3px의 노란색 테두리 추가 */
 }
 
 .leftbox_title {
@@ -113,13 +117,28 @@ html,body {
   margin-left: 20px; /* 왼쪽 여백을 20px 추가 */
   margin-right: 20px; /* 오른쪽 여백을 20px 추가 */
   font-size: 30px; /* 폰트 크기를 30px로 설정 */
+  color: rgba(204, 159, 1);
+}
+
+.leftbox_title span{
+  color: rgba(204, 159, 1);
+  font-family: "Playfair Display", serif;
+  font-style: normal;
+  font-weight: bold;
 }
 
 /* 오른쪽 box */
 .rightbox {
   width: 25%; /* 오른쪽 박스의 너비를 25%로 설정 */
   height: 100%; /* 오른쪽 박스의 높이를 100%로 설정 (화면 전체 높이) */
-  background-color: #2ecc71; /* 오른쪽 박스의 배경색을 초록색으로 설정 */
+  background-color: #1c1c1c; /* 오른쪽 박스의 배경색을 초록색으로 설정 */
+}
+
+.rightbox_title span{
+  color: rgba(204, 159, 1);
+  font-family: "Playfair Display", serif;
+  font-style: normal;
+  font-weight: bold;
 }
 
 .rightbox_title {
@@ -227,7 +246,7 @@ html,body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: white;
+  background-color: rgb(228, 228, 228);
   padding: 10px;
   width: 50%; /* Set the width to 50% */
   border-radius: 20px;
@@ -247,7 +266,7 @@ html,body {
 }
 
 .chat-bar a {
-  background-color: #2ecc71;
+  background-color: rgba(204, 159, 1);
   border-radius: 50%;
   padding: 8px;
   display: flex;
@@ -264,6 +283,8 @@ html,body {
 
 /* 커밋리스트 나오는 v-card 설정 */
 .commit-list-container {
+  background-color: #2F2F2F;
+  color: #B4B4B4;
   overflow: auto;
   width: calc(100% - 10px); /* 5px의 좌우 margin을 감안한 너비 계산 */
   height: 79%;
@@ -277,6 +298,7 @@ html,body {
   padding: 0 5px;
   margin-top: 20px;
   gap: 20px;
+  color: rgb(248, 235, 54);
 }
 
 
