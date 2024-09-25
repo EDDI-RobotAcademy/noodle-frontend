@@ -1,47 +1,55 @@
 <template>
-  <div>
-    <div class="menubar">
-      네비게이션바 자리
-    </div>
-    <div class="container">
-      <div class="leftbox">
-        <div class="leftbox_title">
-          <span>Backlog 보드</span>
-          <div class="switch white">
+  <div class="app-container">
+    <div>
+      <div class="menubar">
+        네비게이션바 자리
+      </div>
+      <div class="container">
+        <div class="leftbox">
+          <div class="leftbox_title">
+            <span>Backlog 보드</span>
+            <div class="switch white">
+              <input
+                type="radio"
+                id="switch-off"
+                v-model="isChecked"
+                :value="false"
+              />
+              <input
+                type="radio"
+                id="switch-on"
+                v-model="isChecked"
+                :value="true"
+              />
+              <label for="switch-off">status</label>
+              <label for="switch-on">Domain</label>
+              <span class="toggle" :class="{ 'checked': isChecked }"></span>
+            </div>
+          </div>
+          <div class="chat-bar">
             <input
-              type="radio"
-              id="switch-off"
-              v-model="isChecked"
-              :value="false"
+              type="email"
+              placeholder="생성을 원하시는 Backlog를 입력해주세요!"
+              v-model="email"
             />
-            <input
-              type="radio"
-              id="switch-on"
-              v-model="isChecked"
-              :value="true"
-            />
-            <label for="switch-off">status</label>
-            <label for="switch-on">Domain</label>
-            <span class="toggle" :class="{ 'checked': isChecked }"></span>
+            <a href="/" @click.prevent="handleSubmit">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <path d="M15.6 15.47A4.99 4.99 0 0 1 7 12a5 5 0 0 1 10 0v1.5a1.5 1.5 0 1 0 3 0V12a8 8 0 1 0-4.94 7.4 1 1 0 1 1 .77 1.84A10 10 0 1 1 22 12v1.5a3.5 3.5 0 0 1-6.4 1.97zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+              </svg>
+            </a>
           </div>
         </div>
-        <div class="chat-bar">
-          <!-- LLM 프롬프트에 맞게 수정해야 할 듯 -->
-          <input
-            type="email"    
-            placeholder="생성을 원하시는 Backlog를 입력해주세요!"
-            v-model="email"
-          />
-          <a href="/" @click.prevent="handleSubmit">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-              <path d="M15.6 15.47A4.99 4.99 0 0 1 7 12a5 5 0 0 1 10 0v1.5a1.5 1.5 0 1 0 3 0V12a8 8 0 1 0-4.94 7.4 1 1 0 1 1 .77 1.84A10 10 0 1 1 22 12v1.5a3.5 3.5 0 0 1-6.4 1.97zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-            </svg>
-          </a>
-        </div>
-      </div>
-      <div class="rightbox">
-        <div class="rightbox_title">
-          <span>커밋 리스트</span>
+        <div class="rightbox">
+          <div class="rightbox_title">
+            <span>커밋 리스트</span>
+          </div>
+          <div class="select-container">
+            <v-select label="repository" :items="[]" class="repository"></v-select>
+            <v-select label="branche" :items="[]" class="branche"></v-select>
+          </div>
+          <v-card class="commit-list-container">
+            ddd
+          </v-card>
         </div>
       </div>
     </div>
@@ -54,7 +62,11 @@ export default {
   data() {
     return {
       isChecked: true, // 스위치의 초기 상태
+
     };
+  },
+   methods: {
+
   },
 };
 </script>
@@ -66,6 +78,12 @@ html,body {
   margin: 0; /* 기본 margin 제거 */
 }
 
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
 .container {
   display: flex; /* Flexbox로 레이아웃 설정 */
   height: 100vh; /* Viewport height를 100%로 설정 (화면 전체 높이) */
@@ -74,12 +92,13 @@ html,body {
 
 .menubar {
   width: 100%; /* 메뉴바의 너비를 100%로 설정 */
-  height: 7%; /* 메뉴바의 높이를 전체 화면의 7%로 설정 */
+  height: 7vh; /* 메뉴바의 높이를 전체 화면의 7%로 설정 */
   border-bottom: 8px solid #e1f531; /* 아래쪽에 두께 8px의 노란색 테두리 추가 */
 }
 
 /* 왼쪽 box */
 .leftbox {
+  position: relative;
   width: 75%; /* 왼쪽 박스의 너비를 75%로 설정 */
   height: 100%; /* 왼쪽 박스의 높이를 100%로 설정 (화면 전체 높이) */
   background-color: #3498db; /* 왼쪽 박스의 배경색을 파란색으로 설정 */
@@ -105,7 +124,7 @@ html,body {
 
 .rightbox_title {
   margin-top: 20px; /* 위쪽 여백을 20px 추가 */
-  margin-left: 20px; /* 왼쪽 여백을 20px 추가 */
+  margin-left: 10px; /* 왼쪽 여백을 20px 추가 */
   font-size: 30px; /* 폰트 크기를 30px로 설정 */
 }
 
@@ -202,6 +221,8 @@ html,body {
   left: calc(var(--switch-width, 100px) - calc(var(--switch-height, 20px) - 8px)); /* 스위치가 선택되었을 때 토글이 오른쪽에 위치 */
 }
 
+
+/* chat bar부분 */
 .chat-bar {
   display: flex;
   justify-content: space-between;
@@ -215,14 +236,6 @@ html,body {
   left: 50%; /* Center it horizontally relative to .leftbox */
   transform: translateX(-50%); /* Adjust for perfect centering */
   bottom: 20px; /* Position at the bottom of .leftbox */
-}
-
-.leftbox {
-  position: relative; /* Ensure .leftbox is a positioning reference */
-  width: 75%; /* Retaining your original styles */
-  height: 100%; 
-  background-color: #3498db;
-  border-right: 3px solid #e1f531;
 }
 
 .chat-bar input {
@@ -247,6 +260,23 @@ html,body {
   width: 20px;
   height: 20px;
   fill: white;
+}
+
+/* 커밋리스트 나오는 v-card 설정 */
+.commit-list-container {
+  overflow: auto;
+  width: calc(100% - 10px); /* 5px의 좌우 margin을 감안한 너비 계산 */
+  height: 79%;
+  margin-left: 5px;
+  margin-top: 15px;
+}
+
+.select-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5px;
+  margin-top: 20px;
+  gap: 20px;
 }
 
 
