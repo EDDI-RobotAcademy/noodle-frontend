@@ -26,6 +26,32 @@
               <span class="toggle" :class="{ 'checked': isChecked }"></span>
             </div>
           </div>
+          <v-container>
+            <h3>칸반 보드</h3>
+            <v-row>
+              <v-col
+                cols="12"
+                sm="4"
+                v-for="(column, columnIndex) in columns"
+                :key="columnIndex"
+              >
+                <v-card>
+                  <v-card-title>{{ column.name }}</v-card-title>
+                  <v-diver></v-diver>
+                  <v-card-text>
+                    <v-card
+                      eslint-disable-next-line
+                      v-for="task in column.tasks"
+                      :key="task.id"
+                      class="mb-2"
+                    >
+                      <v-card-text>{{ task.name }}</v-card-text>
+                    </v-card>
+                  </v-card-text>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>  
           <div class="chat-bar">
             <input
               type="email"
@@ -62,7 +88,28 @@ export default {
   data() {
     return {
       isChecked: true, // 스위치의 초기 상태
-
+      columns: [
+        {
+          name: 'To Do',
+          tasks: [
+            { id: 1, name: '작업 1' },
+            { id: 2, name: '작업 2' },
+          ],
+        },
+        {
+          name: 'In Progress',
+          tasks: [
+            { id: 3, name: '작업 3' },
+          ],
+        },
+        {
+          name: 'Done',
+          tasks: [
+            { id: 4, name: '작업 4' },
+            { id: 5, name: '작업 5' }
+          ],
+        },
+      ],
     };
   },
    methods: {
@@ -279,5 +326,17 @@ html,body {
   gap: 20px;
 }
 
+.v-card {
+  background-color: #ffffff;
+}
+
+.v-card-title {
+  background-color: #e0e0e0;
+  font-weight: bold;
+}
+
+.v-card-text {
+  padding: 10px;
+}
 
 </style>
