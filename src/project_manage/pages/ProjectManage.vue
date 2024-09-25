@@ -1,35 +1,48 @@
-<template> 
-  <div class="menubar">
-    네비gay션바 자리
-  </div>
-  <div class="container">
-    <div class="leftbox">
-      <div class="leftbox_title">
-        <span>Backlog 보드</span>
-        <!-- Switch 추가 -->
-        <div class="switch white">
+<template>
+  <div>
+    <div class="menubar">
+      네비게이션바 자리
+    </div>
+    <div class="container">
+      <div class="leftbox">
+        <div class="leftbox_title">
+          <span>Backlog 보드</span>
+          <div class="switch white">
+            <input
+              type="radio"
+              id="switch-off"
+              v-model="isChecked"
+              :value="false"
+            />
+            <input
+              type="radio"
+              id="switch-on"
+              v-model="isChecked"
+              :value="true"
+            />
+            <label for="switch-off">status</label>
+            <label for="switch-on">Domain</label>
+            <span class="toggle" :class="{ 'checked': isChecked }"></span>
+          </div>
+        </div>
+        <div class="chat-bar">
+          <!-- LLM 프롬프트에 맞게 수정해야 할 듯 -->
           <input
-            type="radio"
-            id="switch-off"
-            v-model="isChecked"
-            :value="false"
+            type="email"    
+            placeholder="생성을 원하시는 Backlog를 입력해주세요!"
+            v-model="email"
           />
-          <input
-            type="radio"
-            id="switch-on"
-            v-model="isChecked"
-            :value="true"
-            checked
-          />
-          <label for="switch-off">status</label>
-          <label for="switch-on">Domain</label>
-          <span class="toggle" :class="{ 'checked': isChecked }"></span>
+          <a href="/" @click.prevent="handleSubmit">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+              <path d="M15.6 15.47A4.99 4.99 0 0 1 7 12a5 5 0 0 1 10 0v1.5a1.5 1.5 0 1 0 3 0V12a8 8 0 1 0-4.94 7.4 1 1 0 1 1 .77 1.84A10 10 0 1 1 22 12v1.5a3.5 3.5 0 0 1-6.4 1.97zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+            </svg>
+          </a>
         </div>
       </div>
-    </div>
-    <div class="rightbox">
-      <div class="rightbox_title">
-        <span>커밋 리스트</span>
+      <div class="rightbox">
+        <div class="rightbox_title">
+          <span>커밋 리스트</span>
+        </div>
       </div>
     </div>
   </div>
@@ -46,10 +59,8 @@ export default {
 };
 </script>
 
-
 <style scoped>
-
-html, body {
+html,body {
   height: 100%; /* HTML과 Body의 높이를 100%로 설정 (화면 전체) */
   width: 100%; /* HTML과 Body의 너비를 100%로 설정 */
   margin: 0; /* 기본 margin 제거 */
@@ -76,19 +87,14 @@ html, body {
 }
 
 .leftbox_title {
-  display: flex; /* Flexbox로 레이아웃 설정 (내부 콘텐츠 정렬) */
-  justify-content: flex-start; /* 왼쪽과 오른쪽에 콘텐츠를 배치 */
-  align-items: center; /* 수직 중앙에 콘텐츠 정렬 */
+  display: flex; /* Flexbox로 레이아웃 설정 */
+  justify-content: space-between; /* 좌우 요소 사이에 공간을 균등 분배 */
+  align-items: center; /* 요소들을 수직 가운데 정렬 */
   margin-top: 20px; /* 위쪽 여백을 20px 추가 */
   margin-left: 20px; /* 왼쪽 여백을 20px 추가 */
   margin-right: 20px; /* 오른쪽 여백을 20px 추가 */
   font-size: 30px; /* 폰트 크기를 30px로 설정 */
 }
-
-.leftbox_title span {
-  margin-right: 75%; /* 텍스트와 스위치 사이에 공간 추가(텍스트를 기준으로 스위치 위치 조정) */
-}
-
 
 /* 오른쪽 box */
 .rightbox {
@@ -96,7 +102,6 @@ html, body {
   height: 100%; /* 오른쪽 박스의 높이를 100%로 설정 (화면 전체 높이) */
   background-color: #2ecc71; /* 오른쪽 박스의 배경색을 초록색으로 설정 */
 }
-
 
 .rightbox_title {
   margin-top: 20px; /* 위쪽 여백을 20px 추가 */
@@ -108,34 +113,37 @@ html, body {
 
 /* 스위치에 관한 설정 */
 .switch {
+  display: flex;
+  align-items: center;
   background: #fff; /* 스위치의 배경색을 흰색으로 설정 */
   border-radius: 32px; /* 스위치의 테두리를 둥글게 설정 (32px의 반경) */
-  display: block; /* 블록 요소로 설정 */
   height: var(--switch-height, 20px); /* 스위치의 높이 설정 (변경 가능하도록 변수 사용) */
   position: relative; /* 자식 요소의 위치를 기준으로 상대적으로 위치 설정 */
   width: var(--switch-width, 60px); /* 스위치의 너비 설정 (변경 가능하도록 변수 사용) */
-  margin-left: 0%; /* 스위치를 오른쪽으로 정렬 */
+  padding: 0 10px; /* 라벨을 위한 패딩 추가 */
+  /* 위치 조정 */
+  transform: translateX(-80px); /* 왼쪽으로 20px 이동 (값을 조정하여 위치 변경 가능) */
 }
 
 /* 스위치 글자 관련 설정 */
 .switch label {
   color: #fff; /* 라벨의 텍스트 색상을 흰색으로 설정 */
-  font-size: 12px; /* 라벨의 폰트 크기를 20px로 설정 */
-  font-weight: 500; /* 라벨의 폰트 두께를 300으로 설정 (얇은 텍스트) */
+  font-size: 12px; /* 라벨의 폰트 크기를 12px로 설정 */
+  font-weight: 500; /* 라벨의 폰트 두께를 500으로 설정 */
   line-height: var(--switch-height, 20px); /* 글의 세로 정렬을 위해 line-height를 스위치 높이에 맞춤 */
   text-transform: uppercase; /* 라벨 텍스트를 대문자로 변환 */
   transition: color 0.2s ease; /* 라벨의 색상 변화에 0.2초의 전환 효과 적용 */
-  width: 35px; /* 라벨의 너비 설정(값이 커질 수록 좁아짐) */
+  width: 35px; /* 라벨의 너비 설정 */
 }
 
 .switch label:nth-of-type(1) {
-  left: -85%; /* 첫 번째 라벨을 스위치 왼쪽에 위치시키기 위해 왼쪽으로 85% 이동(다른 요소 위치의 기준이 됨) */
   position: absolute; /* 라벨의 위치를 절대 위치로 설정 */
+  left: -85%; /* 첫 번째 라벨을 스위치 왼쪽에 위치시키기 위해 왼쪽으로 85% 이동 */
   text-align: right; /* 첫 번째 라벨의 텍스트를 오른쪽 정렬 */
 }
 
 .switch label:nth-of-type(2) {
-  position: absolute; /* 두 번째 라벨의 위치를 절대 위치로 설정 */
+  position: absolute; /* 라벨의 위치를 절대 위치로 설정 */
   right: -70%; /* 두 번째 라벨을 스위치 오른쪽에 위치시키기 위해 오른쪽으로 70% 이동 */
   text-align: left; /* 두 번째 라벨의 텍스트를 왼쪽 정렬 */
 }
@@ -146,7 +154,7 @@ html, body {
   opacity: 0; /* 입력 요소를 보이지 않도록 투명도 0으로 설정 */
   position: absolute; /* 입력 요소의 위치를 절대 위치로 설정 */
   top: 0; /* 입력 요소를 상단에 위치 */
-  width: var(--switch-width, 100px); /* 스위치 입력의 너비를 120px로 설정 */
+  width: var(--switch-width, 100px); /* 스위치 입력의 너비를 100px로 설정 */
   z-index: 2; /* 입력 요소를 다른 요소보다 앞에 표시 (레이어 순서 설정) */
 }
 
@@ -191,7 +199,55 @@ html, body {
 }
 
 .toggle.checked {
-  left: calc(var(--switch-width, 100px) - calc(var(--switch-height, 50px) -8px)); /* 스위치가 선택되었을 때 토글이 오른쪽에 위치 */
+  left: calc(var(--switch-width, 100px) - calc(var(--switch-height, 20px) - 8px)); /* 스위치가 선택되었을 때 토글이 오른쪽에 위치 */
 }
+
+.chat-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 10px;
+  width: 50%; /* Set the width to 50% */
+  border-radius: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: absolute; /* Absolute positioning */
+  left: 50%; /* Center it horizontally relative to .leftbox */
+  transform: translateX(-50%); /* Adjust for perfect centering */
+  bottom: 20px; /* Position at the bottom of .leftbox */
+}
+
+.leftbox {
+  position: relative; /* Ensure .leftbox is a positioning reference */
+  width: 75%; /* Retaining your original styles */
+  height: 100%; 
+  background-color: #3498db;
+  border-right: 3px solid #e1f531;
+}
+
+.chat-bar input {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.chat-bar a {
+  background-color: #2ecc71;
+  border-radius: 50%;
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.chat-bar a svg {
+  width: 20px;
+  height: 20px;
+  fill: white;
+}
+
 
 </style>
