@@ -40,7 +40,8 @@ export default {
   },
   data() {
     return {
-      searchQuery: ''  // Model to hold the search input value
+      searchQuery: '',  // Model to hold the search input value
+      accessToken: localStorage.getItem("accessToken")
     };
   },
   computed: {
@@ -79,6 +80,12 @@ export default {
       }
     }
   },
+  mounted() {
+    if (this.accessToken) {
+      this.$store.state.authenticationModule.isAuthenticated = true;
+    }
+    console.log(this.isAuthenticated)
+  }
 };
 </script>
 
