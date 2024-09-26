@@ -9,14 +9,14 @@
         {{ icon.icon }}
       </div>
     </div>
-    <div class="wrap">
+    <!-- <div class="wrap">
       <div class="search">
         <input type="text" class="searchTerm" v-model="searchQuery" placeholder="찾으시는 Backlog를 입력해주세요." />
         <button type="submit" class="searchButton" @click="submitSearch">
           <i class="material-icons">search</i>
         </button>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
