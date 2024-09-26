@@ -23,7 +23,7 @@
             </div>
           </div>
           <v-container>
-            <h3>칸반 보드</h3>
+            <v-divider></v-divider>
             <v-row>
               <v-col
                 cols="12"
@@ -339,11 +339,11 @@ html,body {
 }
 
 .v-card {
-  background-color: #ffffff;
+  background-color: #6b6b6b;
 }
 
 .v-card-title {
-  background-color: #e0e0e0;
+  background-color: #2f2f2f;
   font-weight: bold;
 }
 
