@@ -6,9 +6,12 @@
             </v-toolbar-title>
         </v-btn>
 
+    <v-toolbar-title class="temporarily">
+        Backlog Board 페이지 입니다.
+    </v-toolbar-title>
 
     <!-- 메뉴 이동 버튼 -->
-        <v-container class="manuBtn">
+        <!-- <v-container class="manuBtn">
             <v-btn @click="goToBacklogBoard" class="btn-text" alt="GO TO BACKLOGBOARD">
                 <v-icon left>mdi-pencil</v-icon>
                 <span>Backlog Board</span>
@@ -17,7 +20,7 @@
                 <v-icon left>mdi-alert-circle</v-icon>
                 <span>Issue Board</span>
             </v-btn>
-        </v-container>
+        </v-container> -->
     </v-app-bar>
 </template>
 
@@ -88,6 +91,17 @@ export default {
     display: flex;
     justify-content: flex-end;
     padding-right:  20px;
+}
+
+.temporarily{
+  display: flex;
+  justify-content: flex-end;
+  color: rgba(204, 159, 1);
+  font-family: "Playfair Display", serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  padding-right:  70px;
 }
 
 </style>
