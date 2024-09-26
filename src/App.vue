@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <navigation-menu-bar/>
+    <navigation-menu-bar v-if="$route.name !== 'HomeView'" />
     <v-main>
       <SurveyButton />
       <router-view/>
