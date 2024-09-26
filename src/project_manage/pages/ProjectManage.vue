@@ -67,11 +67,24 @@
 </template>
 
 <script>
+import { useStore } from 'vuex';
 import { mapActions, mapState } from 'vuex'
 const productManageModule = 'productManageModule'
+const authenticationModule = 'authenticationModule'
 
 export default {
   name: "App",
+  setup() {
+    const store = useStore()
+
+    const goToGithubLogin = async () => {
+      await store.dispatch("authenticationModule/requestGithubOauthRedirectionToDjango")
+    }
+
+    return {
+      goToGithubLogin
+    }
+  },
   data() {
     return {
       isChecked: true, // 스위치의 초기 상태
@@ -119,6 +132,13 @@ export default {
       const res = await this.requestGetReposListToDjango(payload)
     }
   },
+  mounted() {
+    if (localStorage.getItem('userToken')) {
+      // 사용자 인증 과정 추가해야 함
+    } else {
+      this.goToGithubLogin()
+    }
+  }
 };
 </script>
 
