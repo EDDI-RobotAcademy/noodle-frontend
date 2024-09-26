@@ -1,9 +1,5 @@
 <template>
   <div class="app-container">
-    <div>
-      <div class="menubar">
-        네비게이션바 자리
-      </div>
       <div class="container">
         <div class="leftbox">
           <div class="leftbox_title">
@@ -45,7 +41,7 @@
         <div class="rightbox">
           <div class="rightbox_title">
             <span>Commit List</span>
-            <v-btn @click="Refresh">Refresh</v-btn>
+            <v-btn @click="Refresh" class="Refresh">Refresh</v-btn>
           </div>
           <div class="select-container" v-if="repos">
             <v-select label="" :value="selectedRepository" :items="repos" class="repository"
@@ -65,7 +61,6 @@
           <v-card class="commit-list-container">
 
           </v-card>
-        </div>
       </div>
     </div>
   </div>
@@ -156,15 +151,6 @@ body {
   /* 자식 요소들을 수직 정렬하여 아래로 정렬 */
 }
 
-.menubar {
-  width: 100%;
-  /* 메뉴바의 너비를 100%로 설정 */
-  height: 7vh;
-  /* 메뉴바의 높이를 전체 화면의 7%로 설정 */
-  border-bottom: 8px solid rgba(204, 159, 1)
-    /* 아래쪽에 두께 8px의 노란색 테두리 추가 */
-}
-
 /* 왼쪽 box */
 .leftbox {
   position: relative;
@@ -221,12 +207,21 @@ body {
 }
 
 .rightbox_title {
-  margin-top: 20px;
-  /* 위쪽 여백을 20px 추가 */
-  margin-left: 10px;
-  /* 왼쪽 여백을 20px 추가 */
-  font-size: 30px;
-  /* 폰트 크기를 30px로 설정 */
+  display: flex; /* Flexbox로 레이아웃 설정 */
+  justify-content: space-between; /* 좌우 요소 사이에 공간을 균등 분배 */
+  align-items: center; /* 요소들을 수직 가운데 정렬 */
+  margin-top: 20px; /* 위쪽 여백을 20px 추가 */
+  margin-left: 10px; /* 왼쪽 여백을 10px 추가 */
+  margin-right: 10px; /* 오른쪽 여백을 10px 추가 */
+  font-size: 30px; /* 폰트 크기를 30px로 설정 */
+}
+
+.Refresh {
+  background-color: rgba(204, 159, 1);
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 /* ---------- SWITCH ---------- */
