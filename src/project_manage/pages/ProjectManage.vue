@@ -1,9 +1,5 @@
 <template>
   <div class="app-container">
-    <div>
-      <div class="menubar">
-        네비게이션바 자리
-      </div>
       <div class="container">
         <div class="leftbox">
           <div class="leftbox_title">
@@ -77,7 +73,6 @@
           <v-card class="commit-list-container">
             
           </v-card>
-        </div>
       </div>
     </div>
   </div>
@@ -140,12 +135,6 @@ html,body {
   display: flex; /* Flexbox로 레이아웃 설정 */
   height: 100vh; /* Viewport height를 100%로 설정 (화면 전체 높이) */
   align-items: flex-end; /* 자식 요소들을 수직 정렬하여 아래로 정렬 */
-}
-
-.menubar {
-  width: 100%; /* 메뉴바의 너비를 100%로 설정 */
-  height: 7vh; /* 메뉴바의 높이를 전체 화면의 7%로 설정 */
-  border-bottom: 8px solid rgba(204, 159, 1) /* 아래쪽에 두께 8px의 노란색 테두리 추가 */
 }
 
 /* 왼쪽 box */
