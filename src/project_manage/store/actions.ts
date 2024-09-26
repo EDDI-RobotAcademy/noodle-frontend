@@ -1,0 +1,45 @@
+import { ActionContext } from "vuex";
+import { ProductManageState } from "./states";
+import axios, { AxiosResponse } from "axios";
+import axiosInst from "@/utility/axiosInstance";
+
+
+export type ProductManageActions = {
+    requestSaveReposListToDjango(context: ActionContext<ProductManageState, any>,
+        payload: { userToken: string }): Promise<void>;
+    requestGetReposListToDjango(context: ActionContext<ProductManageState, any>,
+        payload: { userToken: string }): Promise<void>;
+};
+
+const actions: ProductManageActions = {
+    async requestSaveReposListToDjango(context: ActionContext<ProductManageState, any>,
+        payload: { userToken: string }): Promise<void> {
+        console.log("payload:", payload)
+
+        try {
+            console.log("requestSaveReposListToDjango()")
+            await axiosInst.djangoAxiosInst.post("/repos/save", payload)
+        } catch (error) {
+            console.log("requestSaveReposListToDjango() 중 에러 발생:", error)
+            throw error
+        }
+    },
+    async requestGetReposListToDjango(context: ActionContext<ProductManageState, any>,
+        payload: { userToken: string }): Promise<void> {
+        console.log("payload:", payload)
+
+        try {
+            console.log("requestGetReposListToDjango()")
+            const response = await axiosInst.djangoAxiosInst.post("/repos/list", payload)
+            console.log("response:", response)
+            const repoList = response.data.repo_list
+            console.log("repoList:", repoList)
+            context.commit("REQUEST_GET_REPOS_LIST_TO_DJANGO", repoList)
+        } catch (error) {
+            console.log("requestGetReposListToDjango() 중 에러 발생:", error)
+            throw error
+        }
+    }
+};
+
+export default actions;
