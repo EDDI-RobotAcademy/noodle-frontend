@@ -34,14 +34,20 @@ export default {
       await store.dispatch("authenticationModule/requestGithubOauthRedirectionToDjango")
     }
 
+    const goToGithubLogout = async () => {
+      await store.dispatch("authenticationModule/requestLogoutToDjango")
+      localStorage.removeItem("userToken")
+    }
+
     return {
-      goToGithubLogin
+      goToGithubLogin,
+      goToGithubLogout
     }
   },
   data() {
     return {
       searchQuery: '',  // Model to hold the search input value
-      accessToken: localStorage.getItem("accessToken")
+      userToken: localStorage.getItem("userToken")
     };
   },
   computed: {
@@ -76,12 +82,12 @@ export default {
       } else if (name === 'Login') {
         this.goToGithubLogin()
       } else if (name === 'Logout') {
-        // 로그아웃 로직 넣어야 함
+        this.goToGithubLogout()
       }
     }
   },
   mounted() {
-    if (this.accessToken) {
+    if (this.userToken) {
       this.$store.state.authenticationModule.isAuthenticated = true;
     }
     console.log(this.isAuthenticated)

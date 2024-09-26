@@ -10,9 +10,7 @@ export type AuthenticationActions = {
     context: ActionContext<AuthenticationState, any>,
     payload: { code: string }
   ): Promise<void>;
-  requestUserInfoToDjango(
-    {commit}: ActionContext<AuthenticationState, any>
-  ): Promise<any>;
+  requestLogoutToDjango({commit}: ActionContext<AuthenticationState, any>): Promise<any>;
 };
 
 const actions: AuthenticationActions = {
@@ -33,28 +31,24 @@ const actions: AuthenticationActions = {
         "/github-oauth/github/access-token",
         { code }
       );
-      console.log("accessToken:", response);
-      localStorage.setItem("accessToken", response.data.code);
+      console.log("response:", response);
+      context.commit("REQUEST_IS_AUTHENTICATED_TO_DJANGO", true);
+      return response.data
     } catch (error) {
       console.log("Access Token 요청 중 문제 발생:", error);
       throw error;
     }
   },
-  async requestUserInfoToDjango({commit, state}:ActionContext<AuthenticationState, any>
-  ): Promise<any> {
+  async requestLogoutToDjango({commit, state}: ActionContext<AuthenticationState, any>):Promise<any> {
     try {
-      const accessToken = localStorage.getItem("accessToken");
-      const userInfoResponse: AxiosResponse<any> =
-        await axiosInst.djangoAxiosInst.post("/github-oauth/github/user-info", {
-          access_token: accessToken,
-        });
-      console.log("userInfo:", userInfoResponse);
-      const userInfo = userInfoResponse.data.user_info;
-      commit("REQUEST_IS_AUTHENTICATED_TO_DJANGO", true);
-      return userInfo;
+        const userToken = localStorage.getItem("userToken");
+        const res = await axiosInst.djangoAxiosInst.post("/github-oauth/github/logout", {userToken: userToken})
+        console.log("res:", res)
+        commit("REQUEST_IS_AUTHENTICATED_TO_DJANGO", false);
+        window.location.reload();
     } catch (error) {
-      alert("사용자 정보 가져오기 실패!");
-      throw error;
+        alert("로그아웃 실패");
+        throw error;
     }
   },
 };
