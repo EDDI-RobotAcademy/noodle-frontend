@@ -64,7 +64,7 @@
         <div class="rightbox">
           <div class="rightbox_title">
             <span>Commit List</span>
-            <v-btn @click="Refresh">Refresh</v-btn>
+            <v-btn @click="Refresh" class="Refresh">Refresh</v-btn>
           </div>
           <div class="select-container">
             <v-select label="repository" :items="[]" class="repository"></v-select>
@@ -179,9 +179,21 @@ html,body {
 }
 
 .rightbox_title {
+  display: flex; /* Flexbox로 레이아웃 설정 */
+  justify-content: space-between; /* 좌우 요소 사이에 공간을 균등 분배 */
+  align-items: center; /* 요소들을 수직 가운데 정렬 */
   margin-top: 20px; /* 위쪽 여백을 20px 추가 */
-  margin-left: 10px; /* 왼쪽 여백을 20px 추가 */
+  margin-left: 10px; /* 왼쪽 여백을 10px 추가 */
+  margin-right: 10px; /* 오른쪽 여백을 10px 추가 */
   font-size: 30px; /* 폰트 크기를 30px로 설정 */
+}
+
+.Refresh {
+  background-color: rgba(204, 159, 1);
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 /* ---------- SWITCH ---------- */
