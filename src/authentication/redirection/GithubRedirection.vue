@@ -15,10 +15,9 @@ export default {
         async setRedirectData() {
             const code = this.$route.query.code
             console.log('code:', code)
-            await this.requestAccessTokenToDjangoRedirection({ code })
-            const userInfo = await this.requestUserInfoToDjango()
-            console.log('userInfo:', userInfo)
-            localStorage.setItem('nickname', userInfo.login)
+            const res = await this.requestAccessTokenToDjangoRedirection({ code })
+            console.log('res:', res)
+            await localStorage.setItem('userToken', res.userToken)
             this.$router.push('/')
         }
     },
