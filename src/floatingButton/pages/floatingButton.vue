@@ -55,7 +55,7 @@
         this.position = { x: 0, y: 0 };
       },
       gotoContactPage() {
-        router.push("/survey/read/1")
+        router.push("/")
       }
     }
   }
