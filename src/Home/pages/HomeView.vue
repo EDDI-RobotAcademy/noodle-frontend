@@ -24,7 +24,7 @@
 <script>
 import { useStore } from 'vuex';
 import { mapActions, mapState } from "vuex";
-import SurveyButton from '@/floatingButton/pages/SurveyButton.vue';
+import SurveyButton from '@/floatingButton/pages/floatingButton.vue';
 
 const authenticationModule = 'authenticationModule'
 
