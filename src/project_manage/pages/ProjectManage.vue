@@ -68,6 +68,7 @@
         <div class="rightbox">
           <div class="rightbox_title">
             <span>Commit List</span>
+            <v-btn @click="Refresh">Refresh</v-btn>
           </div>
           <div class="select-container">
             <v-select label="repository" :items="[]" class="repository"></v-select>
