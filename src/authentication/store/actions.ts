@@ -10,9 +10,7 @@ export type AuthenticationActions = {
     context: ActionContext<AuthenticationState, any>,
     payload: { code: string }
   ): Promise<void>;
-  requestUserInfoToDjango(
-    {commit}: ActionContext<AuthenticationState, any>
-  ): Promise<any>;
+  requestLogoutToDjango({commit}: ActionContext<AuthenticationState, any>): Promise<any>;
 };
 
 const actions: AuthenticationActions = {
@@ -33,8 +31,9 @@ const actions: AuthenticationActions = {
         "/github-oauth/github/access-token",
         { code }
       );
-      console.log("accessToken:", response);
-      localStorage.setItem("accessToken", response.data.code);
+      console.log("response:", response);
+      context.commit("REQUEST_IS_AUTHENTICATED_TO_DJANGO", true);
+      return response.data
     } catch (error) {
       console.log("Access Token 요청 중 문제 발생:", error);
       throw error;
