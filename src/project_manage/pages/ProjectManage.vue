@@ -17,10 +17,15 @@
             <v-row>
               <v-col cols="12" sm="4" v-for="(column, columnIndex) in columns" :key="columnIndex">
                 <v-card>
-                  <v-card-title>{{ column.name }}</v-card-title>
+                  <v-card-title class="KanbanBoardTitle" >{{ column.name }}</v-card-title>
                   <v-diver></v-diver>
-                  <v-card-text>
-                    <v-card eslint-disable-next-line v-for="task in column.tasks" :key="task.id" class="mb-2">
+                  <v-card-text class="KanbanBoardCard">
+                    <v-card
+                      eslint-disable-next-line
+                      v-for="task in column.tasks"
+                      :key="task.id"
+                      class="mb-2"
+                    >
                       <v-card-text>{{ task.name }}</v-card-text>
                     </v-card>
                   </v-card-text>
@@ -187,6 +192,19 @@ body {
   font-family: "Playfair Display", serif;
   font-style: normal;
   font-weight: bold;
+}
+
+.KanbanBoardTitle{
+  background-color: rgba(204, 159, 1);
+}
+
+.KanbanBoardCard{
+  background-color: #444444;
+}
+
+
+.mb-2{
+  background-color: #c5c5c5;
 }
 
 /* 오른쪽 box */
@@ -428,16 +446,4 @@ body {
   color: rgb(248, 235, 54);
 }
 
-.v-card {
-  background-color: #6b6b6b;
-}
-
-.v-card-title {
-  background-color: #2f2f2f;
-  font-weight: bold;
-}
-
-.v-card-text {
-  padding: 10px;
-}
 </style>
