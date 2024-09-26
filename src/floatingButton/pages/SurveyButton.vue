@@ -64,8 +64,8 @@
   <style scoped>
   .fixed-icon-container {
     position: fixed;
-    top: 10%;
-    left: 95%;
+    top: 90%;
+    left: 5%;
     transform: translate(-50%, -50%);
     z-index: 1000;
   }
