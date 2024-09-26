@@ -2,7 +2,6 @@
   <v-app>
     <navigation-menu-bar v-if="$route.name !== 'HomeView'" />
     <v-main>
-      <SurveyButton />
       <router-view/>
     </v-main>
   </v-app>
@@ -10,11 +9,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import SurveyButton from '@/floatingButton/pages/SurveyButton.vue'
 import NavigationMenuBar from './navigationBar/NavigationMenuBar.vue'
 
 export default defineComponent({
-  components: {SurveyButton, NavigationMenuBar},
+  components: {NavigationMenuBar},
   name: 'App',
 
   data () {

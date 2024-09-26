@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <main class="main">
-      <img class="NOODLE_logo" :src="require('@/assets/images/fixed/NOODLE_logo.png')" alt="NOODLE_logo">
+      <SurveyButton />
+      <!-- <img class="NOODLE_logo" :src="require('@/assets/images/fixed/NOODLE_logo.png')" alt="NOODLE_logo"> -->
     </main>
     <div class="Dock">
       <div v-for="icon in icons" :key="icon.name" :data-name="icon.name" class="Icon material-icons"
@@ -23,10 +24,12 @@
 <script>
 import { useStore } from 'vuex';
 import { mapActions, mapState } from "vuex";
+import SurveyButton from '@/floatingButton/pages/SurveyButton.vue';
 
 const authenticationModule = 'authenticationModule'
 
 export default {
+  components:{SurveyButton},
   setup() {
     const store = useStore()
 

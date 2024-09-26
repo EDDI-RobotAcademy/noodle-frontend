@@ -28,10 +28,10 @@
     data() {
       return {
         backgrounds: [
-          { color: "#333333", opacity: 0.7, borderRadius: '40% 42% 45% 55%', size: 55 },
-          { color: "#333333", opacity: 0.6, borderRadius: '55% 41% 65% 43%', size: 55 },
-          { color: "#333333", opacity: 0.5, borderRadius: '58% 56% 72% 58%', size: 55 },
-          { color: "#333333", opacity: 0.4, borderRadius: '52% 72% 45% 61%', size: 55 },
+          { color: "#333333", opacity: 0.7, borderRadius: '40% 42% 45% 55%', size: 500 },
+          { color: "#333333", opacity: 0.6, borderRadius: '55% 41% 65% 43%', size: 500 },
+          { color: "#333333", opacity: 0.5, borderRadius: '58% 56% 72% 58%', size: 500 },
+          { color: "#333333", opacity: 0.4, borderRadius: '52% 72% 45% 61%', size: 500 },
         ],
         position: { x: 0, y: 0 },
       }
@@ -39,8 +39,8 @@
     methods: {
       handleMouseMove(event) {
         const rect = event.target.getBoundingClientRect();
-        const x = event.clientX - rect.left - rect.width / 2;
-        const y = event.clientY - rect.top - rect.height / 2;
+        const x = event.clientX - rect.left - rect.width/2;
+        const y = event.clientY - rect.top - rect.height /2;
   
         const radius = 20;
         const distance = Math.sqrt(x * x + y * y);
@@ -64,16 +64,16 @@
   <style scoped>
   .fixed-icon-container {
     position: fixed;
-    top: 90%;
-    left: 5%;
+    top: 40%;
+    left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1000;
   }
   
   
   .interactive-area {
-    width: 316px;
-    height: 220px;
+    width: 700px;
+    height: 700px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -109,8 +109,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 45px;
-    height: 45px;
+    width: 400px;
+    height: 400px;
     background-image: url('@/assets/images/fixed/NOODLE_logo.png');
     background-size: contain;
     background-repeat: no-repeat;
