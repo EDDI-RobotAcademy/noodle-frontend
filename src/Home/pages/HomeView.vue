@@ -29,7 +29,7 @@ import SurveyButton from '@/floatingButton/pages/floatingButton.vue';
 const authenticationModule = 'authenticationModule'
 
 export default {
-  components:{SurveyButton},
+  components: { SurveyButton },
   setup() {
     const store = useStore()
 
@@ -81,7 +81,11 @@ export default {
     },
     handleIconClick(name) {
       if (name === 'projectManage') {
-        this.goToProjectManage()
+        if (this.isAuthenticated) {
+          this.goToProjectManage()
+        } else {
+          this.goToGithubLogin()
+        }
       } else if (name === 'Login') {
         this.goToGithubLogin()
       } else if (name === 'Logout') {
