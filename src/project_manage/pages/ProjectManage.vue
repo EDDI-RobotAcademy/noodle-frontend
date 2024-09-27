@@ -53,15 +53,19 @@
               @change="setRepositorySelect($event)">
               <option v-for="(item, index) in repos" :key="index" :value="item.value">{{ item.value }}</option>
             </v-select>
-            <v-select label="" :value="selectedBranch" :items="[]" class="branch"
-              @change="setBranchSelect($event)">
-              <option v-for="(item, index) in []" :key="index" :value="item.value">{{ item.value }}</option>
-            </v-select>
+            <div v-if="branches">
+              <v-select :value="selectedBranch" :items="branches" class="branch"
+                @change="setBranchSelect($event)">
+                <option v-for="(item, index) in branches" :key="index" :value="item.value">{{ item.value }}</option>
+              </v-select>
+            </div>
+            <div v-else>
+              <v-select :value="selectedBranches" class="branches"></v-select>
+            </div>
           </div>
           <div class="select-container" v-else>
-            <v-select label="Press Refresh button">
-            </v-select>
-            <v-select label="Select Repository first" :items="[]" class="branches"></v-select>
+            <v-select :value="selectedRepository"></v-select>
+            <v-select :value="selectedBranches"></v-select>
           </div>
           <v-card class="commit-list-container">
 
