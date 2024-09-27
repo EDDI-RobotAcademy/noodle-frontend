@@ -15,6 +15,8 @@ export type ProductManageActions = {
         payload: { userToken: string }): Promise<void>;
     requestSaveCommitListToDjango(context: ActionContext<ProductManageState, any>,
         payload: { userToken: string }): Promise<void>;
+    requestGetCommitListToDjango(context: ActionContext<ProductManageState, any>,
+        payload: { userToken: string }): Promise<void>;
 };
 
 const actions: ProductManageActions = {
@@ -86,7 +88,22 @@ const actions: ProductManageActions = {
             throw error
         }
     },
+    async requestGetCommitListToDjango(context: ActionContext<ProductManageState, any>,
+        payload: { userToken: string, reponame: string, branchname: string }): Promise<void> {
+        console.log("payload:", payload)
 
+        try {
+            console.log("requestGetCommitListToDjango()")
+            const response = await axiosInst.djangoAxiosInst.post("/commits/list", payload)
+            console.log("response:", response)
+            const commitList = response.data.commit_list
+            console.log("commitList:", commitList)
+            context.commit("REQUEST_GET_COMMIT_LIST_TO_DJANGO", commitList)
+        } catch (error) {
+            console.log("requestGetCommitListToDjango() 중 에러 발생:", error)
+            throw error
+        }
+    }
 };
 
 export default actions;

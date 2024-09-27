@@ -164,6 +164,9 @@ export default {
       const userToken = localStorage.getItem('userToken')
       const payload = { 'userToken': userToken, 'reponame': this.selectedRepository, 'branchname': this.selectedBranches }
       await this.requestSaveCommitListToDjango(payload)
+      const res = await this.requestGetCommitListToDjango(payload)
+      console.log("commits response:", res)
+      console.log("commits:", this.commits)
     },
     async Refresh() {
       const userToken = localStorage.getItem('userToken')
