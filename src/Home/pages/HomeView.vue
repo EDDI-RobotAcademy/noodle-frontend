@@ -1,62 +1,103 @@
 <template>
   <div id="app">
     <main class="main">
-      <img class="NOODLE_logo" :src="require('@/assets/images/fixed/NOODLE_logo.png')" alt="NOODLE_logo">
-    </main>
-    <div class="Dock">
-      <div v-for="icon in icons" 
-           :key="icon.name" 
-           :data-name="icon.name" 
-           class="Icon material-icons">
-          <div v-if="icon.name === 'Login'" @click="goToGithubLogin">{{ icon.icon }}</div>
-          <div v-else>{{ icon.icon }}</div>
+      <SurveyButton />
+      <!-- <img class="NOODLE_logo" :src="require('@/assets/images/fixed/NOODLE_logo.png')" alt="NOODLE_logo"> -->
+      <div class="Dock">
+        <div v-for="icon in icons" :key="icon.name" :data-name="icon.name" class="Icon material-icons"
+          @click="handleIconClick(icon.name)">
+          {{ icon.icon }}
+        </div>
       </div>
-    </div>
-    <div class="wrap">
+    </main>
+    <!-- <div class="wrap">
       <div class="search">
         <input type="text" class="searchTerm" v-model="searchQuery" placeholder="찾으시는 Backlog를 입력해주세요." />
         <button type="submit" class="searchButton" @click="submitSearch">
           <i class="material-icons">search</i>
         </button>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 import { useStore } from 'vuex';
+import { mapActions, mapState } from "vuex";
+import SurveyButton from '@/floatingButton/pages/floatingButton.vue';
 
 const authenticationModule = 'authenticationModule'
 
 export default {
-  setup () {
+  components: { SurveyButton },
+  setup() {
     const store = useStore()
 
     const goToGithubLogin = async () => {
       await store.dispatch("authenticationModule/requestGithubOauthRedirectionToDjango")
     }
 
+    const goToGithubLogout = async () => {
+      await store.dispatch("authenticationModule/requestLogoutToDjango")
+      localStorage.removeItem("userToken")
+    }
+
     return {
-      goToGithubLogin
+      goToGithubLogin,
+      goToGithubLogout
     }
   },
   data() {
     return {
-      icons: [
+      searchQuery: '',  // Model to hold the search input value
+      userToken: localStorage.getItem("userToken")
+    };
+  },
+  computed: {
+    ...mapState(authenticationModule, ["isAuthenticated"]),
+    icons() {
+      return this.isAuthenticated ? [
         { name: '기능버튼1', icon: 'face' },
-        { name: '기능버튼2', icon: 'watch_later' },
+        { name: 'projectManage', icon: 'watch_later' },
+        { name: '기능버튼3', icon: 'zoom_in' },
+        { name: '기능버튼4', icon: 'wb_sunny' },
+        { name: 'Logout', icon: 'logout' },
+      ] : [
+        { name: '기능버튼1', icon: 'face' },
+        { name: 'projectManage', icon: 'watch_later' },
         { name: '기능버튼3', icon: 'zoom_in' },
         { name: '기능버튼4', icon: 'wb_sunny' },
         { name: 'Login', icon: 'person' },
-      ],
-      searchQuery: ''  // Model to hold the search input value
-    };
+      ];
+    }
   },
   methods: {
     submitSearch() {
       // 검색로직
       console.log("Searching for:", this.searchQuery);
+    },
+    async goToProjectManage() {
+      await this.$router.push({ name: 'projectManage' })
+    },
+    handleIconClick(name) {
+      if (name === 'projectManage') {
+        if (this.isAuthenticated) {
+          this.goToProjectManage()
+        } else {
+          this.goToGithubLogin()
+        }
+      } else if (name === 'Login') {
+        this.goToGithubLogin()
+      } else if (name === 'Logout') {
+        this.goToGithubLogout()
+      }
     }
+  },
+  mounted() {
+    if (this.userToken) {
+      this.$store.state.authenticationModule.isAuthenticated = true;
+    }
+    console.log(this.isAuthenticated)
   }
 };
 </script>
@@ -69,14 +110,19 @@ export default {
   src: url(https://fonts.gstatic.com/s/materialicons/v41/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2) format('woff2');
 }
 
-/* @import url('https://fonts.googleapis.com/icon?family=Material+Icons'); */ /*google font 임포트 방법2*/
+/* @import url('https://fonts.googleapis.com/icon?family=Material+Icons'); */
+/*google font 임포트 방법2*/
 
 .main {
   display: flex;
-  justify-content: center; /* 좌우 중앙 정렬 */
-  align-items: center; /* 상하 중앙 정렬 */
-  height: 100vh; /* 뷰포트 전체 비율로 차지하게 설정 */
+  justify-content: center;
+  /* 좌우 중앙 정렬 */
+  align-items: center;
+  /* 상하 중앙 정렬 */
+  height: 100vh;
+  /* 뷰포트 전체 비율로 차지하게 설정 */
   background-color: black;
+  z-index: 500;
 }
 
 .NOODLE_logo {
@@ -109,10 +155,12 @@ export default {
 .Dock {
   position: fixed;
   left: 50%;
-  bottom: 20px; /* 하단과의 공간 */
+  bottom: 20px;
+  /* 하단과의 공간 */
   padding: 0px 30px;
   transform: translateX(-50%);
   perspective: 100px;
+  z-index: 9999;
 }
 
 .Dock:before {
@@ -233,7 +281,8 @@ export default {
   padding: 0 5px;
   border-radius: 5px 0 0 5px;
   outline: none;
-  color: rgb(252, 235, 174); /* 검색창에 글이 입력된 후 포커스가 벗어났을 때 글자의 색 */
+  color: rgb(252, 235, 174);
+  /* 검색창에 글이 입력된 후 포커스가 벗어났을 때 글자의 색 */
   box-sizing: border-box;
 }
 
@@ -258,7 +307,7 @@ export default {
 }
 
 .searchButton .material-icons {
-  
+
   font-size: 30px;
   line-height: 36px;
 }
