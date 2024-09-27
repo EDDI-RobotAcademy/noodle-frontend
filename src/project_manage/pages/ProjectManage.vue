@@ -34,60 +34,74 @@
               </v-col>
             </v-row>
           </v-container> -->
-        <div class="chat-bar">
-          <input type="email" placeholder="생성을 원하시는 Backlog를 입력해주세요!" v-model="email" />
-          <a href="/" @click.prevent="handleSubmit">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-              <path
-                d="M15.6 15.47A4.99 4.99 0 0 1 7 12a5 5 0 0 1 10 0v1.5a1.5 1.5 0 1 0 3 0V12a8 8 0 1 0-4.94 7.4 1 1 0 1 1 .77 1.84A10 10 0 1 1 22 12v1.5a3.5 3.5 0 0 1-6.4 1.97zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-            </svg>
-          </a>
+          <div class="chat-bar">
+            <input type="email" placeholder="생성을 원하시는 Backlog를 입력해주세요!" v-model="email" />
+            <a href="/" @click.prevent="handleSubmit">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <path
+                  d="M15.6 15.47A4.99 4.99 0 0 1 7 12a5 5 0 0 1 10 0v1.5a1.5 1.5 0 1 0 3 0V12a8 8 0 1 0-4.94 7.4 1 1 0 1 1 .77 1.84A10 10 0 1 1 22 12v1.5a3.5 3.5 0 0 1-6.4 1.97zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+              </svg>
+            </a>
+          </div>
         </div>
-      </div>
-      <v-container>
-        <v-divider></v-divider>
-        <v-row>
-          <v-col cols="12" sm="4" v-for="(column, columnIndex) in columns" :key="columnIndex">
-            <v-card>
-              <v-card-title class="KanbanBoardTitle">{{ column.name }}</v-card-title>
-              <v-diver></v-diver>
-              <v-card-text class="KanbanBoardCard">
-                <v-card eslint-disable-next-line v-for="task in column.tasks" :key="task.id" class="mb-2">
-                  <v-card-text>{{ task.name }}</v-card-text>
+      <div class="rightbox">
+        <div class="rightbox_title">
+          <span>Commit List</span>
+          <v-btn @click="example" class="example_btn">클릭해보세요!</v-btn>
+          <v-btn @click="Refresh" class="Refresh">Refresh</v-btn>
+        </div>
+        <div v-if="!isExample">
+          <div class="select-container" v-if="repos">
+            <v-select v-model="selectedRepository" :value="selectedRepository" :items="repos" class="repository"
+              @change="setRepositorySelect($event)">
+              <option v-for="(item, index) in repos" :key="index" :value="item.value">{{ item.value }}</option>
+            </v-select>
+            <div v-if="branches">
+              <v-select v-model="selectedBranches" :value="selectedBranch" :items="branches" class="branch" @change="setBranchSelect($event)">
+                <option v-for="(item, index) in branches" :key="index" :value="item.value">{{ item.value }}</option>
+              </v-select>
+            </div>
+            <div v-else>
+              <v-select :value="selectedBranches" class="branches"></v-select>
+            </div>
+          </div>
+          <div class="select-container" v-else>
+            <v-select :value="selectedRepository"></v-select>
+            <v-select :value="selectedBranches"></v-select>
+          </div>
+          
+          <v-card v-if="commits" class="commit-list-container">
+            <v-list>
+              <v-list-item v-for="(item, index) in commits" :key="index">
+                <v-card>
+                  <v-card-item>
+                    <v-card-text>{{ item }}</v-card-text>
+                  </v-card-item>
                 </v-card>
-              </v-card-text>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container>
-      <div class="chat-bar">
-        <input type="email" placeholder="생성을 원하시는 Backlog를 입력해주세요!" v-model="email" />
-        <a href="/" @click.prevent="handleSubmit">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-            <path
-              d="M15.6 15.47A4.99 4.99 0 0 1 7 12a5 5 0 0 1 10 0v1.5a1.5 1.5 0 1 0 3 0V12a8 8 0 1 0-4.94 7.4 1 1 0 1 1 .77 1.84A10 10 0 1 1 22 12v1.5a3.5 3.5 0 0 1-6.4 1.97zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-          </svg>
-        </a>
-      </div>
-    </div>
-    <div class="rightbox">
-      <div class="rightbox_title">
-        <span>Commit List</span>
-        <v-btn @click="Refresh" class="Refresh">Refresh</v-btn>
-      </div>
-      <div class="select-container" v-if="repos">
-        <v-select v-model="selectedRepository" :value="selectedRepository" :items="repos" class="repository"
-          @change="setRepositorySelect($event)">
-          <option v-for="(item, index) in repos" :key="index" :value="item.value">{{ item.value }}</option>
-        </v-select>
-        <div v-if="branches">
-          <v-select v-model="selectedBranches" :value="selectedBranch" :items="branches" class="branch"
-            @change="setBranchSelect($event)">
-            <option v-for="(item, index) in branches" :key="index" :value="item.value">{{ item.value }}</option>
-          </v-select>
+              </v-list-item>
+            </v-list>
+          </v-card>
+          <v-card v-else class="commit-list-container">
+          </v-card>
         </div>
         <div v-else>
-          <v-select :value="selectedBranches" class="branches"></v-select>
+          <div class="select-container">
+            <v-select :value="exampleRepository"></v-select>
+            <v-select :value="exampleBranch"></v-select>
+          </div>
+          <v-card v-if="exampleCommits" class="commit-list-container">
+            <v-list>
+              <v-list-item v-for="(item, index) in exampleCommits" :key="index">
+                <v-card>
+                  <v-card-item>
+                    <v-card-text>{{ item }}</v-card-text>
+                  </v-card-item>
+                </v-card>
+              </v-list-item>
+            </v-list>
+          </v-card>
+          <v-card v-else class="commit-list-container">
+          </v-card>
         </div>
       </div>
       <div class="select-container" v-else>
@@ -114,6 +128,8 @@
 <script>
 import { useStore } from 'vuex';
 import { mapActions, mapState } from 'vuex'
+import axios from 'axios'
+import { toRaw } from 'vue';
 const productManageModule = 'productManageModule'
 const authenticationModule = 'authenticationModule'
 
@@ -157,7 +173,11 @@ export default {
       ],
       selectedRepository: "Select a repository",
       selectedBranches: "Select a branch",
-      selectedCommits: ""
+      selectedCommits: "",
+      exampleRepository: "noodle-frontend",
+      exampleBranch: "develop",
+      exampleCommits: [],
+      isExample: false
     };
   },
   computed: {
@@ -201,10 +221,28 @@ export default {
       console.log("commits:", this.commits)
     },
     async Refresh() {
+      this.isExample = false
       const userToken = localStorage.getItem('userToken')
       const payload = { 'userToken': userToken }
       await this.requestSaveReposListToDjango(payload)
       const res = await this.requestGetReposListToDjango(payload)
+    },
+    async example() {
+      this.isExample = true;
+      try {
+        const url = `https://api.github.com/repos/EDDI-RobotAcademy/noodle-frontend/commits?sha=develop`
+        const response = await axios.get(url)
+        const data = response.data
+        const proxyData = []
+        console.log('data:', data)
+        for (let i = 0; i < data.length; i++) {
+          proxyData.push(data[i].commit.message)
+        }
+        this.exampleCommits = toRaw(proxyData)
+        console.log(this.exampleCommits)
+      } catch (error) {
+        console.error("Error fetching commits:", error)
+      }
     }
   },
   mounted() {
@@ -223,11 +261,9 @@ export default {
 
 html,
 body {
-  height: calc(100% - 70px);
+  height: 100%;
   width: 100%;
-  /* HTML과 Body의 너비를 100%로 설정 */
   margin: 0;
-  /* 기본 margin 제거 */
 }
 
 .app-container {
@@ -242,8 +278,7 @@ body {
   /* Flexbox로 레이아웃 설정 */
   height: 100%;
   /* Viewport height를 100%로 설정 (화면 전체 높이) */
-  align-items: flex-end;
-  /* 자식 요소들을 수직 정렬하여 아래로 정렬 */
+  /* align-items: stretch; */
 }
 
 /* 왼쪽 box */
@@ -299,6 +334,7 @@ body {
 
 /* 오른쪽 box */
 .rightbox {
+  /* align-items: stretch; */
   width: 25%;
   /* 오른쪽 박스의 너비를 25%로 설정 */
   height: 100%;
@@ -331,12 +367,31 @@ body {
   /* 폰트 크기를 30px로 설정 */
 }
 
+.example_btn{
+  background-color: rgba(204, 159, 1);
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+}
+
 .Refresh {
   background-color: rgba(204, 159, 1);
   padding: 5px 10px;
   border: none;
   cursor: pointer;
   font-size: 16px;
+}
+
+/* 커밋리스트 나오는 v-card 설정 */
+.commit-list-container {
+  background-color: #2F2F2F;
+  color: #B4B4B4;
+  overflow: auto;
+  width: calc(100% - 10px);
+  height: 600px;
+  margin-left: 5px;
+  margin-top: 15px;
 }
 
 /* ---------- SWITCH ---------- */
@@ -522,17 +577,6 @@ body {
   fill: white;
 }
 
-/* 커밋리스트 나오는 v-card 설정 */
-.commit-list-container {
-  background-color: #2F2F2F;
-  color: #B4B4B4;
-  overflow: auto;
-  width: calc(100% - 10px);
-  /* 5px의 좌우 margin을 감안한 너비 계산 */
-  height: 77%;
-  margin-left: 5px;
-  margin-top: 15px;
-}
 
 .select-container {
   display: flex;
