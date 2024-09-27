@@ -50,37 +50,59 @@
           <v-btn @click="example" class="example_btn">클릭해보세요!</v-btn>
           <v-btn @click="Refresh" class="Refresh">Refresh</v-btn>
         </div>
-        <div class="select-container" v-if="repos">
-          <v-select v-model="selectedRepository" :value="selectedRepository" :items="repos" class="repository"
-            @change="setRepositorySelect($event)">
-            <option v-for="(item, index) in repos" :key="index" :value="item.value">{{ item.value }}</option>
-          </v-select>
-          <div v-if="branches">
-            <v-select v-model="selectedBranches" :value="selectedBranch" :items="branches" class="branch" @change="setBranchSelect($event)">
-              <option v-for="(item, index) in branches" :key="index" :value="item.value">{{ item.value }}</option>
+        <div v-if="!isExample">
+          <div class="select-container" v-if="repos">
+            <v-select v-model="selectedRepository" :value="selectedRepository" :items="repos" class="repository"
+              @change="setRepositorySelect($event)">
+              <option v-for="(item, index) in repos" :key="index" :value="item.value">{{ item.value }}</option>
             </v-select>
+            <div v-if="branches">
+              <v-select v-model="selectedBranches" :value="selectedBranch" :items="branches" class="branch" @change="setBranchSelect($event)">
+                <option v-for="(item, index) in branches" :key="index" :value="item.value">{{ item.value }}</option>
+              </v-select>
+            </div>
+            <div v-else>
+              <v-select :value="selectedBranches" class="branches"></v-select>
+            </div>
           </div>
-          <div v-else>
-            <v-select :value="selectedBranches" class="branches"></v-select>
+          <div class="select-container" v-else>
+            <v-select :value="selectedRepository"></v-select>
+            <v-select :value="selectedBranches"></v-select>
           </div>
+          
+          <v-card v-if="commits" class="commit-list-container">
+            <v-list>
+              <v-list-item v-for="(item, index) in commits" :key="index">
+                <v-card>
+                  <v-card-item>
+                    <v-card-text>{{ item }}</v-card-text>
+                  </v-card-item>
+                </v-card>
+              </v-list-item>
+            </v-list>
+          </v-card>
+          <v-card v-else class="commit-list-container">
+          </v-card>
         </div>
-        <div class="select-container" v-else>
-          <v-select :value="selectedRepository"></v-select>
-          <v-select :value="selectedBranches"></v-select>
+        <div v-else>
+          <div class="select-container">
+            <v-select :value="exampleRepository"></v-select>
+            <v-select :value="exampleBranch"></v-select>
+          </div>
+          <v-card v-if="exampleCommits" class="commit-list-container">
+            <v-list>
+              <v-list-item v-for="(item, index) in exampleCommits" :key="index">
+                <v-card>
+                  <v-card-item>
+                    <v-card-text>{{ item }}</v-card-text>
+                  </v-card-item>
+                </v-card>
+              </v-list-item>
+            </v-list>
+          </v-card>
+          <v-card v-else class="commit-list-container">
+          </v-card>
         </div>
-        <v-card v-if="commits" class="commit-list-container">
-          <v-list>
-            <v-list-item v-for="(item, index) in commits" :key="index">
-              <v-card>
-                <v-card-item>
-                  <v-card-text>{{ item }}</v-card-text>
-                </v-card-item>
-              </v-card>
-            </v-list-item>
-          </v-list>
-        </v-card>
-        <v-card v-else class="commit-list-container">
-        </v-card>
       </div>
     </div>
   </div>
@@ -89,6 +111,8 @@
 <script>
 import { useStore } from 'vuex';
 import { mapActions, mapState } from 'vuex'
+import axios from 'axios'
+import { toRaw } from 'vue';
 const productManageModule = 'productManageModule'
 const authenticationModule = 'authenticationModule'
 
@@ -132,7 +156,11 @@ export default {
       ],
       selectedRepository: "Select a repository",
       selectedBranches: "Select a branch",
-      selectedCommits: ""
+      selectedCommits: "",
+      exampleRepository: "noodle-frontend",
+      exampleBranch: "develop",
+      exampleCommits: [],
+      isExample: false
     };
   },
   computed: {
@@ -176,10 +204,28 @@ export default {
       console.log("commits:", this.commits)
     },
     async Refresh() {
+      this.isExample = false
       const userToken = localStorage.getItem('userToken')
       const payload = { 'userToken': userToken }
       await this.requestSaveReposListToDjango(payload)
       const res = await this.requestGetReposListToDjango(payload)
+    },
+    async example() {
+      this.isExample = true;
+      try {
+        const url = `https://api.github.com/repos/EDDI-RobotAcademy/noodle-frontend/commits?sha=develop`
+        const response = await axios.get(url)
+        const data = response.data
+        const proxyData = []
+        console.log('data:', data)
+        for (let i = 0; i < data.length; i++) {
+          proxyData.push(data[i].commit.message)
+        }
+        this.exampleCommits = toRaw(proxyData)
+        console.log(this.exampleCommits)
+      } catch (error) {
+        console.error("Error fetching commits:", error)
+      }
     }
   },
   mounted() {
