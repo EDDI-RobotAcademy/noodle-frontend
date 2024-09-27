@@ -1,19 +1,19 @@
 <template>
   <div class="app-container">
-      <div class="container">
-        <div class="leftbox">
-          <div class="leftbox_title">
-            <span>Backlog Board</span>
-            <div class="switch white">
-              <input type="radio" id="switch-off" v-model="isChecked" :value="false" />
-              <input type="radio" id="switch-on" v-model="isChecked" :value="true" />
-              <label for="switch-off">status</label>
-              <label for="switch-on">Domain</label>
-              <span class="toggle" :class="{ 'checked': isChecked }"></span>
-            </div>
+    <div class="container">
+      <div class="leftbox">
+        <div class="leftbox_title">
+          <span>Backlog Board</span>
+          <div class="switch white">
+            <input type="radio" id="switch-off" v-model="isChecked" :value="false" />
+            <input type="radio" id="switch-on" v-model="isChecked" :value="true" />
+            <label for="switch-off">status</label>
+            <label for="switch-on">Domain</label>
+            <span class="toggle" :class="{ 'checked': isChecked }"></span>
           </div>
-          <img class="example_backlog" :src="require('@/assets/images/fixed/example_backlog.png')" alt="example_backlog">
-          <!-- <v-container>
+        </div>
+        <img class="example_backlog" :src="require('@/assets/images/fixed/example_backlog.png')" alt="example_backlog">
+        <!-- <v-container>
             <v-divider></v-divider>
             <v-row>
               <v-col cols="12" sm="4" v-for="(column, columnIndex) in columns" :key="columnIndex">
@@ -104,6 +104,23 @@
           </v-card>
         </div>
       </div>
+      <div class="select-container" v-else>
+        <v-select :value="selectedRepository"></v-select>
+        <v-select :value="selectedBranches"></v-select>
+      </div>
+      <v-card v-if="commits" class="commit-list-container">
+        <v-list>
+          <v-list-item v-for="(item, index) in commits" :key="index">
+            <v-card>
+              <v-card-item>
+                <v-card-text>{{ item }}</v-card-text>
+              </v-card-item>
+            </v-card>
+          </v-list-item>
+        </v-list>
+      </v-card>
+      <v-card v-else class="commit-list-container">
+      </v-card>
     </div>
   </div>
 </template>
@@ -244,7 +261,6 @@ export default {
 
 html,
 body {
-  /* height:calc(100% - 70px); */
   height: 100%;
   width: 100%;
   margin: 0;
@@ -303,16 +319,16 @@ body {
   font-weight: bold;
 }
 
-.KanbanBoardTitle{
+.KanbanBoardTitle {
   background-color: rgba(204, 159, 1);
 }
 
-.KanbanBoardCard{
+.KanbanBoardCard {
   background-color: #444444;
 }
 
 
-.mb-2{
+.mb-2 {
   background-color: #c5c5c5;
 }
 
@@ -335,13 +351,20 @@ body {
 }
 
 .rightbox_title {
-  display: flex; /* Flexbox로 레이아웃 설정 */
-  justify-content: space-between; /* 좌우 요소 사이에 공간을 균등 분배 */
-  align-items: center; /* 요소들을 수직 가운데 정렬 */
-  margin-top: 20px; /* 위쪽 여백을 20px 추가 */
-  margin-left: 10px; /* 왼쪽 여백을 10px 추가 */
-  margin-right: 10px; /* 오른쪽 여백을 10px 추가 */
-  font-size: 30px; /* 폰트 크기를 30px로 설정 */
+  display: flex;
+  /* Flexbox로 레이아웃 설정 */
+  justify-content: space-between;
+  /* 좌우 요소 사이에 공간을 균등 분배 */
+  align-items: center;
+  /* 요소들을 수직 가운데 정렬 */
+  margin-top: 20px;
+  /* 위쪽 여백을 20px 추가 */
+  margin-left: 10px;
+  /* 왼쪽 여백을 10px 추가 */
+  margin-right: 10px;
+  /* 오른쪽 여백을 10px 추가 */
+  font-size: 30px;
+  /* 폰트 크기를 30px로 설정 */
 }
 
 .example_btn{
@@ -565,7 +588,7 @@ body {
 }
 
 
-.example_backlog{
+.example_backlog {
   width: 95%;
   height: 50%;
   margin-left: 15px;
