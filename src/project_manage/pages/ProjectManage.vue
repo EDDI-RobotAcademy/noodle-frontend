@@ -12,7 +12,8 @@
               <span class="toggle" :class="{ 'checked': isChecked }"></span>
             </div>
           </div>
-          <v-container>
+          <img class="example_backlog" :src="require('@/assets/images/fixed/example_backlog.png')" alt="example_backlog">
+          <!-- <v-container>
             <v-divider></v-divider>
             <v-row>
               <v-col cols="12" sm="4" v-for="(column, columnIndex) in columns" :key="columnIndex">
@@ -32,7 +33,7 @@
                 </v-card>
               </v-col>
             </v-row>
-          </v-container>
+          </v-container> -->
           <div class="chat-bar">
             <input type="email" placeholder="생성을 원하시는 Backlog를 입력해주세요!" v-model="email" />
             <a href="/" @click.prevent="handleSubmit">
@@ -485,4 +486,10 @@ body {
   color: rgb(248, 235, 54);
 }
 
+
+.example_backlog{
+  width: 95%;
+  height: 50%;
+  margin-left: 15px;
+}
 </style>
