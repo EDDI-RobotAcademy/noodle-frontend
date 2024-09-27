@@ -9,6 +9,10 @@ export type ProductManageActions = {
         payload: { userToken: string }): Promise<void>;
     requestGetReposListToDjango(context: ActionContext<ProductManageState, any>,
         payload: { userToken: string }): Promise<void>;
+    requestSaveBranchListToDjango(context: ActionContext<ProductManageState, any>,
+        payload: { userToken: string }): Promise<void>;
+    requestGetBranchListToDjango(context: ActionContext<ProductManageState, any>,
+        payload: { userToken: string }): Promise<void>;
 };
 
 const actions: ProductManageActions = {
@@ -39,7 +43,36 @@ const actions: ProductManageActions = {
             console.log("requestGetReposListToDjango() 중 에러 발생:", error)
             throw error
         }
+    },
+    async requestSaveBranchListToDjango(context: ActionContext<ProductManageState, any>,
+        payload: { userToken: string, reponame: string }): Promise<void> {
+        console.log("payload:", payload)
+
+        try {
+            console.log("requestSaveBranchListToDjango()")
+            await axiosInst.djangoAxiosInst.post("/branches/save", payload)
+        } catch (error) {
+            console.log("requestSaveBranchListToDjango() 중 에러 발생:", error)
+            throw error
+        }
+    },
+    async requestGetBranchListToDjango(context: ActionContext<ProductManageState, any>,
+        payload: { userToken: string, reponame: string }): Promise<void> {
+        console.log("payload:", payload)
+
+        try {
+            console.log("requestGetBranchListToDjango()")
+            const response = await axiosInst.djangoAxiosInst.post("/branches/list", payload)
+            console.log("response:", response)
+            const branchList = response.data.branch_list
+            console.log("branchList:", branchList)
+            context.commit("REQUEST_GET_BRANCH_LIST_TO_DJANGO", branchList)
+        } catch (error) {
+            console.log("requestGetBranchListToDjango() 중 에러 발생:", error)
+            throw error
+        }
     }
+
 };
 
 export default actions;

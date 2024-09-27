@@ -49,13 +49,13 @@
             <v-btn @click="Refresh" class="Refresh">Refresh</v-btn>
           </div>
           <div class="select-container" v-if="repos">
-            <v-select label="" :value="selectedRepository" :items="repos" class="repository"
+            <v-select v-model="selectedRepository" :value="selectedRepository" :items="repos" class="repository"
               @change="setRepositorySelect($event)">
               <option v-for="(item, index) in repos" :key="index" :value="item.value">{{ item.value }}</option>
             </v-select>
-            <v-select label="" :value="selectedBranch" :items="branches" class="branch"
+            <v-select label="" :value="selectedBranch" :items="[]" class="branch"
               @change="setBranchSelect($event)">
-              <option v-for="(item, index) in branches" :key="index" :value="item.value">{{ item.value }}</option>
+              <option v-for="(item, index) in []" :key="index" :value="item.value">{{ item.value }}</option>
             </v-select>
           </div>
           <div class="select-container" v-else>
@@ -120,12 +120,27 @@ export default {
     };
   },
   computed: {
-    ...mapState(productManageModule, ["repos"]),
+    ...mapState(productManageModule, ["repos", "branches"]),
+  },
+  watch: {
+    async selectedRepository(newVal) {
+      console.log('selectedRepository:', newVal)
+
+      if (newVal !== null) {
+        await this.setRepositorySelect()
+      }
+    }
   },
   methods: {
-    ...mapActions(productManageModule, ["requestSaveReposListToDjango", "requestGetReposListToDjango"]),
+    ...mapActions(productManageModule, ["requestSaveReposListToDjango", "requestGetReposListToDjango", "requestSaveBranchListToDjango", "requestGetBranchListToDjango"]),
     async setRepositorySelect(event) {
-      this.selectedRepository = event.target.value
+      const selectedValue = event
+      this.selectedBranches = selectedValue
+      const userToken = localStorage.getItem('userToken')
+      const payload = { 'userToken': userToken, 'reponame': this.selectedRepository }
+      await this.requestSaveBranchListToDjango(payload)
+      const res = await this.requestGetBranchListToDjango(payload)
+      console.log("res:", res)
     },
     setBranchSelect(event) {
       this.selectedBranches = event.target.value
