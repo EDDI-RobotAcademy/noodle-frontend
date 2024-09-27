@@ -471,7 +471,7 @@ body {
   overflow: auto;
   width: calc(100% - 10px);
   /* 5px의 좌우 margin을 감안한 너비 계산 */
-  height: 79%;
+  height: 77%;
   margin-left: 5px;
   margin-top: 15px;
 }
