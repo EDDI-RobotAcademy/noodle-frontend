@@ -172,8 +172,7 @@ export default {
 
 html,
 body {
-  height: 100%;
-  /* HTML과 Body의 높이를 100%로 설정 (화면 전체) */
+  height:calc(100% - 70px);
   width: 100%;
   /* HTML과 Body의 너비를 100%로 설정 */
   margin: 0;
@@ -183,13 +182,14 @@ body {
 .app-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  /* height: 100vh; */
+  height: 100%
 }
 
 .container {
   display: flex;
   /* Flexbox로 레이아웃 설정 */
-  height: 100vh;
+  height: 100%;
   /* Viewport height를 100%로 설정 (화면 전체 높이) */
   align-items: flex-end;
   /* 자식 요소들을 수직 정렬하여 아래로 정렬 */
@@ -471,7 +471,7 @@ body {
   overflow: auto;
   width: calc(100% - 10px);
   /* 5px의 좌우 margin을 감안한 너비 계산 */
-  height: 79%;
+  height: 77%;
   margin-left: 5px;
   margin-top: 15px;
 }

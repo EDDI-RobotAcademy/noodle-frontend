@@ -68,7 +68,7 @@ export default {
     align-items: center;
     background-color: #1c1c1c;
     border-bottom: 3px solid rgba(204, 159, 1);
-    /* height: 7vh; */
+    height: 70px;
 }
 
 .goToHomeButton{
