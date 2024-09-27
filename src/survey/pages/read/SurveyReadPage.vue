@@ -123,14 +123,14 @@ export default {
 /* 선택된 옵션 강조 */
 .selected-option {
   font-weight: 900;
-  color: rgba(204, 159, 1, 0.95);
+  color: rgb(255, 255, 255);
   text-shadow: 0.5px 0.5px 1px rgba(0,0,0,0.1);
   font-size: calc(1em + 2px);
 }
 
-/* 일반 옵션 글씨 색 */
-.v-radio .v-label {
-  color: rgba(204, 159, 1, 0.95); /* 일반 옵션 글씨도 노란색 */
-  font-size: 1em;
+.v-radio{
+  color: #fff;
 }
+
+
 </style>
