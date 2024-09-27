@@ -1,75 +1,79 @@
 <template>
   <div class="app-container">
-      <div class="container">
-        <div class="leftbox">
-          <div class="leftbox_title">
-            <span>Backlog Board</span>
-            <div class="switch white">
-              <input type="radio" id="switch-off" v-model="isChecked" :value="false" />
-              <input type="radio" id="switch-on" v-model="isChecked" :value="true" />
-              <label for="switch-off">status</label>
-              <label for="switch-on">Domain</label>
-              <span class="toggle" :class="{ 'checked': isChecked }"></span>
-            </div>
-          </div>
-          <v-container>
-            <v-divider></v-divider>
-            <v-row>
-              <v-col cols="12" sm="4" v-for="(column, columnIndex) in columns" :key="columnIndex">
-                <v-card>
-                  <v-card-title class="KanbanBoardTitle" >{{ column.name }}</v-card-title>
-                  <v-diver></v-diver>
-                  <v-card-text class="KanbanBoardCard">
-                    <v-card
-                      eslint-disable-next-line
-                      v-for="task in column.tasks"
-                      :key="task.id"
-                      class="mb-2"
-                    >
-                      <v-card-text>{{ task.name }}</v-card-text>
-                    </v-card>
-                  </v-card-text>
-                </v-card>
-              </v-col>
-            </v-row>
-          </v-container>
-          <div class="chat-bar">
-            <input type="email" placeholder="생성을 원하시는 Backlog를 입력해주세요!" v-model="email" />
-            <a href="/" @click.prevent="handleSubmit">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                <path
-                  d="M15.6 15.47A4.99 4.99 0 0 1 7 12a5 5 0 0 1 10 0v1.5a1.5 1.5 0 1 0 3 0V12a8 8 0 1 0-4.94 7.4 1 1 0 1 1 .77 1.84A10 10 0 1 1 22 12v1.5a3.5 3.5 0 0 1-6.4 1.97zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-              </svg>
-            </a>
+    <div class="container">
+      <div class="leftbox">
+        <div class="leftbox_title">
+          <span>Backlog Board</span>
+          <div class="switch white">
+            <input type="radio" id="switch-off" v-model="isChecked" :value="false" />
+            <input type="radio" id="switch-on" v-model="isChecked" :value="true" />
+            <label for="switch-off">status</label>
+            <label for="switch-on">Domain</label>
+            <span class="toggle" :class="{ 'checked': isChecked }"></span>
           </div>
         </div>
-        <div class="rightbox">
-          <div class="rightbox_title">
-            <span>Commit List</span>
-            <v-btn @click="Refresh" class="Refresh">Refresh</v-btn>
-          </div>
-          <div class="select-container" v-if="repos">
-            <v-select v-model="selectedRepository" :value="selectedRepository" :items="repos" class="repository"
-              @change="setRepositorySelect($event)">
-              <option v-for="(item, index) in repos" :key="index" :value="item.value">{{ item.value }}</option>
+        <v-container>
+          <v-divider></v-divider>
+          <v-row>
+            <v-col cols="12" sm="4" v-for="(column, columnIndex) in columns" :key="columnIndex">
+              <v-card>
+                <v-card-title class="KanbanBoardTitle">{{ column.name }}</v-card-title>
+                <v-diver></v-diver>
+                <v-card-text class="KanbanBoardCard">
+                  <v-card eslint-disable-next-line v-for="task in column.tasks" :key="task.id" class="mb-2">
+                    <v-card-text>{{ task.name }}</v-card-text>
+                  </v-card>
+                </v-card-text>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-container>
+        <div class="chat-bar">
+          <input type="email" placeholder="생성을 원하시는 Backlog를 입력해주세요!" v-model="email" />
+          <a href="/" @click.prevent="handleSubmit">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+              <path
+                d="M15.6 15.47A4.99 4.99 0 0 1 7 12a5 5 0 0 1 10 0v1.5a1.5 1.5 0 1 0 3 0V12a8 8 0 1 0-4.94 7.4 1 1 0 1 1 .77 1.84A10 10 0 1 1 22 12v1.5a3.5 3.5 0 0 1-6.4 1.97zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="rightbox">
+        <div class="rightbox_title">
+          <span>Commit List</span>
+          <v-btn @click="Refresh" class="Refresh">Refresh</v-btn>
+        </div>
+        <div class="select-container" v-if="repos">
+          <v-select v-model="selectedRepository" :value="selectedRepository" :items="repos" class="repository"
+            @change="setRepositorySelect($event)">
+            <option v-for="(item, index) in repos" :key="index" :value="item.value">{{ item.value }}</option>
+          </v-select>
+          <div v-if="branches">
+            <v-select v-model="selectedBranches" :value="selectedBranch" :items="branches" class="branch" @change="setBranchSelect($event)">
+              <option v-for="(item, index) in branches" :key="index" :value="item.value">{{ item.value }}</option>
             </v-select>
-            <div v-if="branches">
-              <v-select :value="selectedBranch" :items="branches" class="branch"
-                @change="setBranchSelect($event)">
-                <option v-for="(item, index) in branches" :key="index" :value="item.value">{{ item.value }}</option>
-              </v-select>
-            </div>
-            <div v-else>
-              <v-select :value="selectedBranches" class="branches"></v-select>
-            </div>
           </div>
-          <div class="select-container" v-else>
-            <v-select :value="selectedRepository"></v-select>
-            <v-select :value="selectedBranches"></v-select>
+          <div v-else>
+            <v-select :value="selectedBranches" class="branches"></v-select>
           </div>
-          <v-card class="commit-list-container">
-
-          </v-card>
+        </div>
+        <div class="select-container" v-else>
+          <v-select :value="selectedRepository"></v-select>
+          <v-select :value="selectedBranches"></v-select>
+        </div>
+        <v-card v-if="commits" class="commit-list-container">
+          <v-list>
+            <v-list-item v-for="(item, index) in commits" :key="index">
+              <v-card>
+                <v-card-item>
+                  <v-card-text>{{ item }}</v-card-text>
+                </v-card-item>
+              </v-card>
+            </v-list-item>
+          </v-list>
+        </v-card>
+        <v-card v-else class="commit-list-container">
+        </v-card>
       </div>
     </div>
   </div>
@@ -120,11 +124,12 @@ export default {
         },
       ],
       selectedRepository: "Select a repository",
-      selectedBranches: "Select a branch"
+      selectedBranches: "Select a branch",
+      selectedCommits: ""
     };
   },
   computed: {
-    ...mapState(productManageModule, ["repos", "branches"]),
+    ...mapState(productManageModule, ["repos", "branches", "commits"]),
   },
   watch: {
     async selectedRepository(newVal) {
@@ -133,21 +138,32 @@ export default {
       if (newVal !== null) {
         await this.setRepositorySelect()
       }
+    },
+    async selectedBranches(newVal) {
+      console.log('selectedBranches:', newVal)
+
+      if (newVal !== null) {
+        await this.setBranchSelect()
+      }
     }
   },
   methods: {
-    ...mapActions(productManageModule, ["requestSaveReposListToDjango", "requestGetReposListToDjango", "requestSaveBranchListToDjango", "requestGetBranchListToDjango"]),
+    ...mapActions(productManageModule, ["requestSaveReposListToDjango", "requestGetReposListToDjango", "requestSaveBranchListToDjango", "requestGetBranchListToDjango", "requestSaveCommitListToDjango", "requestGetCommitListToDjango"]),
     async setRepositorySelect(event) {
       const selectedValue = event
-      this.selectedBranches = selectedValue
+      // this.selectedBranches = selectedValue
       const userToken = localStorage.getItem('userToken')
       const payload = { 'userToken': userToken, 'reponame': this.selectedRepository }
       await this.requestSaveBranchListToDjango(payload)
       const res = await this.requestGetBranchListToDjango(payload)
       console.log("res:", res)
     },
-    setBranchSelect(event) {
-      this.selectedBranches = event.target.value
+    async setBranchSelect(event) {
+      const selectedValue = event
+      // this.selectedBranches = selectedValue
+      const userToken = localStorage.getItem('userToken')
+      const payload = { 'userToken': userToken, 'reponame': this.selectedRepository, 'branchname': this.selectedBranches }
+      await this.requestSaveCommitListToDjango(payload)
     },
     async Refresh() {
       const userToken = localStorage.getItem('userToken')

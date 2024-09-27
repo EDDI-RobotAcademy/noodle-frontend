@@ -13,6 +13,8 @@ export type ProductManageActions = {
         payload: { userToken: string }): Promise<void>;
     requestGetBranchListToDjango(context: ActionContext<ProductManageState, any>,
         payload: { userToken: string }): Promise<void>;
+    requestSaveCommitListToDjango(context: ActionContext<ProductManageState, any>,
+        payload: { userToken: string }): Promise<void>;
 };
 
 const actions: ProductManageActions = {
@@ -71,7 +73,19 @@ const actions: ProductManageActions = {
             console.log("requestGetBranchListToDjango() 중 에러 발생:", error)
             throw error
         }
-    }
+    },
+    async requestSaveCommitListToDjango(context: ActionContext<ProductManageState, any>,
+        payload: { userToken: string, reponame: string, branchname: string }): Promise<void> {
+        console.log("payload:", payload)
+
+        try {
+            console.log("requestSaveCommitListToDjango()")
+            await axiosInst.djangoAxiosInst.post("/commits/save", payload)
+        } catch (error) {
+            console.log("requestSaveCommitListToDjango() 중 에러 발생:", error)
+            throw error
+        }
+    },
 
 };
 
