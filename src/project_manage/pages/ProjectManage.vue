@@ -1,15 +1,46 @@
 <template>
   <div class="app-container">
-    <div class="container">
-      <div class="leftbox">
-        <div class="leftbox_title">
-          <span>Backlog Board</span>
-          <div class="switch white">
-            <input type="radio" id="switch-off" v-model="isChecked" :value="false" />
-            <input type="radio" id="switch-on" v-model="isChecked" :value="true" />
-            <label for="switch-off">status</label>
-            <label for="switch-on">Domain</label>
-            <span class="toggle" :class="{ 'checked': isChecked }"></span>
+      <div class="container">
+        <div class="leftbox">
+          <div class="leftbox_title">
+            <span>Backlog Board</span>
+            <div class="switch white">
+              <input type="radio" id="switch-off" v-model="isChecked" :value="false" />
+              <input type="radio" id="switch-on" v-model="isChecked" :value="true" />
+              <label for="switch-off">status</label>
+              <label for="switch-on">Domain</label>
+              <span class="toggle" :class="{ 'checked': isChecked }"></span>
+            </div>
+          </div>
+          <img class="example_backlog" :src="require('@/assets/images/fixed/example_backlog.png')" alt="example_backlog">
+          <!-- <v-container>
+            <v-divider></v-divider>
+            <v-row>
+              <v-col cols="12" sm="4" v-for="(column, columnIndex) in columns" :key="columnIndex">
+                <v-card>
+                  <v-card-title class="KanbanBoardTitle" >{{ column.name }}</v-card-title>
+                  <v-diver></v-diver>
+                  <v-card-text class="KanbanBoardCard">
+                    <v-card
+                      eslint-disable-next-line
+                      v-for="task in column.tasks"
+                      :key="task.id"
+                      class="mb-2"
+                    >
+                      <v-card-text>{{ task.name }}</v-card-text>
+                    </v-card>
+                  </v-card-text>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container> -->
+          <div class="chat-bar">
+            <input type="email" placeholder="생성을 원하시는 Backlog를 입력해주세요!" v-model="email" />
+            <a href="/" @click.prevent="handleSubmit">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <path
+                  d="M15.6 15.47A4.99 4.99 0 0 1 7 12a5 5 0 0 1 10 0v1.5a1.5 1.5 0 1 0 3 0V12a8 8 0 1 0-4.94 7.4 1 1 0 1 1 .77 1.84A10 10 0 1 1 22 12v1.5a3.5 3.5 0 0 1-6.4 1.97zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+              </svg>
           </div>
         </div>
         <v-container>
@@ -504,4 +535,10 @@ body {
   color: rgb(248, 235, 54);
 }
 
+
+.example_backlog{
+  width: 95%;
+  height: 50%;
+  margin-left: 15px;
+}
 </style>
