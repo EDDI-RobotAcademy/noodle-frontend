@@ -104,11 +104,11 @@
           </v-card>
         </div>
       </div>
-      <div class="select-container" v-else>
+      <!-- <div class="select-container" v-else>
         <v-select :value="selectedRepository"></v-select>
         <v-select :value="selectedBranches"></v-select>
-      </div>
-      <v-card v-if="commits" class="commit-list-container">
+      </div> -->
+      <!-- <v-card v-if="commits" class="commit-list-container">
         <v-list>
           <v-list-item v-for="(item, index) in commits" :key="index">
             <v-card>
@@ -120,7 +120,7 @@
         </v-list>
       </v-card>
       <v-card v-else class="commit-list-container">
-      </v-card>
+      </v-card> -->
     </div>
   </div>
 </template>
@@ -249,7 +249,7 @@ export default {
     if (localStorage.getItem('userToken')) {
       // 사용자 인증 과정 추가해야 함
     } else {
-      this.goToGithubLogin()
+      // this.goToGithubLogin()
     }
   }
 };
