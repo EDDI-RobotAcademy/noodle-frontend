@@ -222,11 +222,10 @@ export default {
 
 html,
 body {
-  height:calc(100% - 70px);
+  /* height:calc(100% - 70px); */
+  height: 100%;
   width: 100%;
-  /* HTML과 Body의 너비를 100%로 설정 */
   margin: 0;
-  /* 기본 margin 제거 */
 }
 
 .app-container {
@@ -241,8 +240,7 @@ body {
   /* Flexbox로 레이아웃 설정 */
   height: 100%;
   /* Viewport height를 100%로 설정 (화면 전체 높이) */
-  align-items: flex-end;
-  /* 자식 요소들을 수직 정렬하여 아래로 정렬 */
+  /* align-items: stretch; */
 }
 
 /* 왼쪽 box */
@@ -298,6 +296,7 @@ body {
 
 /* 오른쪽 box */
 .rightbox {
+  /* align-items: stretch; */
   width: 25%;
   /* 오른쪽 박스의 너비를 25%로 설정 */
   height: 100%;
@@ -329,6 +328,17 @@ body {
   border: none;
   cursor: pointer;
   font-size: 16px;
+}
+
+/* 커밋리스트 나오는 v-card 설정 */
+.commit-list-container {
+  background-color: #2F2F2F;
+  color: #B4B4B4;
+  overflow: auto;
+  width: calc(100% - 10px);
+  height: 600px;
+  margin-left: 5px;
+  margin-top: 15px;
 }
 
 /* ---------- SWITCH ---------- */
@@ -514,17 +524,6 @@ body {
   fill: white;
 }
 
-/* 커밋리스트 나오는 v-card 설정 */
-.commit-list-container {
-  background-color: #2F2F2F;
-  color: #B4B4B4;
-  overflow: auto;
-  width: calc(100% - 10px);
-  /* 5px의 좌우 margin을 감안한 너비 계산 */
-  height: 77%;
-  margin-left: 5px;
-  margin-top: 15px;
-}
 
 .select-container {
   display: flex;
