@@ -3,13 +3,13 @@
     <main class="main">
       <SurveyButton />
       <!-- <img class="NOODLE_logo" :src="require('@/assets/images/fixed/NOODLE_logo.png')" alt="NOODLE_logo"> -->
-    </main>
-    <div class="Dock">
-      <div v-for="icon in icons" :key="icon.name" :data-name="icon.name" class="Icon material-icons"
-        @click="handleIconClick(icon.name)">
-        {{ icon.icon }}
+      <div class="Dock">
+        <div v-for="icon in icons" :key="icon.name" :data-name="icon.name" class="Icon material-icons"
+          @click="handleIconClick(icon.name)">
+          {{ icon.icon }}
+        </div>
       </div>
-    </div>
+    </main>
     <!-- <div class="wrap">
       <div class="search">
         <input type="text" class="searchTerm" v-model="searchQuery" placeholder="찾으시는 Backlog를 입력해주세요." />
@@ -122,6 +122,7 @@ export default {
   height: 100vh;
   /* 뷰포트 전체 비율로 차지하게 설정 */
   background-color: black;
+  z-index: 500;
 }
 
 .NOODLE_logo {
@@ -159,6 +160,7 @@ export default {
   padding: 0px 30px;
   transform: translateX(-50%);
   perspective: 100px;
+  z-index: 9999;
 }
 
 .Dock:before {
