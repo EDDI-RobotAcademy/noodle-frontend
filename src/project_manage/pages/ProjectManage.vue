@@ -47,6 +47,7 @@
       <div class="rightbox">
         <div class="rightbox_title">
           <span>Commit List</span>
+          <v-btn @click="example" class="example_btn">클릭해보세요!</v-btn>
           <v-btn @click="Refresh" class="Refresh">Refresh</v-btn>
         </div>
         <div class="select-container" v-if="repos">
@@ -295,6 +296,14 @@ body {
   margin-left: 10px; /* 왼쪽 여백을 10px 추가 */
   margin-right: 10px; /* 오른쪽 여백을 10px 추가 */
   font-size: 30px; /* 폰트 크기를 30px로 설정 */
+}
+
+.example_btn{
+  background-color: rgba(204, 159, 1);
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
 }
 
 .Refresh {
