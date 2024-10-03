@@ -71,11 +71,11 @@
           </div>
           
           <v-card v-if="commits" class="commit-list-container">
-            <v-list>
+            <v-list style="background-color: #2f2f2f;">
               <v-list-item v-for="(item, index) in commits" :key="index">
-                <v-card>
+                <v-card style="background-color: #444444;">
                   <v-card-item>
-                    <v-card-text>{{ item }}</v-card-text>
+                    <v-card-text style="color: white;">{{ item }}</v-card-text>
                   </v-card-item>
                 </v-card>
               </v-list-item>
@@ -89,12 +89,14 @@
             <v-select :value="exampleRepository"></v-select>
             <v-select :value="exampleBranch"></v-select>
           </div>
-          <v-card v-if="exampleCommits" class="commit-list-container">
-            <v-list>
+          <v-card v-if="exampleCommits" class="commit-list-container" >
+            <v-list style="background-color: #2f2f2f;">
+              <!-- 카드 색상 -->
               <v-list-item v-for="(item, index) in exampleCommits" :key="index">
-                <v-card>
+                <v-card style="background-color: #444444;">
+                  <!-- 위는 카드 아래는 글씨 -->
                   <v-card-item>
-                    <v-card-text>{{ item }}</v-card-text>
+                    <v-card-text style="color: white;">{{ item }}</v-card-text>
                   </v-card-item>
                 </v-card>
               </v-list-item>
@@ -249,7 +251,7 @@ export default {
     if (localStorage.getItem('userToken')) {
       // 사용자 인증 과정 추가해야 함
     } else {
-      this.goToGithubLogin()
+      // this.goToGithubLogin()
     }
   }
 };
