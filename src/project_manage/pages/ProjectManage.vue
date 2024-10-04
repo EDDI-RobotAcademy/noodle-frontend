@@ -34,14 +34,15 @@
               </v-col>
             </v-row>
           </v-container> -->
-        <div class="chat-bar">
-          <input type="email" placeholder="생성을 원하시는 Backlog를 입력해주세요!" v-model="email" />
-          <a href="/" @click.prevent="handleSubmit">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-              <path
-                d="M15.6 15.47A4.99 4.99 0 0 1 7 12a5 5 0 0 1 10 0v1.5a1.5 1.5 0 1 0 3 0V12a8 8 0 1 0-4.94 7.4 1 1 0 1 1 .77 1.84A10 10 0 1 1 22 12v1.5a3.5 3.5 0 0 1-6.4 1.97zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-            </svg>
-          </a>
+          <!-- <div class="chat-bar">
+            <input type="email" placeholder="생성을 원하시는 Backlog를 입력해주세요!" v-model="email" />
+            <a href="/" @click.prevent="handleSubmit">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <path
+                  d="M15.6 15.47A4.99 4.99 0 0 1 7 12a5 5 0 0 1 10 0v1.5a1.5 1.5 0 1 0 3 0V12a8 8 0 1 0-4.94 7.4 1 1 0 1 1 .77 1.84A10 10 0 1 1 22 12v1.5a3.5 3.5 0 0 1-6.4 1.97zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+              </svg>
+            </a>
+          </div> -->
         </div>
       </div>
       <div class="rightbox">
@@ -72,11 +73,11 @@
           </div>
 
           <v-card v-if="commits" class="commit-list-container">
-            <v-list>
+            <v-list style="background-color: #2f2f2f;">
               <v-list-item v-for="(item, index) in commits" :key="index">
-                <v-card>
+                <v-card style="background-color: #444444;">
                   <v-card-item>
-                    <v-card-text>{{ item }}</v-card-text>
+                    <v-card-text style="color: white;">{{ item }}</v-card-text>
                   </v-card-item>
                 </v-card>
               </v-list-item>
@@ -90,12 +91,14 @@
             <v-select :value="exampleRepository"></v-select>
             <v-select :value="exampleBranch"></v-select>
           </div>
-          <v-card v-if="exampleCommits" class="commit-list-container">
-            <v-list>
+          <v-card v-if="exampleCommits" class="commit-list-container" >
+            <v-list style="background-color: #2f2f2f;">
+              <!-- 카드 색상 -->
               <v-list-item v-for="(item, index) in exampleCommits" :key="index">
-                <v-card>
+                <v-card style="background-color: #444444;">
+                  <!-- 위는 카드 아래는 글씨 -->
                   <v-card-item>
-                    <v-card-text>{{ item }}</v-card-text>
+                    <v-card-text style="color: white;">{{ item }}</v-card-text>
                   </v-card-item>
                 </v-card>
               </v-list-item>
