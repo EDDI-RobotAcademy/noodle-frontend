@@ -44,6 +44,7 @@
             </a>
           </div> -->
         </div>
+      </div>
       <div class="rightbox">
         <div class="rightbox_title">
           <span>Commit List</span>
@@ -57,7 +58,8 @@
               <option v-for="(item, index) in repos" :key="index" :value="item.value">{{ item.value }}</option>
             </v-select>
             <div v-if="branches">
-              <v-select v-model="selectedBranches" :value="selectedBranch" :items="branches" class="branch" @change="setBranchSelect($event)">
+              <v-select v-model="selectedBranches" :value="selectedBranch" :items="branches" class="branch"
+                @change="setBranchSelect($event)">
                 <option v-for="(item, index) in branches" :key="index" :value="item.value">{{ item.value }}</option>
               </v-select>
             </div>
@@ -69,7 +71,7 @@
             <v-select :value="selectedRepository"></v-select>
             <v-select :value="selectedBranches"></v-select>
           </div>
-          
+
           <v-card v-if="commits" class="commit-list-container">
             <v-list style="background-color: #2f2f2f;">
               <v-list-item v-for="(item, index) in commits" :key="index">
@@ -134,6 +136,7 @@ import axios from 'axios'
 import { toRaw } from 'vue';
 const productManageModule = 'productManageModule'
 const authenticationModule = 'authenticationModule'
+const backlogModule = 'backlogModule'
 
 export default {
   name: "App",
@@ -179,7 +182,8 @@ export default {
       exampleRepository: "noodle-frontend",
       exampleBranch: "develop",
       exampleCommits: [],
-      isExample: false
+      isExample: false,
+      backlogList: null,
     };
   },
   computed: {
@@ -203,6 +207,7 @@ export default {
   },
   methods: {
     ...mapActions(productManageModule, ["requestSaveReposListToDjango", "requestGetReposListToDjango", "requestSaveBranchListToDjango", "requestGetBranchListToDjango", "requestSaveCommitListToDjango", "requestGetCommitListToDjango"]),
+    ...mapActions(backlogModule, ["requestGenerateBacklogToFastAPI", "requestBacklogListToFastAPI"]),
     async setRepositorySelect(event) {
       const selectedValue = event
       // this.selectedBranches = selectedValue
@@ -232,7 +237,7 @@ export default {
     async example() {
       this.isExample = true;
       try {
-        const url = `https://api.github.com/repos/EDDI-RobotAcademy/noodle-frontend/commits?sha=develop`
+        const url = `https://api.github.com/repos/EDDI-RobotAcademy/noodle-backend/commits?sha=develop`
         const response = await axios.get(url)
         const data = response.data
         const proxyData = []
@@ -242,6 +247,13 @@ export default {
         }
         this.exampleCommits = toRaw(proxyData)
         console.log(this.exampleCommits)
+
+        const payload = { username: "EDDI-RobotAcademy", reponame: "noodle-backend", branchname: "develop" }
+        await this.requestGenerateBacklogToFastAPI(payload)
+        this.backlogList = await this.requestBacklogListToFastAPI()
+
+        console.log("backlogList:", this.backlogList)
+
       } catch (error) {
         console.error("Error fetching commits:", error)
       }
@@ -369,7 +381,7 @@ body {
   /* 폰트 크기를 30px로 설정 */
 }
 
-.example_btn{
+.example_btn {
   background-color: rgba(204, 159, 1);
   padding: 5px 10px;
   border: none;
