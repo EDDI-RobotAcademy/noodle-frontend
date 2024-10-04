@@ -251,7 +251,7 @@ export default {
     if (localStorage.getItem('userToken')) {
       // 사용자 인증 과정 추가해야 함
     } else {
-      // this.goToGithubLogin()
+      this.goToGithubLogin()
     }
   }
 };
