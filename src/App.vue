@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <SurveyButton />
+    <SurveyButton v-if="$route.name == 'HomeView' || $route.name == 'ProjectManage'"/>
     <navigation-menu-bar v-if="$route.name !== 'HomeView'" />
     <v-main>
       <router-view/>
