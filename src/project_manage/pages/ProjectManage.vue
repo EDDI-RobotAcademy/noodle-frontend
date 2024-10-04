@@ -12,7 +12,18 @@
             <span class="toggle" :class="{ 'checked': isChecked }"></span>
           </div>
         </div>
-        <img class="example_backlog" :src="require('@/assets/images/fixed/example_backlog.png')" alt="example_backlog">
+        <v-card v-if="backlogList" class="commit-list-container">
+          <v-list style="background-color: #2f2f2f;">
+            <v-list-item v-for="(item, index) in backlogList" :key="index">
+              <v-card style="background-color: #444444;">
+                <v-card-item>
+                  <v-card-text style="color: white;">{{ item }}</v-card-text>
+                </v-card-item>
+              </v-card>
+            </v-list-item>
+          </v-list>
+        </v-card>
+        <!-- <img class="example_backlog" :src="require('@/assets/images/fixed/example_backlog.png')" alt="example_backlog"> -->
         <!-- <v-container>
             <v-divider></v-divider>
             <v-row>
@@ -34,7 +45,7 @@
               </v-col>
             </v-row>
           </v-container> -->
-          <!-- <div class="chat-bar">
+        <!-- <div class="chat-bar">
             <input type="email" placeholder="생성을 원하시는 Backlog를 입력해주세요!" v-model="email" />
             <a href="/" @click.prevent="handleSubmit">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
@@ -43,7 +54,6 @@
               </svg>
             </a>
           </div> -->
-        </div>
       </div>
       <div class="rightbox">
         <div class="rightbox_title">
@@ -91,7 +101,7 @@
             <v-select :value="exampleRepository"></v-select>
             <v-select :value="exampleBranch"></v-select>
           </div>
-          <v-card v-if="exampleCommits" class="commit-list-container" >
+          <v-card v-if="exampleCommits" class="commit-list-container">
             <v-list style="background-color: #2f2f2f;">
               <!-- 카드 색상 -->
               <v-list-item v-for="(item, index) in exampleCommits" :key="index">
@@ -251,8 +261,12 @@ export default {
         const payload = { username: "EDDI-RobotAcademy", reponame: "noodle-backend", branchname: "develop" }
         await this.requestGenerateBacklogToFastAPI(payload)
         this.backlogList = await this.requestBacklogListToFastAPI()
+        if (this.backlogList == "아직 데이터를 처리 중이거나 요청한 데이터가 없습니다") {
+          this.backlogList = ["아직 데이터를 처리 중이거나 요청한 데이터가 없습니다"]
+        }
 
         console.log("backlogList:", this.backlogList)
+        console.log("type:", this.backlogList.type)
 
       } catch (error) {
         console.error("Error fetching commits:", error)
