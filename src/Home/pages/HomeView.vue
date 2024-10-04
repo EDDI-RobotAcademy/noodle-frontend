@@ -81,11 +81,7 @@ export default {
     },
     handleIconClick(name) {
       if (name === 'projectManage') {
-        if (this.isAuthenticated) {
-          this.goToProjectManage()
-        } else {
-          this.goToGithubLogin()
-        }
+        this.goToProjectManage()
       } else if (name === 'Login') {
         this.goToGithubLogin()
       } else if (name === 'Logout') {
