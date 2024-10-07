@@ -29,28 +29,19 @@ export default {
         // Vuex 상태 매핑
         ...mapState(reviewModule, ['reviewList']),
 
-
-        // 페이지에 맞는 리뷰 항목만 가져오기
-        pagedItems() {
-            const startIdx = (this.pagination.page - 1) * this.perPage;
-            const endIdx = startIdx + this.perPage;
-            console.log('reviewList', this.reviewList)
-            // return this.reviewList.slice(startIdx, endIdx);
-            return []
-        },
-
         // 전체 페이지 수 계산
         totalPages() {
-            return Math.ceil(this.reviewList.length / this.perPage);
+            return Math.ceil(this.reviewList / this.perPage);
         }
     },
     mounted() {
+        this.reviewList = this.requestEntireReviewListCount();
         const payload = { 'pagination': this.pagination.page, 'perPage': this.perPage }
         this.reviewList = this.requestReviewListToDjango(payload);
     },
     methods: {
         // Vuex 액션 매핑
-        ...mapActions(reviewModule, ['requestReviewListToDjango']),
+        ...mapActions(reviewModule, ['requestReviewListToDjango', 'requestEntireReviewListCount']),
 
         // 테이블 행 클릭 시 리뷰 읽기 페이지로 이동
         readRow(event, { item }) {
