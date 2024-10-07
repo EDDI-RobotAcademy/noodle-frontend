@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <SurveyButton v-if="$route.name == 'HomeView' || $route.name == 'ProjectManage'"/>
-    <navigation-menu-bar v-if="$route.name !== 'HomeView'" />
+    <SurveyButton v-if="$route.name == 'HomeView' || $route.name == 'projectManage'"/>
+    <navigation-menu-bar v-if="$route.name == 'projectManage'" />
     <v-main>
       <router-view/>
     </v-main>
