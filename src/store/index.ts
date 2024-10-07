@@ -4,6 +4,7 @@ import productManageModule from '@/project_manage/store/productManageModule'
 import surveyModule from '@/survey/store/surveyModule'
 import resultReportModule from '@/resultReport/store/resultReportModule'
 import { createStore } from 'vuex'
+import reviewModule from '@/review/store/reviewModule'
 
 export default createStore({
   state: {
@@ -19,6 +20,7 @@ export default createStore({
     authenticationModule,
     productManageModule,
     backlogModule,
-    resultReportModule
+    resultReportModule,
+    reviewModule
   }
 })
