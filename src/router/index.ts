@@ -4,12 +4,14 @@ import SurveyRoutes from '@/survey/router/SurveyRoutes'
 import HomeRoutes from '@/Home/router/HomeRouters'
 import project_manageRoutes from '@/project_manage/router/ProjectManageRouters'
 import AuthenticationRoutes from '@/authentication/router/AuthenticationRoutes'
+import ResultReportRoutes from '@/resultReport/router/ResultReportRoutes'
 
 const routes: Array<RouteRecordRaw> = [
   ...HomeRoutes,
   ...SurveyRoutes,
   ...project_manageRoutes,
   ...AuthenticationRoutes,
+  ...ResultReportRoutes
 ]
 
 const router = createRouter({
