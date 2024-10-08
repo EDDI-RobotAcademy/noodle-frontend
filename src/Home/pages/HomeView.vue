@@ -44,7 +44,7 @@ export default {
 
     return {
       goToGithubLogin,
-      goToGithubLogout
+      goToGithubLogout,
     }
   },
   data() {
@@ -60,13 +60,13 @@ export default {
         { name: '기능버튼1', icon: 'face' },
         { name: 'projectManage', icon: 'watch_later' },
         { name: '기능버튼3', icon: 'zoom_in' },
-        { name: '기능버튼4', icon: 'wb_sunny' },
+        { name: 'Review', icon: 'rate_review' },
         { name: 'Logout', icon: 'logout' },
       ] : [
         { name: '기능버튼1', icon: 'face' },
         { name: 'projectManage', icon: 'watch_later' },
         { name: '기능버튼3', icon: 'zoom_in' },
-        { name: '기능버튼4', icon: 'wb_sunny' },
+        { name: 'Review', icon: 'rate_review' },
         { name: 'Login', icon: 'person' },
       ];
     }
@@ -79,6 +79,9 @@ export default {
     async goToProjectManage() {
       await this.$router.push({ name: 'projectManage' })
     },
+    async goToReviewListPage() {
+      await this.$router.push({ name: 'ReviewListPage' })
+    },
     handleIconClick(name) {
       if (name === 'projectManage') {
         this.goToProjectManage()
@@ -86,6 +89,8 @@ export default {
         this.goToGithubLogin()
       } else if (name === 'Logout') {
         this.goToGithubLogout()
+      } else if (name === 'Review') {
+        this.goToReviewListPage()
       }
     }
   },
