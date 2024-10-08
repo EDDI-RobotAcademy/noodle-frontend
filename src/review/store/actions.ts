@@ -12,6 +12,14 @@ export type ReviewActions = {
 	requestEntireReviewListCount(
 		context: ActionContext<any, any>
 	): Promise<void>;
+	requestRegisterFreeFormReviewToDjango(
+		context: ActionContext<any, any>,
+		payload: { title: string; userToken: string; content: string }
+	): Promise<void>;
+	requestRegisterSelectionFormReviewToDjango(
+		context: ActionContext<any, any>,
+		payload: { userToken: string; ratingList: [number]; content: string }
+	): Promise<void>;
 };
 
 const actions: ReviewActions = {
@@ -43,6 +51,36 @@ const actions: ReviewActions = {
 			return res.data.count;
 		} catch (error) {
 			console.error("requestEntireReviewListCount():" + error);
+			throw error;
+		}
+	},
+	async requestRegisterFreeFormReviewToDjango(
+		context: ActionContext<any, any>,
+		payload: { title: string; userToken: string; content: string }
+	): Promise<void> {
+		try {
+			console.log("requesting register your review!");
+			await axiosInst.djangoAxiosInst.post(
+				"/review/register/writingReview",
+				payload
+			);
+		} catch (error) {
+			console.error("error occured while registering!" + error);
+			throw error;
+		}
+	},
+	async requestRegisterSelectionFormReviewToDjango(
+		context: ActionContext<any, any>,
+		payload: { userToken: string; ratingList: [number]; content: string }
+	): Promise<void> {
+		try {
+			console.log("requesting register your review!");
+			await axiosInst.djangoAxiosInst.post(
+				"/review/register/selectionReview",
+				payload
+			);
+		} catch (error) {
+			console.error("error occured while registering!" + error);
 			throw error;
 		}
 	},
