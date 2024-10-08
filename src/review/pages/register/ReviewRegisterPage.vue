@@ -89,6 +89,7 @@ export default {
             usabilityScore: 0,
             qualityScore: 0,
             responsiveScore: 0,
+            user: ''
         };
     },
     methods: {
@@ -98,7 +99,11 @@ export default {
                 if (this.designScore == 0 || this.usabilityScore == 0 || this.qualityScore == 0 || this.responsiveScore == 0) {
                     alert('별점은 필수 입력 사항입니다!')
                 } else {
-                    const payload = { 'userToken': localStorage.getItem('userToken'), 'ratingList': [this.designScore, this.qualityScore, this.usabilityScore, this.responsiveScore], 'content': this.statusContent }
+                    this.user = localStorage.getItem('userToken')
+                    if (!this.user) {
+                        this.user = 'anonymous'
+                    }
+                    const payload = { 'userToken': this.user, 'ratingList': [this.designScore, this.qualityScore, this.usabilityScore, this.responsiveScore], 'content': this.statusContent }
                     this.requestRegisterSelectionFormReviewToDjango(payload)
                     console.log("Status 리뷰 제출:", payload);
                     // alert(`리뷰가 제출되었습니다!`);
@@ -106,7 +111,11 @@ export default {
                     this.$router.push('/review/list')
                 }
             } else {
-                const payload = { 'title': this.domainTitle, 'userToken': localStorage.getItem('userToken'), 'content': this.domainContent }
+                this.user = localStorage.getItem('userToken')
+                if (!this.user) {
+                    this.user = 'anonymous'
+                }
+                const payload = { 'title': this.domainTitle, 'userToken': this.user, 'content': this.domainContent }
                 this.requestRegisterFreeFormReviewToDjango(payload)
                 console.log("Domain 리뷰 제출:", this.domainTitle, this.domainContent);
                 // alert('리뷰가 제출되었습니다!');
