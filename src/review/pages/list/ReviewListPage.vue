@@ -34,10 +34,10 @@ export default {
             return Math.ceil(this.reviewList / this.perPage);
         }
     },
-    mounted() {
+    async mounted() {
         this.reviewList = this.requestEntireReviewListCount();
         const payload = { 'pagination': this.pagination.page, 'perPage': this.perPage }
-        this.reviewList = this.requestReviewListToDjango(payload);
+        this.pagedItems = await this.requestReviewListToDjango(payload);
     },
     methods: {
         // Vuex 액션 매핑
@@ -62,7 +62,7 @@ export default {
         return {
             // 테이블 헤더 설정
             headerTitle: [
-                { text: 'No', align: 'start', sortable: true, value: 'reviewId' },
+                { text: 'No', align: 'start', sortable: true, value: 'id' },
                 { text: '제목', align: 'end', value: 'title' },
                 { text: '작성자', align: 'end', value: 'writer' },
                 { text: '작성일자', align: 'end', value: 'regDate' }
@@ -71,7 +71,8 @@ export default {
             pagination: {
                 page: 1, // 현재 페이지
             },
-            reviewList: [],
+            reviewList: 0,
+            pagedItems: [],
         };
     }
 }
