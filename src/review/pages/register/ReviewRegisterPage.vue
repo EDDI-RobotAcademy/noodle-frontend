@@ -92,11 +92,15 @@ export default {
         };
     },
     methods: {
+        ...mapActions(reviewModule, ['requestRegisterFreeFormReviewToDjango', 'requestRegisterSelectionFormReviewToDjango']),
         submitReview() {
             if (!this.isChecked) {
                 if (this.designScore == 0 || this.usabilityScore == 0 || this.qualityScore == 0 || this.responsiveScore == 0) {
                     alert('별점은 필수 입력 사항입니다!')
                 } else {
+                    const payload = { 'userToken': localStorage.getItem('userToken'), 'ratingList': [this.designScore, this.qualityScore, this.usabilityScore, this.responsiveScore], 'content': this.statusContent }
+                    this.requestRegisterSelectionFormReviewToDjango(payload)
+                    console.log("Status 리뷰 제출:", payload);
                     // alert(`리뷰가 제출되었습니다!`);
                     this.clearForm();
                     this.$router.push('/review/list')
@@ -111,7 +115,6 @@ export default {
             }
         },
         clearForm() {
-            this.statusTitle = '';
             this.statusContent = '';
             this.domainTitle = '';
             this.domainContent = '';
