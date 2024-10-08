@@ -127,6 +127,11 @@ export default {
             this.statusContent = '';
             this.domainTitle = '';
             this.domainContent = '';
+            this.designScore = 0;
+            this.responsiveScore = 0;
+            this.usabilityScore = 0;
+            this.qualityScore = 0;
+            this.user = ''
         },
         check(type, index) {
             // type에 따라 각 점수 업데이트
