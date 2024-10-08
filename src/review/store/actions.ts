@@ -25,7 +25,7 @@ const actions: ReviewActions = {
 				"/review/list",
 				payload
 			);
-			return res.data;
+			return res.data.list;
 		} catch (error) {
 			console.error("requestReviewListToDjango():" + error);
 			throw error;
@@ -40,7 +40,7 @@ const actions: ReviewActions = {
 				"/review/entire-count"
 			);
 			console.log("entirecount", res.data);
-			return res.data;
+			return res.data.count;
 		} catch (error) {
 			console.error("requestEntireReviewListCount():" + error);
 			throw error;

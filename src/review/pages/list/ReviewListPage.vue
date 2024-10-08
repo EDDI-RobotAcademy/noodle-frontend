@@ -81,9 +81,8 @@ export default {
         return {
             // 테이블 헤더 설정
             headerTitle: [
-                { text: 'No', align: 'start', value: 'id' },
-                { text: '제목', align: 'end', value: 'title' },
-                { text: '작성자', align: 'end', value: 'writer' },
+                { text: '작성자', align: 'start', value: 'writer' },
+                { text: '제목', align: 'middle', value: 'title' },
                 { text: '작성일자', align: 'end', value: 'regDate' }
             ],
             perPage: 10, // 페이지당 항목 수
