@@ -68,7 +68,7 @@
                 <input type="text" id="domain-title" v-model="domainTitle" required />
 
                 <v-text class="question-text">기타 리뷰</v-text>
-                <textarea v-model="statusContent" class="review-text-field" required></textarea>
+                <textarea v-model="domainContent" id="domain-content" class="review-text-field" required></textarea>
                 <button type="submit">리뷰 제출</button>
             </form>
         </div>
@@ -76,11 +76,12 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+const reviewModule = 'reviewModule'
 export default {
     data() {
         return {
             isChecked: false, // false -> Status, true -> Domain
-            statusTitle: '갸아악',
             statusContent: '',
             domainTitle: '',
             domainContent: '',
@@ -96,14 +97,15 @@ export default {
                 if (this.designScore == 0 || this.usabilityScore == 0 || this.qualityScore == 0 || this.responsiveScore == 0) {
                     alert('별점은 필수 입력 사항입니다!')
                 } else {
-                    console.log("Status 리뷰 제출:", this.statusTitle, this.statusContent);
-                    alert('리뷰 ${statusTitle}이(가) 제출되었습니다!');
+                    // alert(`리뷰가 제출되었습니다!`);
                     this.clearForm();
                     this.$router.push('/review/list')
                 }
             } else {
+                const payload = { 'title': this.domainTitle, 'userToken': localStorage.getItem('userToken'), 'content': this.domainContent }
+                this.requestRegisterFreeFormReviewToDjango(payload)
                 console.log("Domain 리뷰 제출:", this.domainTitle, this.domainContent);
-                alert('리뷰가 제출되었습니다!');
+                // alert('리뷰가 제출되었습니다!');
                 this.clearForm();
                 this.$router.push('/review/list')
             }
