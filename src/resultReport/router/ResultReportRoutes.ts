@@ -1,10 +1,10 @@
-import ResultReportPage from "@/resultReport/pages/ResultReportPage.vue"
+import ResultReportRegisterPage from "@/resultReport/pages/register/ResultReportRegisterPage.vue"
 
 const ResultReportRoutes = [
     {
-        path: "/result-report/",
-        name: "ResultReportPage",
-        component: ResultReportPage,
+        path: "/result-report/register",
+        name: "ResultReportRegisterPage",
+        component: ResultReportRegisterPage,
     },
 ]
 
