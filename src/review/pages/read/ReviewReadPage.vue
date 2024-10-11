@@ -56,6 +56,9 @@ export default {
         goToReviewListPage() {
             this.$router.push("/review/list")
         }
+    },
+    created() {
+        alert("현재 구현중인 페이지입니다. 제대로 동작하지 않을 수 있습니다.");
     }
 }
 </script>
