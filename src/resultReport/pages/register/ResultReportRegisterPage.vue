@@ -121,7 +121,10 @@
                 v-model="usage.description"
                 label="상세 설명"
                 outlined
+                auto-grow
                 rows="3"
+                hide-details
+                class="auto-expand-textarea"
               ></v-textarea>
               <v-btn color="error" @click="removeUsagePlan(index)">삭제</v-btn>
             </v-expansion-panel-content>
@@ -312,5 +315,10 @@ export default {
   transition: stroke-dashoffset 0.35s;
   transform: rotate(-90deg);
   transform-origin: 50% 50%;
+}
+
+.auto-expand-textarea {
+  min-height: 100px;
+  transition: height 0.3s ease;
 }
 </style>
