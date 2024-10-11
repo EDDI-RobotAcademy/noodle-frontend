@@ -15,7 +15,15 @@
       <v-card-text>
         <h2 class="text-h5 mb-4">팀 구성</h2>
         <v-row v-for="(member, index) in teamMembers" :key="index" align="center">
-          <v-col cols="5">
+          <v-col cols="4">
+            <v-text-field
+              v-model="member.department"
+              label="부서"
+              outlined
+              dense
+            ></v-text-field>
+          </v-col>
+          <v-col cols="3">
             <v-text-field
               v-model="member.name"
               label="이름"
@@ -23,7 +31,7 @@
               dense
             ></v-text-field>
           </v-col>
-          <v-col cols="5">
+          <v-col cols="3">
             <v-text-field
               v-model="member.role"
               label="역할"
@@ -229,7 +237,7 @@ export default {
     return {
       projectTitle: '',
       teamMembers: [
-        { name: '', role: '' }
+        { department: '', name: '', role: '' }
       ],
       techStack: ['Vue.js'],
       features: ['사용자 인증 및 권한 관리'],
@@ -267,7 +275,7 @@ export default {
   },
   methods: {
     addTeamMember() {
-      this.teamMembers.push({ name: '', role: '' });
+      this.teamMembers.push({ department: '', name: '', role: '' });
     },
     removeTeamMember(index) {
       this.teamMembers.splice(index, 1);
