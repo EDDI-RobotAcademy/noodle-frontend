@@ -50,11 +50,8 @@ export default {
 
         // 테이블 행 클릭 시 리뷰 읽기 페이지로 이동
         readRow(event, { item }) {
-            console.log('item :', item);
-            this.$router.push({
-                name: 'ReviewReadPage',
-                params: { reviewId: item['reviewId'].toString() }
-            });
+            console.log('item :', item.id);
+            this.$router.push(`/review/read/${item.id}`);
         },
 
         // 페이지가 변경될 때 아이템 업데이트
