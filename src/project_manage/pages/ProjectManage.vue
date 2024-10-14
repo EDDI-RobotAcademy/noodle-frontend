@@ -13,16 +13,26 @@
           </div>
         </div>
         <!-- 생성된 백로그 출력부 -->
-        <v-card v-if="backlogList" class="commit-list-container">
+        <v-card v-if="backlogList" class="backlog-list-container">
           <v-list style="background-color: #2f2f2f;">
             <v-list-item v-for="(backlog, index) in backlogList" :key="index">
-              <v-card>
-                <v-list-item v-for="(item, index) in backlog" :key="index">
-                  <v-card style="background-color: #444444;">
-                    <v-card-item>
-                      <v-card-text style="color: white;">{{ item }}</v-card-text>
-                    </v-card-item>
-                  </v-card>
+              <v-card style="background-color: #3c3c3c;">
+                <v-list-item v-for="(key, item, index) in backlog" :key="index">
+                  <v-card-item>
+                    <v-card-text style="color: white; font-weight:bold; margin-top:-10px; margin-bottom: -10px;">{{ item
+                      }}</v-card-text>
+                    <div v-if="item === `Task List`">
+                      <v-list-item v-for="(item, index) in key" :key="index">
+                        <v-card-text style="color: white; margin-top: -10px; margin-bottom: -10px;">{{ item
+                          }}</v-card-text>
+                      </v-list-item>
+                    </div>
+                    <div v-else>
+                      <v-list-item>
+                        <v-card-text style="color: white; margin-top:-10px;">{{ key }}</v-card-text>
+                      </v-list-item>
+                    </div>
+                  </v-card-item>
                 </v-list-item>
               </v-card>
             </v-list-item>
@@ -264,12 +274,71 @@ export default {
         console.log(this.exampleCommits)
 
         const payload = { username: "EDDI-RobotAcademy", reponame: "noodle-backend", branchname: "develop" }
-        await this.requestGenerateBacklogToFastAPI(payload)
-        this.backlogList = await this.requestBacklogListToFastAPI()
-        if (this.backlogList == "아직 데이터를 처리 중이거나 요청한 데이터가 없습니다") {
-          this.backlogList = ["아직 데이터를 처리 중이거나 요청한 데이터가 없습니다"]
-        }
-
+        // await this.requestGenerateBacklogToFastAPI(payload)
+        // this.backlogList = await this.requestBacklogListToFastAPI()
+        // if (this.backlogList == "아직 데이터를 처리 중이거나 요청한 데이터가 없습니다") {
+        //   this.backlogList = ["아직 데이터를 처리 중이거나 요청한 데이터가 없습니다"]
+        // }
+        this.backlogList = [
+          {
+            "Title": "Django Command-Line Utility",
+            "Success Criteria": "The command-line utility should run without errors and set the Django settings module correctly.",
+            "Domain Separation": "Core utility functions.",
+            "Task List": [
+              "Implement error handling for missing Django installation.",
+              "Ensure the environment variable for settings is configurable.",
+            ],
+          },
+          {
+            "Title": "Commits Model Migration",
+            "Success Criteria": "The migration should create the `Commits` table with the specified fields.",
+            "Domain Separation": "Database migrations.",
+            "Task List": [
+              "Verify the migration file is generated correctly.",
+              "Test the migration on a local database.",
+            ],
+          },
+          {
+            "Title": "Commits Repository Implementation",
+            "Success Criteria": "The repository should save commits from GitHub and handle pagination correctly.",
+            "Domain Separation": "Data access layer.",
+            "Task List": [
+              "Implement the `saveCommits` method.",
+              "Handle API response and errors.",
+              "Write unit tests for the repository methods.",
+            ],
+          },
+          {
+            "Title": "Commits Service Implementation",
+            "Success Criteria": "The service should interact with the repository and return commit data correctly.",
+            "Domain Separation": "Business logic layer.",
+            "Task List": [
+              "Implement the `save` and `list` methods.",
+              "Ensure proper error handling and logging.",
+              "Write unit tests for service methods.",
+            ],
+          },
+          {
+            "Title": "Commits View Implementation",
+            "Success Criteria": "The view should handle HTTP requests and return appropriate responses.",
+            "Domain Separation": "API layer.",
+            "Task List": [
+              "Implement the `save` and `list` methods in the view.",
+              "Validate request data and handle errors.",
+              "Write integration tests for the view.",
+            ],
+          },
+          {
+            "Title": "GitHub OAuth Integration",
+            "Success Criteria": "The application should authenticate users via GitHub and store access tokens securely.",
+            "Domain Separation": "Authentication layer.",
+            "Task List": [
+              "Implement OAuth flow in the `OauthView`.",
+              "Store and retrieve access tokens using Redis.",
+              "Write tests for the OAuth functionality.",
+            ],
+          },
+        ]
         console.log("backlogList:", this.backlogList)
         console.log("type:", this.backlogList.type)
 
@@ -423,9 +492,14 @@ body {
   color: #B4B4B4;
   overflow: auto;
   width: calc(100% - 10px);
-  height: 600px;
+  height: 650px;
   margin-left: 5px;
   margin-top: 15px;
+}
+
+.backlog-list-container {
+  overflow: auto;
+  height: 800px;
 }
 
 /* ---------- SWITCH ---------- */
