@@ -169,10 +169,8 @@ export default {
         { department: '개발3팀', name: '이호준', role: '팀원' },
         { department: '개발3팀', name: '이현석', role: '팀원' },
         { department: '개발3팀', name: '정원형', role: '팀원' },
-        { department: '개발3팀', name: '정아람', role: '팀원' },
-
       ],
-      techStack: ['Vue.js', 'Python', 'Django', 'FastAPI'],
+      techStack: ['Vue.js', 'Python', 'Django', 'FastAPI', 'mysql'],
       features: ['여행지 추천', '패키지 상품을 통한 손쉬운 예약과 일정 관리', '리뷰 페이지로 확인 가능한 사용자들의 피드백'],
       usagePlans: [
         {
