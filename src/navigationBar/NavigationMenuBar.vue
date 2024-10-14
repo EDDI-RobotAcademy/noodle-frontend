@@ -1,26 +1,26 @@
 <template>
     <v-app-bar class="nevigationbar">
+        <!-- <img class="footer-noodle-logo" :src="require('@/assets/images/fixed/NOODLE_logo.png')" alt="Noodle Logo" /> -->
         <v-btn @click="goToHome" alt="GO TO HOME">
             <v-toolbar-title class="goToHomeButton">
             <span>NOODLE</span>
             </v-toolbar-title>
         </v-btn>
 
-    <v-toolbar-title class="temporarily" >
-        Backlog Board
-    </v-toolbar-title>
-
     <!-- 메뉴 이동 버튼 -->
-        <!-- <v-container class="manuBtn">
-            <v-btn @click="goToBacklogBoard" class="btn-text" alt="GO TO BACKLOGBOARD">
-                <v-icon left>mdi-pencil</v-icon>
-                <span>Backlog Board</span>
+        <v-container class="manuBtn">
+            <v-btn @click="goToBacklogBoard" text class="custom-btn" alt="GO TO BACKLOGBOARD">
+                <span class="btn-text">Backlog Board</span>
             </v-btn>
-            <v-btn @click="goToIssueBoard" class="btn-text" alt="GO TO ISSUEBOARD">
-                <v-icon left>mdi-alert-circle</v-icon>
-                <span>Issue Board</span>
+            <span class="separator">|</span>
+            <v-btn @click="goToReview" text class="custom-btn" alt="GO TO REVIEW">
+                <span class="btn-text">REVIEW</span>
             </v-btn>
-        </v-container> -->
+            <span class="separator">|</span>
+            <v-btn @click="goToGithubLogin" text class="custom-btn" alt="GO TO GITHUBLOGIN">
+                <span class="btn-text">LOGIN</span>
+            </v-btn>
+        </v-container>
     </v-app-bar>
 </template>
 
@@ -28,31 +28,52 @@
 import '@mdi/font/css/materialdesignicons.css'
 import router from '@/router'
 import { mapActions, mapState } from 'vuex'
+import { useStore } from 'vuex';
 
+
+const authenticationModule = 'authenticationModule'
 
 export default {
-    data () {
-        return {
+    setup() {
+        const store = useStore()
 
+        const goToGithubLogin = async () => {
+        await store.dispatch("authenticationModule/requestGithubOauthRedirectionToDjango")
         }
-    },
-    computed: {
 
+        const goToGithubLogout = async () => {
+        await store.dispatch("authenticationModule/requestLogoutToDjango")
+        localStorage.removeItem("userToken")
+        }
+
+        return {
+        goToGithubLogin,
+        goToGithubLogout
+        }
+  },
+  data() {
+    return {
+      searchQuery: '',  // Model to hold the search input value
+      userToken: localStorage.getItem("userToken")
+    };
+  },
+    computed: {
+    ...mapState(authenticationModule, ["isAuthenticated"]),
     },
     methods: {
         goToHome () {
-            router.push('/')
+            router.push('/SecondHomeView')
         },
         goToBacklogBoard () {
             router.push('/projectManage')
         },
-        goToIssueBoard () {
-            router.push('')
-        },
     },
     mounted () {
+    if (this.userToken) {
+      this.$store.state.authenticationModule.isAuthenticated = true;
+    }
+    console.log(this.isAuthenticated),
     console.log('navigation bar mounted()')
-
     }
 
 }
@@ -66,42 +87,80 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #1c1c1c;
-    border-bottom: 3px solid rgba(204, 159, 1);
+    background-color: rgb(36, 36, 36);
+    border-bottom: 3px solid #ffcc00;
     height: 70px;
 }
 
-.goToHomeButton{
-  color: rgba(204, 159, 1);
-  font-family: "Playfair Display", serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 30px;
+.footer-noodle-logo {
+    width: 50px;
+    height: 50px;
+    margin-left: 20px;
 }
 
-.btn-text{
-  color: rgba(204, 159, 1);
-  font-family: "Playfair Display", serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 20px;
+.goToHomeButton {
+    color: #ffcc00;
+    font-family: "Playfair Display", serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    /* margin-left: -10px; */
 }
 
-.manuBtn{
+.custom-btn {
+    height: auto !important;
+    padding: 6px 8px !important;
+}
+
+.btn-text {
+    color: #ffcc00 !important;
+    font-family: "Playfair Display", serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.btn-text::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 50%;
+    background-color: #ffcc00;
+    transition: all 0.3s ease;
+}
+
+.custom-btn:hover .btn-text::after {
+    width: 100%;
+    left: 0;
+}
+
+.manuBtn {
     display: flex;
     justify-content: flex-end;
-    padding-right:  20px;
+    align-items: center;
+    padding-right: 20px;
+    gap:5px;
+    margin-right: 20px;
 }
 
-.temporarily{
-  display: flex;
-  justify-content: flex-end;
-  color: rgba(204, 159, 1);
-  font-family: "Playfair Display", serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 20px;
-  padding-right:  70px;
+.separator {
+    color: #ffcc00;
+    font-size: 20px;
+    margin: 0 10px;
 }
 
+.temporarily {
+    display: flex;
+    justify-content: flex-end;
+    color: rgb(0, 0, 0);
+    font-family: "Playfair Display", serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    padding-right: 70px;
+}
 </style>
