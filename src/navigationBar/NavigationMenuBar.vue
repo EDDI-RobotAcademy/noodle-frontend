@@ -13,6 +13,10 @@
                 <span class="btn-text">Backlog Board</span>
             </v-btn>
             <span class="separator">|</span>
+            <v-btn @click="goToResultReport" text class="custom-btn" alt="GO TO RESULTREPORT">
+                <span class="btn-text">RESULT REPORT</span>
+            </v-btn>
+            <span class="separator">|</span>
             <v-btn @click="goToReview" text class="custom-btn" alt="GO TO REVIEW">
                 <span class="btn-text">REVIEW</span>
             </v-btn>
@@ -76,6 +80,9 @@ export default {
         },
         goToReview() {
             this.$router.push('/review/list')
+        },
+        goToResultReport() {
+            this.$router.push('/result-report/list2')
         }
     },
     mounted() {
