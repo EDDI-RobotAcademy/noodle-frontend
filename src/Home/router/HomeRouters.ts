@@ -6,6 +6,7 @@ const HomeRoutes = [
       name: 'SecondHomeView',
       component: SecondHomeView,
     },
+    
 ]
 
 export default HomeRoutes
