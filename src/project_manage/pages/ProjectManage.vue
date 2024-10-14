@@ -12,13 +12,18 @@
             <span class="toggle" :class="{ 'checked': isChecked }"></span>
           </div>
         </div>
+        <!-- 생성된 백로그 출력부 -->
         <v-card v-if="backlogList" class="commit-list-container">
           <v-list style="background-color: #2f2f2f;">
-            <v-list-item v-for="(item, index) in backlogList" :key="index">
-              <v-card style="background-color: #444444;">
-                <v-card-item>
-                  <v-card-text style="color: white;">{{ item }}</v-card-text>
-                </v-card-item>
+            <v-list-item v-for="(backlog, index) in backlogList" :key="index">
+              <v-card>
+                <v-list-item v-for="(item, index) in backlog" :key="index">
+                  <v-card style="background-color: #444444;">
+                    <v-card-item>
+                      <v-card-text style="color: white;">{{ item }}</v-card-text>
+                    </v-card-item>
+                  </v-card>
+                </v-list-item>
               </v-card>
             </v-list-item>
           </v-list>
