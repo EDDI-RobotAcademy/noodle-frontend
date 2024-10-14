@@ -36,7 +36,7 @@ const actions: BacklogActions = {
 
         try {
             const response = await axiosInst.fastapiAxiosInst.get("/generate-backlog-result")
-            return response.data
+            return response.data.message
         } catch (error) {
             console.error("Error fetching data:", error)
             throw error
