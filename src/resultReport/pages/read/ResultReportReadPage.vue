@@ -197,36 +197,6 @@ export default {
     }
   },
   methods: {
-    addTeamMember() {
-      this.teamMembers.push({ department: '', name: '', role: '' });
-    },
-    removeTeamMember(index) {
-      this.teamMembers.splice(index, 1);
-    },
-    addTechStack() {
-      this.techStack.push('');
-    },
-    removeTechStack(index) {
-      this.techStack.splice(index, 1);
-    },
-    addFeature() {
-      this.features.push('');
-    },
-    removeFeature(index) {
-      this.features.splice(index, 1);
-    },
-    addUsagePlan() {
-      this.usagePlans.push({ title: '', description: '' });
-    },
-    removeUsagePlan(index) {
-      this.usagePlans.splice(index, 1);
-    },
-    addImprovement() {
-      this.improvements.push('');
-    },
-    removeImprovement(index) {
-      this.improvements.splice(index, 1);
-    },
     submitReport() {
       console.log('프로젝트 보고서가 등록되었습니다.')
     },
