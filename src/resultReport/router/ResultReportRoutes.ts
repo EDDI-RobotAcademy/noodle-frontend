@@ -1,5 +1,6 @@
 import ResultReportRegisterPage from "@/resultReport/pages/register/ResultReportRegisterPage.vue"
 import ResultReportListPage from "@/resultReport/pages/list/ResultReportListPage.vue"
+import ResultReportReadPage from "@/resultReport/pages/read/ResultReportReadPage.vue"
 
 const ResultReportRoutes = [
     {
@@ -12,6 +13,11 @@ const ResultReportRoutes = [
         path: "/result-report/list",
         name: "ResultReportListPage",
         component: ResultReportListPage
+    },
+    {
+        path: "/result-report/read",
+        name: "ResultReportReadPage",
+        component: ResultReportReadPage
     }
 ]
 

@@ -91,12 +91,14 @@
             <template v-slot:opposite></template>
             <v-card outlined>
               <v-card-text>
-                <v-text-field
+                <v-textarea
                   v-model="features[index]"
                   label="기능 설명"
                   outlined
+                  auto-grow
                   dense
-                ></v-text-field>
+                  class="auto-expand-textarea"
+                ></v-textarea>
               </v-card-text>
               <v-card-actions>
                 <v-btn color="error" icon @click="removeFeature(index)">
