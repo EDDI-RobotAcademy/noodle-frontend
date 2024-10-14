@@ -3,11 +3,11 @@
         <!-- <img class="footer-noodle-logo" :src="require('@/assets/images/fixed/NOODLE_logo.png')" alt="Noodle Logo" /> -->
         <v-btn @click="goToHome" alt="GO TO HOME">
             <v-toolbar-title class="goToHomeButton">
-            <span>NOODLE</span>
+                <span>NOODLE</span>
             </v-toolbar-title>
         </v-btn>
 
-    <!-- 메뉴 이동 버튼 -->
+        <!-- 메뉴 이동 버튼 -->
         <v-container class="manuBtn">
             <v-btn @click="goToBacklogBoard" text class="custom-btn" alt="GO TO BACKLOGBOARD">
                 <span class="btn-text">Backlog Board</span>
@@ -38,42 +38,45 @@ export default {
         const store = useStore()
 
         const goToGithubLogin = async () => {
-        await store.dispatch("authenticationModule/requestGithubOauthRedirectionToDjango")
+            await store.dispatch("authenticationModule/requestGithubOauthRedirectionToDjango")
         }
 
         const goToGithubLogout = async () => {
-        await store.dispatch("authenticationModule/requestLogoutToDjango")
-        localStorage.removeItem("userToken")
+            await store.dispatch("authenticationModule/requestLogoutToDjango")
+            localStorage.removeItem("userToken")
         }
 
         return {
-        goToGithubLogin,
-        goToGithubLogout
+            goToGithubLogin,
+            goToGithubLogout
         }
-  },
-  data() {
-    return {
-      searchQuery: '',  // Model to hold the search input value
-      userToken: localStorage.getItem("userToken")
-    };
-  },
+    },
+    data() {
+        return {
+            searchQuery: '',  // Model to hold the search input value
+            userToken: localStorage.getItem("userToken")
+        };
+    },
     computed: {
-    ...mapState(authenticationModule, ["isAuthenticated"]),
+        ...mapState(authenticationModule, ["isAuthenticated"]),
     },
     methods: {
-        goToHome () {
+        goToHome() {
             router.push('/SecondHomeView')
         },
-        goToBacklogBoard () {
+        goToBacklogBoard() {
             router.push('/projectManage')
         },
+        goToReview() {
+            this.$router.push('/review/list')
+        }
     },
-    mounted () {
-    if (this.userToken) {
-      this.$store.state.authenticationModule.isAuthenticated = true;
-    }
-    console.log(this.isAuthenticated),
-    console.log('navigation bar mounted()')
+    mounted() {
+        if (this.userToken) {
+            this.$store.state.authenticationModule.isAuthenticated = true;
+        }
+        console.log(this.isAuthenticated),
+            console.log('navigation bar mounted()')
     }
 
 }
@@ -143,7 +146,7 @@ export default {
     justify-content: flex-end;
     align-items: center;
     padding-right: 20px;
-    gap:5px;
+    gap: 5px;
     margin-right: 20px;
 }
 
