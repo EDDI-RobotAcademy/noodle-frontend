@@ -43,7 +43,7 @@
           <v-card class="introduce-card-top animated-card" v-if="showCards[0]" key="card1">
             <div class="card-content">
               <div class="introduce-card-top-image" 
-                  :style="{ backgroundImage: `url(${require('@/assets/images/fixed/commit-list-image.jpg')})` }">
+                  :style="{ backgroundImage: `url(${require('@/assets/images/fixed/commit-list-image2.jpg')})` }">
               </div>
               <div class="introduce-card-text-area-top">
                 <h2 class="introduce-card-title">Commit List up</h2>
@@ -69,7 +69,7 @@
             <div class="card-content">
               <div class="introduce-card-bottom-image" 
                   :style="{ 
-                    backgroundImage: `url(${require('@/assets/images/fixed/go-to-service-image.jpg')})`,
+                    backgroundImage: `url(${require('@/assets/images/fixed/go-to-service-image2.jpg')})`,
                     cursor: 'pointer'}">
               </div>
               <div class="introduce-card-text-area-bottom" @click="goToProjectManage" :style="{cursor: 'pointer'}">
@@ -87,7 +87,7 @@
           <v-card class="introduce-card-top animated-card" v-if="showCards[0]" key="card1">
             <div class="card-content">
               <div class="introduce-card-top-image" 
-                  :style="{ backgroundImage: `url(${require('@/assets/images/fixed/create-projectreport-image.jpg')})` }">
+                  :style="{ backgroundImage: `url(${require('@/assets/images/fixed/create-projectreport-image2.png')})` }">
               </div>
               <div class="introduce-card-text-area-top">
                 <h2 class="introduce-card-title">Project Report</h2>
@@ -98,7 +98,7 @@
           <v-card class="introduce-card-top animated-card" v-if="showCards[1]" key="card2">
             <div class="card-content">
               <div class="introduce-card-top-image" 
-                  :style="{ backgroundImage: `url(${require('@/assets/images/fixed/commit-list-image.jpg')})` }">
+                  :style="{ backgroundImage: `url(${require('@/assets/images/fixed/level-of-completion-image2.jpg')})` }">
               </div>
               <div class="introduce-card-text-area-top">
                 <h2 class="introduce-card-title">Project의 완성도 점검</h2>
@@ -113,7 +113,7 @@
             <div class="card-content">
               <div class="introduce-card-bottom-image" 
                   :style="{ 
-                    backgroundImage: `url(${require('@/assets/images/fixed/go-to-service-image.jpg')})`,
+                    backgroundImage: `url(${require('@/assets/images/fixed/go-to-service-image2.jpg')})`,
                     cursor: 'pointer'}">
               </div>
               <div class="introduce-card-text-area-bottom" @click="goToProjectManage" :style="{cursor: 'pointer'}">
@@ -333,7 +333,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background-size: 100% 100%; /* 이미지를 요소에 맞게 늘림 */
+  background-size: cover; /* 이미지가 컨테이너를 덮도록 변경 */
   background-repeat: no-repeat;
   background-position: center;
   transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
