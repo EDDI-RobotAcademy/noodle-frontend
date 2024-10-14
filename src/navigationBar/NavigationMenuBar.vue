@@ -17,8 +17,11 @@
                 <span class="btn-text">REVIEW</span>
             </v-btn>
             <span class="separator">|</span>
-            <v-btn @click="goToGithubLogin" text class="custom-btn" alt="GO TO GITHUBLOGIN">
+            <v-btn v-if="flag == false" @click="goToGithubLogin" text class="custom-btn" alt="GO TO GITHUBLOGIN">
                 <span class="btn-text">LOGIN</span>
+            </v-btn>
+            <v-btn v-if="flag == true" @click="goToGithubLogout" text class="custom-btn" alt="GO TO GITHUBLOGIN">
+                <span class="btn-text">LOGOUt</span>
             </v-btn>
         </v-container>
     </v-app-bar>
@@ -54,11 +57,15 @@ export default {
     data() {
         return {
             searchQuery: '',  // Model to hold the search input value
-            userToken: localStorage.getItem("userToken")
+
         };
     },
     computed: {
         ...mapState(authenticationModule, ["isAuthenticated"]),
+
+        flag() {
+            return this.isAuthenticated; // Vuex 상태를 직접 참조
+        }
     },
     methods: {
         goToHome() {
@@ -72,11 +79,13 @@ export default {
         }
     },
     mounted() {
-        if (this.userToken) {
-            this.$store.state.authenticationModule.isAuthenticated = true;
+        if (localStorage.getItem('userToken')) {
+            this.$store.commit(`${authenticationModule}/setAuthentication`, true);
+        } else {
+            this.$store.commit(`${authenticationModule}/setAuthentication`, false);
         }
-        console.log(this.isAuthenticated),
-            console.log('navigation bar mounted()')
+        console.log(this.isAuthenticated)
+        console.log('navigation bar mounted()')
     }
 
 }
