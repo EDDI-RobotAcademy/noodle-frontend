@@ -12,8 +12,8 @@
                 <p><strong>AI 답변 퀄리티:</strong> <span class="star-rating">★{{ qualityScore }}</span></p>
             </div>
         </v-card>
-        <v-card v-if="this.reviewContent = ''" class="review-card">
-            <p class="review-content"> {{ reviewContent }}</p>
+        <v-card v-if="this.reviewContent !== ''" class="review-card">
+            <p class="review-content"> {{ this.reviewContent }}</p>
         </v-card>
     </div>
     <div class="review-container" v-else>
