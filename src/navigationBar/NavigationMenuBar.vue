@@ -62,7 +62,7 @@ export default {
     },
     methods: {
         goToHome() {
-            router.push('/SecondHomeView')
+            router.push('/')
         },
         goToBacklogBoard() {
             router.push('/projectManage')
