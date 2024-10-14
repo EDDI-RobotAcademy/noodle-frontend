@@ -307,6 +307,7 @@ export default {
       this.improvements.splice(index, 1);
     },
     submitReport() {
+      this.$router.push(`/`)
       console.log('프로젝트 보고서가 등록되었습니다.')
     },
     dashOffset(rate) {

@@ -1,11 +1,12 @@
-import HomeView from "@/Home/pages/HomeView.vue"
+import SecondHomeView from "@/Home/pages/SecondHomeView.vue"
 
 const HomeRoutes = [
     {
       path: '/',
-      name: 'HomeView',
-      component: HomeView,
+      name: 'SecondHomeView',
+      component: SecondHomeView,
     },
+    
 ]
 
 export default HomeRoutes
