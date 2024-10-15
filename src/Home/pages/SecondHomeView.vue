@@ -47,7 +47,7 @@
               </div>
               <div class="introduce-card-text-area-top">
                 <h2 class="introduce-card-title">Commit List up</h2>
-                <spen class="introduce-card-content">GitHub와 연동을 통해 Repogitory / branches 별로 <br>Commit 내역을 List up 해드립니다.</spen>
+                <spen class="introduce-card-content">GitHub와 연동을 통해 Repository / branches 별로 <br>Commit 내역을 List up 해드립니다.</spen>
               </div>
             </div>
           </v-card>
@@ -137,7 +137,7 @@
     <div class="footer-content">
       <p>서울 금천구 가산디지털1로 25 18층 플레이데이터 (가산동 670)</p>
       <p>한재혁  |  김지민  |  이민재  |  이현석  |  최인헌</p>
-      <p>SK-networks Family AI Camp 1st - Final Projrect 1Team</p>
+      <p>SK-networks Family AI Camp 1st - Final Project 1Team</p>
     </div>
   </v-container>
 </template>
