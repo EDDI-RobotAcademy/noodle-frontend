@@ -21,10 +21,12 @@
                 <span class="btn-text">REVIEW</span>
             </v-btn>
             <span class="separator">|</span>
-            <v-btn v-if="flag == false" @click="goToGithubLogin" text class="custom-btn" alt="GO TO GITHUBLOGIN">
+            <v-btn v-if="this.isAuthenticated == false" @click="goToGithubLogin" text class="custom-btn"
+                alt="GO TO GITHUBLOGIN">
                 <span class="btn-text">LOGIN</span>
             </v-btn>
-            <v-btn v-if="flag == true" @click="goToGithubLogout" text class="custom-btn" alt="GO TO GITHUBLOGIN">
+            <v-btn v-if="this.isAuthenticated == true" @click="goToGithubLogout" text class="custom-btn"
+                alt="GO TO GITHUBLOGIN">
                 <span class="btn-text">LOGOUt</span>
             </v-btn>
         </v-container>
@@ -86,13 +88,12 @@ export default {
         }
     },
     mounted() {
-        if (localStorage.getItem('userToken')) {
-            this.$store.commit(`${authenticationModule}/setAuthentication`, true);
+        const token = localStorage.getItem('userToken');
+        if (token !== null) {
+            this.$store.commit('authenticationModule/REQUEST_IS_AUTHENTICATED_TO_DJANGO', true);
         } else {
-            this.$store.commit(`${authenticationModule}/setAuthentication`, false);
+            this.$store.commit('authenticationModule/REQUEST_IS_AUTHENTICATED_TO_DJANGO', false);
         }
-        console.log(this.isAuthenticated)
-        console.log('navigation bar mounted()')
     }
 
 }
