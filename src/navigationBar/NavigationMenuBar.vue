@@ -21,8 +21,13 @@
                 <span class="btn-text">REVIEW</span>
             </v-btn>
             <span class="separator">|</span>
-            <v-btn @click="goToGithubLogin" text class="custom-btn" alt="GO TO GITHUBLOGIN">
+            <v-btn v-if="this.isAuthenticated == false" @click="goToGithubLogin" text class="custom-btn"
+                alt="GO TO GITHUBLOGIN">
                 <span class="btn-text">LOGIN</span>
+            </v-btn>
+            <v-btn v-if="this.isAuthenticated == true" @click="goToGithubLogout" text class="custom-btn"
+                alt="GO TO GITHUBLOGIN">
+                <span class="btn-text">LOGOUt</span>
             </v-btn>
         </v-container>
     </v-app-bar>
@@ -58,11 +63,15 @@ export default {
     data() {
         return {
             searchQuery: '',  // Model to hold the search input value
-            userToken: localStorage.getItem("userToken")
+
         };
     },
     computed: {
         ...mapState(authenticationModule, ["isAuthenticated"]),
+
+        flag() {
+            return this.isAuthenticated; // Vuex 상태를 직접 참조
+        }
     },
     methods: {
         goToHome() {
@@ -79,11 +88,12 @@ export default {
         }
     },
     mounted() {
-        if (this.userToken) {
-            this.$store.state.authenticationModule.isAuthenticated = true;
+        const token = localStorage.getItem('userToken');
+        if (token !== null) {
+            this.$store.commit('authenticationModule/REQUEST_IS_AUTHENTICATED_TO_DJANGO', true);
+        } else {
+            this.$store.commit('authenticationModule/REQUEST_IS_AUTHENTICATED_TO_DJANGO', false);
         }
-        console.log(this.isAuthenticated),
-            console.log('navigation bar mounted()')
     }
 
 }
