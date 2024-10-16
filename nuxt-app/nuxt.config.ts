@@ -31,4 +31,23 @@ export default defineNuxtConfig({
 			// AWS_S3_IDENTITY_POOL: process.env.VUE_APP_AWS_S3_IDENTITY_POOL_ID,
 		},
 	},
+	app: {
+		head: {
+			meta: [
+				{ charset: "utf-8" },
+				{
+					name: "viewport",
+					content: "width=device-width, initial-scale=1",
+				},
+			],
+			link: [
+				{
+					rel: "icon",
+					type: "image/x-icon",
+					href: "noodle.ico",
+				},
+			],
+      title: "NOODLE | Use Your Noodle!"
+		},
+	},
 });
