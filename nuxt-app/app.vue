@@ -50,8 +50,8 @@ export default defineComponent({
     const searchQuery = ref('')
     const isAuthenticated = ref(false)
 
-    function goToGithubLogin() {
-      // action 호출 예정
+    async function goToGithubLogin() {
+      await authenticationStore.requestGithubOauthRedirectionToDjango()
     }
     function goToGithubLogout() {
       // action 호출 예정

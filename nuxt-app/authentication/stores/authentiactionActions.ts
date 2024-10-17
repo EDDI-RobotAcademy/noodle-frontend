@@ -4,7 +4,7 @@ export const authenticationActions = {
 	async requestGithubOauthRedirectionToDjango(): Promise<void> {
 		const {djangoAxiosInst} = axiosUtility.createAxiosInstances();
         try{
-            return await djangoAxiosInst.get("/github/oauth/github").then((res) => {
+            return await djangoAxiosInst.get("/github-oauth/github").then((res) => {
                 window.location.href = res.data.url;
             })
         } catch (error) {
