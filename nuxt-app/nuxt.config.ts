@@ -47,7 +47,7 @@ export default defineNuxtConfig({
 					href: "noodle.ico",
 				},
 			],
-      title: "NOODLE | Use Your Noodle!"
+			title: "NOODLE | Use Your Noodle!",
 		},
 	},
 });
