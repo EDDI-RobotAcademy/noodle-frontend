@@ -34,8 +34,8 @@
                             </div>
                             <div class="introduce-card-text-area-top">
                                 <h2 class="introduce-card-title">Commit List up</h2>
-                                <spen class="introduce-card-content">GitHub와 연동을 통해 Repository / branches 별로 <br>Commit
-                                    내역을 List up 해드립니다.</spen>
+                                <span class="introduce-card-content">GitHub와 연동을 통해 Repository / branches 별로 <br>Commit
+                                    내역을 List up 해드립니다.</span>
                             </div>
                         </div>
                     </v-card>
@@ -77,8 +77,8 @@
                             </div>
                             <div class="introduce-card-text-area-top">
                                 <h2 class="introduce-card-title">Project Report</h2>
-                                <spen class="introduce-card-content">LLM을 통해 생성된 Backlog를 분석하여 Project Report를 생성해드립니다.
-                                </spen>
+                                <span class="introduce-card-content">LLM을 통해 생성된 Backlog를 분석하여 Project Report를 생성해드립니다.
+                                </span>
                             </div>
                         </div>
                     </v-card>

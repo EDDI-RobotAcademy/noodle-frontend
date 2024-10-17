@@ -14,13 +14,15 @@ import { useAuthenticationStore } from '../stores/authenticationStore';
 export default defineComponent({
     setup() {
         const route = useRoute()
+        const router = useRouter()
         const authenticationStore = useAuthenticationStore()
 
         const code = ref(route.query.code)
 
         async function setRedirectData() {
-            console.log('code:', code)
-            await authenticationStore.requestAccessTokenToDjangoRedirection(code)
+            const response = await authenticationStore.requestAccessTokenToDjangoRedirection({ "code": code.value })
+            await localStorage.setItem('userToken', response.userToken)
+            router.push('/')
         }
 
         onMounted(async () => {
