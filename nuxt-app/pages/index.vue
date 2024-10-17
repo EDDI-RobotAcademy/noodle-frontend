@@ -177,6 +177,8 @@ export default defineComponent({
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Rozha+One&family=Rubik+Mono+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Jua&family=Rozha+One&family=Rubik+Mono+One&display=swap');
+
 
 .search-wrapper {
     position: absolute;
@@ -202,7 +204,7 @@ export default defineComponent({
 .search-wrapper.active .input-holder {
     width: 450px;
     border-radius: 50px;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.85);
     transition: all .5s cubic-bezier(0.000, 0.105, 0.035, 1.570);
 }
 
