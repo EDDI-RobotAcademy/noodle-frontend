@@ -31,6 +31,7 @@
             alt="GO TO GITHUBLOGIN">
             <span class="btn-text">LOGOUT</span>
           </v-btn>
+          <p>{{ isAuthenticated }}</p>
         </v-container>
       </v-app-bar>
       <NuxtPage />
@@ -48,13 +49,13 @@ export default defineComponent({
     const authenticationStore = useAuthenticationStore()
 
     const searchQuery = ref('')
-    const isAuthenticated = ref(false)
+    const isAuthenticated = computed(() => authenticationStore.isAuthenticated)
 
     async function goToGithubLogin() {
       await authenticationStore.requestGithubOauthRedirectionToDjango()
     }
-    function goToGithubLogout() {
-      // action 호출 예정
+    async function goToGithubLogout() {
+      await authenticationStore.requestLogoutToDjango()
     }
     function goToBacklogBoard() {
       router.push('/projectManager')
@@ -68,12 +69,11 @@ export default defineComponent({
     function goToHome() {
       router.push('/')
     }
-    function flag() {
-      isAuthenticated.value = authenticationStore.isAuthenticated
-    }
 
     onMounted(async () => {
-      flag()
+      if (localStorage.getItem('userToken') != undefined) {
+        authenticationStore.isAuthenticated = true
+      }
     })
 
     return {
