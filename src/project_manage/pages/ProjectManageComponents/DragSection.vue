@@ -1,9 +1,9 @@
 <template>
-  <div class="draggable-section" :class="{ 'open': isDraggableSectionOpen, 'dragging': isDragging }" ref="draggableSection">
-    <div class="draggable-handle" @mousedown="handleMouseDown">
-      <span class="handle-icon">⋮</span>
+  <div class="drag-section" :class="{ 'drag-section--open': isDragSectionOpen, 'drag-section--dragging': isDragging }" ref="dragSection">
+    <div class="drag-handle" @mousedown="handleMouseDown">
+      <span class="drag-handle__icon">⋮</span>
     </div>
-    <div class="draggable-content">
+    <div class="drag-content">
       <slot></slot>
     </div>
   </div>
@@ -14,7 +14,7 @@ export default {
   name: 'DragSection',
   data() {
     return {
-      isDraggableSectionOpen: false,
+      isDragSectionOpen: false,
       isDragging: false,
       dragStartX: 0,
       dragStartWidth: 0,
@@ -25,20 +25,20 @@ export default {
       e.preventDefault();
       this.isDragging = false;
       this.dragStartX = e.clientX;
-      this.dragStartWidth = this.$refs.draggableSection.offsetWidth;
+      this.dragStartWidth = this.$refs.dragSection.offsetWidth;
       document.addEventListener('mousemove', this.handleMouseMove);
       document.addEventListener('mouseup', this.handleMouseUp);
     },
     handleMouseMove(e) {
       if (!this.isDragging) {
         this.isDragging = true;
-        this.isDraggableSectionOpen = true;
+        this.isDragSectionOpen = true;
       }
       const deltaX = this.dragStartX - e.clientX;
       const newWidth = this.dragStartWidth + deltaX;
       const maxWidth = window.innerWidth - 20;
       if (newWidth > 20 && newWidth <= maxWidth) {
-        this.$refs.draggableSection.style.width = `${newWidth}px`;
+        this.$refs.dragSection.style.width = `${newWidth}px`;
       }
       this.adjustDraggableSectionSize();
     },
@@ -47,25 +47,25 @@ export default {
       document.removeEventListener('mouseup', this.handleMouseUp);
       if (!this.isDragging) {
         this.toggleDraggableSection();
-      } else if (this.$refs.draggableSection.offsetWidth < 50) {
-        this.isDraggableSectionOpen = false;
-        this.$refs.draggableSection.style.width = '';
+      } else if (this.$refs.dragSection.offsetWidth < 50) {
+        this.isDragSectionOpen = false;
+        this.$refs.dragSection.style.width = '';
       }
       this.isDragging = false;
     },
     toggleDraggableSection() {
-      this.isDraggableSectionOpen = !this.isDraggableSectionOpen;
-      if (this.isDraggableSectionOpen) {
-        this.$refs.draggableSection.style.width = '25%';
+      this.isDragSectionOpen = !this.isDragSectionOpen;
+      if (this.isDragSectionOpen) {
+        this.$refs.dragSection.style.width = '25%';
       } else {
-        this.$refs.draggableSection.style.width = '';
+        this.$refs.dragSection.style.width = '';
       }
       this.$nextTick(() => {
         this.adjustDraggableSectionSize();
       });
     },
     adjustDraggableSectionSize() {
-      const draggableSection = this.$refs.draggableSection;
+      const draggableSection = this.$refs.dragSection;
       draggableSection.style.height = `${window.innerHeight}px`;
       draggableSection.style.top = '0';
     }
@@ -81,11 +81,11 @@ export default {
 </script>
 
 <style scoped>
-.draggable-section {
+.drag-section {
   position: fixed;
   right: 0;
   top: 0;
-  width: 20px;
+  width: 0;
   height: 100vh;
   background-color: #2f2f2f;
   transition: width 0.3s ease;
@@ -93,17 +93,17 @@ export default {
   z-index: 1000;
 }
 
-.draggable-section.open {
+.drag-section--open {
   width: 25%;
 }
 
-.draggable-section.dragging {
+.drag-section--dragging {
   transition: none;
 }
 
-.draggable-handle {
+.drag-handle {
   position: absolute;
-  left: -15px;
+  left: -30px;
   top: 50%;
   transform: translateY(-50%);
   width: 30px;
@@ -112,29 +112,28 @@ export default {
   cursor: ew-resize;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   z-index: 1001;
   border-radius: 30px 0 0 30px;
-  padding-right: 10px;
+  cursor: pointer;
 }
 
-.handle-icon {
+.drag-handle__icon {
   color: white;
   font-size: 20px;
   transform: rotate(90deg);
 }
 
-.draggable-content {
+.drag-content {
   width: 100%;
   height: 100%;
   padding: 20px;
-  padding-left: 40px;
   color: white;
   overflow-y: auto;
   box-sizing: border-box;
 }
 
-.draggable-section:not(.open) .draggable-content {
+.drag-section:not(.drag-section--open) .drag-content {
   display: none;
 }
 </style>
