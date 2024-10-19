@@ -25,8 +25,8 @@ export default {
   computed: {
     arrowPath() {
       return this.isDragSectionOpen
-        ? 'M9 6l6 6-6 6'    // 오른쪽 화살표 (열린 상태)
-        : 'M15 6l-6 6 6 6'  // 왼쪽 화살표 (닫힌 상태)
+        ? 'M9 6l6 6-6 6'
+        : 'M15 6l-6 6 6 6'
     }
   },
   methods: {
@@ -41,37 +41,41 @@ export default {
     handleMouseMove(e) {
       if (!this.isDragging) {
         this.isDragging = true;
-        this.isDragSectionOpen = true;
       }
+      
       const deltaX = this.dragStartX - e.clientX;
-      const newWidth = this.dragStartWidth + deltaX;
+      let newWidth = this.dragStartWidth + deltaX;
+      newWidth = Math.max(newWidth, 30);
+
       const maxWidth = window.innerWidth - 20;
-      if (newWidth > 20 && newWidth <= maxWidth) {
+      if (newWidth <= maxWidth) {
         this.$refs.dragSection.style.width = `${newWidth}px`;
+        this.isDragSectionOpen = newWidth > 30;
       }
       this.adjustDraggableSectionSize();
     },
-    handleMouseUp(e) {
+    handleMouseUp() {
       document.removeEventListener('mousemove', this.handleMouseMove);
       document.removeEventListener('mouseup', this.handleMouseUp);
+      
       if (!this.isDragging) {
         this.toggleDraggableSection();
       } else if (this.$refs.dragSection.offsetWidth < 50) {
-        this.isDragSectionOpen = false;
-        this.$refs.dragSection.style.width = '';
+        this.closeDragSection();
       }
       this.isDragging = false;
     },
     toggleDraggableSection() {
       this.isDragSectionOpen = !this.isDragSectionOpen;
-      if (this.isDragSectionOpen) {
-        this.$refs.dragSection.style.width = '25%';
-      } else {
-        this.$refs.dragSection.style.width = '';
-      }
-      this.$nextTick(() => {
-        this.adjustDraggableSectionSize();
-      });
+      this.updateDragSectionWidth();
+    },
+    closeDragSection() {
+      this.isDragSectionOpen = false;
+      this.updateDragSectionWidth();
+    },
+    updateDragSectionWidth() {
+      this.$refs.dragSection.style.width = this.isDragSectionOpen ? '25%' : '0';
+      this.$nextTick(this.adjustDraggableSectionSize);
     },
     adjustDraggableSectionSize() {
       const draggableSection = this.$refs.dragSection;
@@ -118,13 +122,12 @@ export default {
   width: 30px;
   height: 60px;
   background-color: rgba(204, 159, 1);
-  cursor: ew-resize;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1001;
   border-radius: 30px 0 0 30px;
-  cursor: pointer;
 }
 
 .drag-handle-icon {
