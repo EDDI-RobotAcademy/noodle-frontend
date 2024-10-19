@@ -31,7 +31,6 @@
             alt="GO TO GITHUBLOGIN">
             <span class="btn-text">LOGOUT</span>
           </v-btn>
-          <p>{{ isAuthenticated }}</p>
         </v-container>
       </v-app-bar>
       <NuxtPage />
@@ -58,7 +57,7 @@ export default defineComponent({
       await authenticationStore.requestLogoutToDjango()
     }
     function goToBacklogBoard() {
-      router.push('/projectManager')
+      router.push('/projectManage')
     }
     function goToResultReport() {
       router.push('/result-report/list2')

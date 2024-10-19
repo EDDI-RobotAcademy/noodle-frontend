@@ -154,13 +154,8 @@ export default defineComponent({
         }
 
         function goToProjectManage() {
-            router.push('/projectManager')
+            router.push('/projectManage')
         }
-
-        onMounted(() => {
-            // activeButton.value = 'backlog-board-btn'
-            // isSearchActive.value = false
-        })
 
         return {
             activeButton,
