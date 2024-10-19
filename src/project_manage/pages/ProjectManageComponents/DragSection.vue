@@ -1,7 +1,9 @@
 <template>
   <div class="drag-section" :class="{ 'drag-section--open': isDragSectionOpen, 'drag-section--dragging': isDragging }" ref="dragSection">
     <div class="drag-handle" @mousedown="handleMouseDown">
-      <span class="drag-handle__icon">⋮</span>
+      <svg class="drag-handle-icon" viewBox="0 0 24 24" width="24" height="24">
+        <path :d="arrowPath" fill="none" stroke="white" stroke-width="2" />
+      </svg>
     </div>
     <div class="drag-content">
       <slot></slot>
@@ -19,6 +21,13 @@ export default {
       dragStartX: 0,
       dragStartWidth: 0,
     };
+  },
+  computed: {
+    arrowPath() {
+      return this.isDragSectionOpen
+        ? 'M9 6l6 6-6 6'    // 오른쪽 화살표 (열린 상태)
+        : 'M15 6l-6 6 6 6'  // 왼쪽 화살표 (닫힌 상태)
+    }
   },
   methods: {
     handleMouseDown(e) {
@@ -118,10 +127,9 @@ export default {
   cursor: pointer;
 }
 
-.drag-handle__icon {
-  color: white;
-  font-size: 20px;
-  transform: rotate(90deg);
+.drag-handle-icon {
+  width: 24px;
+  height: 24px;
 }
 
 .drag-content {
