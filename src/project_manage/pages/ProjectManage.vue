@@ -139,7 +139,6 @@
       <DragSection>
         <h3>추후에 결과 보고서가 출력되도록 추가하면 될 듯</h3>
       </DragSection>
-
       
       <!-- <div class="select-container" v-else>
         <v-select :value="selectedRepository"></v-select>
@@ -360,12 +359,12 @@ export default {
     }
   },
   mounted() {
-    // if (localStorage.getItem('userToken')) {
-    //   // 사용자 인증 과정 추가해야 함
-    // } else {
-    //   alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.")
-    //   this.goToGithubLogin()
-    // }
+    if (localStorage.getItem('userToken')) {
+      // 사용자 인증 과정 추가해야 함
+    } else {
+      alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.")
+      this.goToGithubLogin()
+    }
   }
 };
 </script>
