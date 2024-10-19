@@ -9,7 +9,7 @@ export function createAxiosInstances() {
 		const config = useRuntimeConfig();
 		djangoAxiosInst = axios.create({
 			baseURL: config.public.MAIN_API_URL,
-			timeout: 2500,
+			timeout: 5000,
 		});
 	}
 
@@ -17,7 +17,7 @@ export function createAxiosInstances() {
 		const config = useRuntimeConfig();
 		fastapiAxiosInst = axios.create({
 			baseURL: config.public.AI_BASE_URL,
-			timeout: 2500,
+			timeout: 10000,
 		});
 	}
 
