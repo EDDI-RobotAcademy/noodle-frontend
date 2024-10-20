@@ -67,7 +67,7 @@ export default {
 }
 
 #search {
-  max-width: 420px;
+  max-width: 640px;
   text-align: center;
   padding: 1em;
   width: 100%;
@@ -103,7 +103,9 @@ export default {
 #search-box:focus + #search-box-label:before,
 #search-box:valid + #search-box-label:before {
   transition-duration: 0.2s;
-  transform: translate(0, -1.5em) scale(0.9, 0.9);
+  transform: translateY(-2em) scale(0.9, 0.9);
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 #search-box:invalid + #search-box-label:before {
@@ -112,26 +114,31 @@ export default {
 
 #search-box + #search-box-label {
   position: absolute;
-  top: 0.7em;
-  display: block;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  height: 100%;
   pointer-events: none;
+  padding-left: 1.5em;
 }
 
 #search-box + #search-box-label:before {
   content: attr(data-info);
   display: inline-block;
-  margin: 0 1em;
-  padding: 0 2px;
   white-space: nowrap;
   transition: 0.3s ease-in-out;
+  padding: 0.2em 0.5em;
+  border-radius: 1em;
+  background-color: #f9f9f9;
 }
 
 #submit {
   position: absolute;
   top: 50%;
-  right: 0;
+  right: 25px;
   transform: translateY(-50%);
-  margin-right: 0.4em;
+  margin-right: 0;
   font-size: 1.5em;
   color: #ccc;
   transition: color 0.2s;
