@@ -10,7 +10,7 @@
       <v-divider></v-divider>
       <UsagePlans :usagePlans="usagePlans" />
       <v-divider></v-divider>
-      <ReportImprovements :ReportImprovements="ReportImprovements" />
+      <ReportImprovements :reportImprovements="reportImprovements" />
       <v-divider></v-divider>
       <CompletionRates
         :completionRates="completionRates"
@@ -70,7 +70,7 @@ export default {
           description: '현재 서비스를 기반으로 추가 기능을 개발하여 서비스 범위 확대'
         }
       ],
-      Reportimprovements: ['성능 최적화 필요'],
+      reportImprovements: ['성능 최적화 필요'],
       completionRates: [
         { label: '보안', rate: 85, color: 'red' },
         { label: '유지보수', rate: 70, color: 'green' },
