@@ -65,15 +65,15 @@ export default {
 <style scoped>
 .home-main-body {
   background-image: url('~@/assets/images/fixed/main.jpg');
-  /* background-size: 120% auto; */
-  background-size: cover;
-  background-position: center;
-  animation: moveBackground 30s ease-in-out infinite alternate; /* 시간 단축 */
+  background-size: 150% auto;
+  background-position: 0% 50%;
+  animation: moveBackground 35s ease-in-out infinite alternate;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
   width: 100vw;
+  overflow: hidden;
 }
 
 @keyframes moveBackground {
@@ -92,7 +92,7 @@ export default {
   height: 50vh;
   width: 40%;
   margin-left: 10%;
-  margin-top: 30vh; /* 이 줄을 추가합니다 */
+  margin-top: 30vh;
 }
 
 .title-area {
