@@ -6,6 +6,7 @@ export default defineNuxtConfig({
 	extends: [
 		"./authentication/nuxt.config.ts",
 		"./projectManage/nuxt.config.ts",
+		"./resultReport/nuxt.config.ts",
 	],
 
 	css: ["vuetify/styles", "@mdi/font/css/materialdesignicons.min.css"],
@@ -25,6 +26,7 @@ export default defineNuxtConfig({
 		"@pinia/nuxt",
 		"~/authentication/index.ts",
 		"~/projectManage/index.ts",
+		"~/resultReport/index.ts",
 	],
 
 	imports: {
