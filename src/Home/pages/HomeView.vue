@@ -39,7 +39,7 @@ export default {
 
     const goToGithubLogout = async () => {
       await store.dispatch("authenticationModule/requestLogoutToDjango")
-      localStorage.removeItem("userToken")
+      sessionStorage.removeItem("userToken")
     }
 
     return {
@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       searchQuery: '',  // Model to hold the search input value
-      userToken: localStorage.getItem("userToken")
+      userToken: sessionStorage.getItem("userToken")
     };
   },
   computed: {

@@ -159,7 +159,7 @@ export default defineComponent({
 
         async function setRepositorySelect(newVal) {
             if (newVal !== null) {
-                // const userToken = localStorage.getItem('userToken')
+                // const userToken = sessionStorage.getItem('userToken')
                 const payload = { "userToken": userToken.value, 'reponame': selectedRepository.value }
                 await projectManageStore.requestSaveBranchListToDjango(payload)
                 await projectManageStore.requestGetBranchListToDjango(payload)
@@ -167,7 +167,7 @@ export default defineComponent({
         }
         async function setBranchSelect(newVal) {
             if (newVal !== null) {
-                // const userToken = localStorage.getItem('userToken')
+                // const userToken = sessionStorage.getItem('userToken')
                 const payload = { 'userToken': userToken.value, 'reponame': selectedRepository.value, 'branchname': selectedBranches.value }
                 await projectManageStore.requestSaveCommitListToDjango(payload)
                 await projectManageStore.requestGetCommitListToDjango(payload)
@@ -175,7 +175,7 @@ export default defineComponent({
         }
         async function Refresh() {
             isExample.value = false
-            // const userToken = localStorage.getItem('userToken')
+            // const userToken = sessionStorage.getItem('userToken')
             const payload = { userToken: userToken.value }
             await projectManageStore.requestSaveReposListToDjango(payload)
             await projectManageStore.requestGetReposListToDjango(payload)
@@ -263,7 +263,7 @@ export default defineComponent({
         }
 
         onMounted(async () => {
-            userToken.value = localStorage.getItem('userToken')
+            userToken.value = sessionStorage.getItem('userToken')
         })
 
         return {
