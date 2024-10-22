@@ -7,6 +7,7 @@ export default defineNuxtConfig({
 		"./authentication/nuxt.config.ts",
 		"./projectManage/nuxt.config.ts",
 		"./resultReport/nuxt.config.ts",
+		"./review/nuxt.config.ts",
 		"./survey/nuxt.config.ts",
 	],
 
@@ -28,6 +29,7 @@ export default defineNuxtConfig({
 		"~/authentication/index.ts",
 		"~/projectManage/index.ts",
 		"~/resultReport/index.ts",
+		"~/review/index.ts"
 		"~/survey/index.ts",
 	],
 
