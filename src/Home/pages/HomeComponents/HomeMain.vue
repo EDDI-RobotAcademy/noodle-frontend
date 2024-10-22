@@ -16,9 +16,9 @@
           </transition>
         </div>
         <SearchBox class="searchbox" :class="{ 'fade-in': showElements }" />
-        <ScrollAnimation />
       </div>
       <RecentReport class="recentreport" :class="{ 'fade-in': showElements }" />
+      <ScrollAnimation class="scrollanimation" :class="{ 'fade-in': showElements }"/>
   </div>
 </template>
 
@@ -78,6 +78,7 @@ export default {
   height: calc(100vh - var(--navigation-bar-height));
   width: 100vw;
   overflow: hidden;
+  position: relative;
 }
 
 @keyframes moveBackgroundX {
@@ -161,14 +162,21 @@ export default {
   transform: translateY(0);
 }
 
-.searchbox, .recentreport, .main-title, .sub-introduce {
+.searchbox, .recentreport, .main-title, .sub-introduce, .scrollanimation {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out; /* 시간을 0.8초로 변경 */
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
-.searchbox.fade-in, .recentreport.fade-in, .main-title.visible, .sub-introduce.visible {
+.searchbox.fade-in, .recentreport.fade-in, .main-title.visible, .sub-introduce.visible, .scrollanimation.fade-in {
   opacity: 1;
   transform: translateY(0);
+}
+
+.scrollanimation {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 </style>
