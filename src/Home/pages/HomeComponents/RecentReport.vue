@@ -1,39 +1,24 @@
 <template>
   <v-container class="half-width">
-    <div class="title-area">
-      <div class="active-title">최근보고서</div>
-    </div>
+    <div class="active-title">최근 보고서</div>
     <h2>최근 보고서</h2>
-    <v-row justify="center">
-      <v-col cols="12">
+    <v-row>
+      <v-col v-for="report in recentReports" :key="report.id" cols="12" sm="6">
         <v-card 
-          v-for="report in recentReports" 
-          :key="report.id" 
           class="custom-card-spacing"
           @click="goToReport(report.id)"
         >
-          <div class="report-content">
-            <div class="image">
-              
+          <v-card-text class="report-content">
+            <div class="image-container">
+              <div class="image"></div>
             </div>
-            <div class="section1">
-              <v-card-title class="department">
-                <p>개발3팀</p>
-              </v-card-title>
-              <v-card-title class="report-title">
-                <p class="report-link">{{ report.title }}</p>
-              </v-card-title>
+            <div class="report-info">
+              <v-card-subtitle class="department">개발3팀</v-card-subtitle>
+              <v-card-title class="report-title">{{ report.title }}</v-card-title>
+              <v-card-subtitle class="member">구성원: {{ report.author }}</v-card-subtitle>
+              <v-card-text class="function">ㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹ</v-card-text>
             </div>
-            <div class="section2">
-            <v-card-text >
-              <p class="member">구성원: {{ report.author }}</p>
-              <p class="function">ㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹ</p>
-            </v-card-text>
-            </div>
-            <div class="open-button">
-              <v-btn class="open-btn">Open</v-btn>
-            </div>
-          </div>
+          </v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -57,7 +42,7 @@ export default {
   },
   computed: {
     recentReports() {
-      return this.reports.slice(0, 6)
+      return this.reports.slice(0, 4) // 5에서 4로 변경하여 2x2 그리드 만들기
     }
   },
   methods: {
@@ -71,22 +56,19 @@ export default {
 
 <style scoped>
 .title-area {
-  display: flex;
-  align-items: center;
-  background-color: #b4b4b4;
-  padding: 10px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  margin-bottom: 20px;
+  display: none;
 }
 
 .active-title {
-  background-color: white;
-  padding: 10px 20px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  font-weight: bold;
-  margin-right: 5px;
+  display: inline-block;
+  background-color: #ffffff;
+  color: #333;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius:  15px 15px 0px 0px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .inactive-title {
@@ -98,92 +80,93 @@ export default {
   border-top-right-radius: 10px;
 }
 
-.add-button {
-  margin-left: auto;
-  background-color: white;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  font-weight: bold;
-  cursor: pointer;
-}
-
 h2 {
-  display: none; /* 기존 h2 제목 숨기기 */
+  display: none;
 }
 
 .report-content {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  height: 100%;
+}
+
+.image-container {
+  width: 80px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 16px;
+  flex-shrink: 0;
 }
 
 .image {
-  width: 100px;
-  height: 90px;
+  width: 80px;
+  height: 80px;
   background-color: #f0f0f0;
 }
 
-.department {
-  font-size: 13px;
-  color: #8f8f8f;
-  padding-bottom: 0;
-}
-
-.report-title {
-  font-size: 25px;
-  font-weight: bold;
-  padding-top: 3px;
-  padding-bottom: 0px;
-  margin-top: 2px;
-  color: #000000;
-}
-
-.member{
-  font-size: 13px;
-  color: #8f8f8f;
-  padding-bottom: 0;
-  margin-bottom: 5px;
-}
-
-.function{
-  font-size: 20px;
-  color: #000000;
-  padding-top: 3px;
-  padding-bottom: 0;
-  margin-top: 0;
-}
-
-.open-button {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  margin-right: 40px;
-}
-
-.section1{
-  width: 25%;
-  align-items: center;
-}
-
-.section2 {
+.report-info {
+  flex-grow: 1;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: flex-start;
 }
 
+.report-info > * {
+  padding: 0 !important;
+  margin: 0;
+}
+
+.department, .member, .report-title, .function {
+  text-align: left;
+  width: 100%;
+}
+
+.report-title {
+  font-size: 18px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.function {
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .v-card {
-  transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+  height: 100%;
   cursor: pointer;
+  transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
 .v-card:hover {
   box-shadow: 0 8px 16px rgba(0,0,0,0.2);
   transform: translateY(-5px);
-  cursor: pointer;
+}
+
+.open-btn {
+  display: none;
+}
+
+.section1, .section2 {
+  width: auto;
+}
+
+.v-card {
+  height: auto;
+  height: 180px;
+}
+
+.v-card:hover {
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  transform: translateY(-5px);
 }
 
 .v-card:hover .open-btn {
@@ -193,19 +176,37 @@ h2 {
 
 .open-btn {
   transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-  border-radius:50px;
-}
-
-.custom-card-spacing {
-  margin-bottom: 25px;
+  border-radius: 50px;
 }
 
 .half-width {
-  max-width: 40%;
-  margin-left: auto;
-  margin-right: auto;
-  height: 72vh; /* 뷰포트 높이의 72%로 설정 (기존 80vh에서 10% 감소) */
-  overflow-y: auto;
+  width: 40%;
+  height: auto;
+  overflow-y: visible;
+}
+
+.report-title, .function {
+  font-size: 25px;
+  font-weight: bold;
+  padding-top: 3px;
+  padding-bottom: 0;
+  margin-top: 2px;
+  color: #000000;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.section1 {
+  width: 25%;
+  align-items: center;
+}
+
+.section2 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .report-title p,
