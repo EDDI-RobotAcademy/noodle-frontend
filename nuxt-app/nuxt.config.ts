@@ -29,7 +29,7 @@ export default defineNuxtConfig({
 		"~/authentication/index.ts",
 		"~/projectManage/index.ts",
 		"~/resultReport/index.ts",
-		"~/review/index.ts"
+		"~/review/index.ts",
 		"~/survey/index.ts",
 	],
 

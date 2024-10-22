@@ -176,7 +176,7 @@ const check = (type, index) => {
     color: gold;
 }
 
-.star-rating .star:hover ~ .star {
+.star-rating .star:hover~.star {
     color: lightgray;
 }
 
@@ -236,27 +236,27 @@ const check = (type, index) => {
     z-index: 2;
 }
 
-.switch input:checked ~ label:nth-of-type(1) {
+.switch input:checked~label:nth-of-type(1) {
     color: #000;
 }
 
-.switch input:checked ~ label:nth-of-type(2) {
+.switch input:checked~label:nth-of-type(2) {
     color: #a0a0a0;
 }
 
-.switch input ~ :checked ~ label:nth-of-type(1) {
+.switch input~ :checked~label:nth-of-type(1) {
     color: #a0a0a0;
 }
 
-.switch input ~ :checked ~ label:nth-of-type(2) {
+.switch input~ :checked~label:nth-of-type(2) {
     color: #000;
 }
 
-.switch input:checked ~ .toggle {
+.switch input:checked~.toggle {
     left: 10px;
 }
 
-.switch input ~ :checked ~ .toggle {
+.switch input~ :checked~.toggle {
     left: 40px;
 }
 

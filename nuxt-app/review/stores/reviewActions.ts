@@ -1,28 +1,61 @@
-import { tryUseNuxtApp } from "nuxt/app";
 import * as axiosUtility from "../../utility/axiosInstance";
-import { useReviewStore } from './reviewStore';
 
 export const reviewActions = {
-  async requestReviewList({ pagination, perPage }) {
-		const {djangoAxiosInst} = axiosUtility.createAxiosInstances();
-    try {
-      const res = await djangoAxiosInst.post('/review/list', { pagination, perPage });
-      const reviewStore = useReviewStore();
-      reviewStore.reviewList = res.data.list;
-    } catch (error) {
-      console.error('requestReviewListToDjango():' + error);
-      throw error;
-    }
-  },
-  async requestEntireReviewListCount() {
-		const {djangoAxiosInst} = axiosUtility.createAxiosInstances();
-    try {
-      const res = await djangoAxiosInst.post('/review/entire-count');
-      const reviewStore = useReviewStore();
-      reviewStore.totalCount = res.data.count;
-    } catch (error) {
-      console.error('requestEntireReviewListCount():' + error);
-      throw error;
-    }
-  },
+	async requestReviewListToDjango(payload): Promise<void> {
+		const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+
+		try {
+			const res = await djangoAxiosInst.post("/review/list", payload);
+			return res.data.list;
+		} catch (error) {
+			console.error("requestReviewListToDjango():" + error);
+		}
+	},
+	async requestEntireReviewListCount(): Promise<void> {
+		const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+
+		try {
+			const res = await djangoAxiosInst.post("/review/entire-count");
+			return res.data.count;
+		} catch (error) {
+			console.error("requestEntireReviewListCount():" + error);
+		}
+	},
+	async requestRegisterFreeFormReviewToDjango(payload): Promise<void> {
+		const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+
+		try {
+			await djangoAxiosInst.post(
+				"/review/register/writingReview",
+				payload
+			);
+		} catch (error) {
+			console.error("error occured while registering!" + error);
+		}
+	},
+	async requestRegisterSelectionFormReviewToDjango(payload): Promise<void> {
+		const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+
+		try {
+			await djangoAxiosInst.post(
+				"/review/register/selectionReview",
+				payload
+			);
+		} catch (error) {
+			console.error("error occured while registering!" + error);
+		}
+	},
+	async requestReviewDetailsToDjango(reviewID): Promise<void> {
+		const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+
+		try {
+			const response = await djangoAxiosInst.post(
+				"/review/read",
+				reviewID
+			);
+			return response.data;
+		} catch (error) {
+			console.error("error occured while getting details!" + error);
+		}
+	},
 };

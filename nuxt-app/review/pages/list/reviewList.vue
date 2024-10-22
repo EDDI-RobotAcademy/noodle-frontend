@@ -3,28 +3,13 @@
     <h2>Review</h2>
 
     <!-- 리뷰 목록 테이블 -->
-    <v-data-table
-      v-model:items-per-page.sync="perPage"
-      :headers="headerTitle"
-      :items="pagedItems"
-      :pagination.sync="pagination"
-      class="elevation-1 review-table"
-      @click:row="readRow"
-      item-value="reviewId"
-      :items-per-page-options="perPageOptions"
-      :pageText="prompt"
-      hide-default-footer
-    />
+    <v-data-table v-model:items-per-page.sync="perPage" :headers="headerTitle" :items="pagedItems"
+      :pagination.sync="pagination" class="elevation-1 review-table" @click:row="readRow" item-value="reviewId"
+      :items-per-page-options="perPageOptions" :pageText="prompt" hide-default-footer />
 
     <!-- 페이지네이션 -->
-    <v-pagination
-      v-model="pagination"
-      :length="totalPages"
-      color="primary"
-      @input="updateItems"
-      :total-visible="5"
-      class="pagination-bar"
-    />
+    <v-pagination v-model="pagination" :length="totalPages" color="primary" @input="updateItems" :total-visible="5"
+      class="pagination-bar" />
 
     <!-- 리뷰 작성 버튼 -->
     <div class="create-review-btn">
@@ -38,56 +23,73 @@
 </template>
 
 <script>
-import { ref, computed, onMounted, watch } from 'vue';
+import { defineComponent, onMounted } from 'vue';
 import { useReviewStore } from '../../stores/reviewStore';
 
-const reviewStore = useReviewStore();
+export default defineComponent({
+  setup() {
+    const reviewStore = useReviewStore();
+    const router = useRouter();
 
-const perPage = ref(10);
-const pagination = ref(1);
-const pagedItems = ref([]);
-const perPageOptions = ref([
-  { value: 10, title: '10' },
-  { value: 25, title: '25' },
-  { value: 50, title: '50' },
-]);
-const headerTitle = ref([
-  { text: '작성자', align: 'start', value: 'writer' },
-  { text: '제목', align: 'middle', value: 'title' },
-  { text: '작성일자', align: 'end', value: 'regDate' },
-]);
-const prompt = ref('');
+    const headerTitle = ref([
+      { text: '작성자', align: 'start', value: 'writer' },
+      { text: '제목', align: 'middle', value: 'title' },
+      { text: '작성일자', align: 'end', value: 'regDate' }
+    ])
+    const perPage = ref(10)
+    const pagination = ref(1)
+    const reviewList = ref(0)
+    const pagedItems = ref([])
+    const perPageOptions = ref([
+      { value: 10, title: '10' },
+      { value: 25, title: '25' },
+      { value: 50, title: '50' }
+    ])
+    const prompt = ref('')
+    const totalPages = computed(() => {
+      return Math.ceil(reviewList.value / perPage.value)
+    })
 
-const totalPages = computed(() => Math.ceil(reviewStore.reviewList.length / perPage.value));
+    async function updateItems() {
+      const payload = { pagination: pagination.value, perPage: perPage.value }
+      pagedItems.value = await reviewStore.requestReviewListToDjango(payload)
+      prompt.value = `${perPage.value * (pagination.value - 1) + 1}- ${perPage.value * (pagination.value - 1) + pagedItems.length} of ${reviewList.value}`
+    }
+    function readRow(event, item) {
+      router.push(`/review/read/${item.item.id}`)
+    }
 
-const updateItems = async () => {
-  await reviewStore.requestReviewList({ pagination: pagination.value, perPage: perPage.value });
-  pagedItems.value = reviewStore.reviewList.slice(
-    (pagination.value - 1) * perPage.value,
-    pagination.value * perPage.value
-  );
-  prompt.value = `${perPage.value * (pagination.value - 1) + 1}-${
-    perPage.value * (pagination.value - 1) + pagedItems.value.length
-  } of ${reviewStore.reviewList.length}`;
-};
+    watch(perPage, (newPerPage) => {
+      pagination.value = 1
+      updateItems()
+    })
+    watch(pagination, (index) => {
+      pagination.value = index
+      updateItems()
+    })
 
-const readRow = (event, item) => {
-  useRouter().push(`/review/read/${item.item.id}`);
-};
+    onMounted(async () => {
+      reviewList.value = await reviewStore.requestEntireReviewListCount()
+      const payload = { pagination: pagination.value, perPage: perPage.value }
+      pagedItems.value = await reviewStore.requestReviewListToDjango(payload)
+      console.log(pagedItems.value)
+      prompt.value = `${perPage.value * (pagination.value - 1) + 1}- ${perPage.value * (pagination.value - 1) + pagedItems.length} of ${reviewList.value}`
+    })
 
-onMounted(async () => {
-  await reviewStore.requestEntireReviewListCount();
-  await updateItems();
-});
+    return {
+      headerTitle,
+      perPage,
+      pagination,
+      reviewList,
+      pagedItems,
+      perPageOptions,
+      prompt,
+      totalPages,
 
-watch(perPage, async () => {
-  pagination.value = 1;
-  await updateItems();
-});
-
-watch(pagination, async () => {
-  await updateItems();
-});
+      readRow,
+    }
+  }
+})
 </script>
 
 <style scoped>
