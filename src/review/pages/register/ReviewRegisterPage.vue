@@ -99,7 +99,7 @@ export default {
                 if (this.designScore == 0 || this.usabilityScore == 0 || this.qualityScore == 0 || this.responsiveScore == 0) {
                     alert('별점은 필수 입력 사항입니다!')
                 } else {
-                    this.user = localStorage.getItem('userToken')
+                    this.user = sessionStorage.getItem('userToken')
                     if (!this.user) {
                         this.user = 'anonymous'
                     }
@@ -111,7 +111,7 @@ export default {
                     this.$router.push('/review/list')
                 }
             } else {
-                this.user = localStorage.getItem('userToken')
+                this.user = sessionStorage.getItem('userToken')
                 if (!this.user) {
                     this.user = 'anonymous'
                 }

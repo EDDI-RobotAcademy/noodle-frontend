@@ -21,7 +21,7 @@ export default defineComponent({
 
         async function setRedirectData() {
             const response = await authenticationStore.requestAccessTokenToDjangoRedirection({ "code": code.value })
-            await localStorage.setItem('userToken', response.userToken)
+            await sessionStorage.setItem('userToken', response.userToken)
             router.push('/')
         }
 

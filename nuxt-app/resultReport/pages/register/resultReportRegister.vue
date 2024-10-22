@@ -1,9 +1,9 @@
 <template>
-    <v-container class="pa-0">
+    <v-container>
         <v-card class="mx-auto" max-width="1000">
             <!-- 프로젝트 제목 섹션 -->
             <v-card-title class="text-h4 font-weight-bold text-center pa-4">
-                <v-text-field v-model="projectTitle" label="" outlined dense></v-text-field>
+                <v-text-field v-model="projectTitle" label="프로젝트 제목" outlined dense></v-text-field>
             </v-card-title>
 
             <!-- 팀 구성 섹션 -->
@@ -133,7 +133,7 @@
                                 :cx="center" :cy="center" />
                             <circle :stroke="item.color" :stroke-width="strokeWidth" fill="transparent" :r="radius"
                                 :cx="center" :cy="center" :stroke-dasharray="circumference"
-                                :stroke-dashoffset="makeDashOffset(item.rate)" />
+                                :stroke-dashoffset="dashOffset(item.rate)" />
                             <text :x="center" :y="center" text-anchor="middle" :fill="item.color" font-size="20"
                                 font-weight="bold" dy=".3em">
                                 {{ item.rate }}%
@@ -155,15 +155,10 @@
             </v-card-text>
         </v-card>
 
-        <v-row justify="space-between" class="mt-4 mx-0">
-            <!-- 취소 버튼 -->
+        <!-- 등록 버튼 -->
+        <v-row justify="end" class="mt-4">
             <v-col cols="auto">
-                <v-btn color="primary" large @click="goToRead">취소</v-btn>
-            </v-col>
-            <!-- 등록 버튼 -->
-
-            <v-col cols="auto">
-                <v-btn color="secondary" large @click="submitReport">등록</v-btn>
+                <v-btn color="primary" large @click="submitReport">등록</v-btn>
             </v-col>
         </v-row>
     </v-container>
@@ -175,18 +170,14 @@ import { useRouter } from 'vue-router';
 
 export default defineComponent({
     setup() {
-        const router = useRouter();
+        const router = useRouter()
 
-        const projectTitle = ref("감자 여행 결과 보고서")
+        const projectTitle = ref('')
         const teamMembers = ref([
-            { department: '개발3팀', name: '김지민', role: '팀장' },
-            { department: '개발3팀', name: '이호준', role: '팀원' },
-            { department: '개발3팀', name: '이현석', role: '팀원' },
-            { department: '개발3팀', name: '정원형', role: '팀원' },
-            { department: '개발3팀', name: '정아람', role: '팀원' },
+            { department: '', name: '', role: '' }
         ])
-        const techStack = ref(['Vue.js', 'Python', 'Django', 'FastAPI'])
-        const features = ref(['여행지 추천', '패키지 상품을 통한 손쉬운 예약과 일정 관리', '리뷰 페이지로 확인 가능한 사용자들의 피드백'])
+        const techStack = ref(['Vue.js'])
+        const features = ref(['사용자 인증 및 권한 관리'])
         const usagePlans = ref([
             {
                 title: '서비스 확장',
@@ -209,6 +200,7 @@ export default defineComponent({
         const radius = computed(() => (size.value / 2) - (strokeWidth.value / 2))
         const center = computed(() => size.value / 2)
         const circumference = computed(() => 2 * Math.PI * radius.value)
+
 
         function addTeamMember() {
             teamMembers.value.push({ department: '', name: '', role: '' })
@@ -240,15 +232,10 @@ export default defineComponent({
         function removeImprovement(index) {
             improvements.value.splice(index, 1)
         }
-        function goToRead() {
-            // router.push(`/result-report/read/${id}`)
-            router.push(`/resultReport/read/1`)
-        }
         function submitReport() {
-            // router.push(`/resultReport/read/${id}`)
-            router.push(`/resultReport/read/12`)
+            router.push(`/resultReport/list`)
         }
-        function makeDashOffset(rate) {
+        function dashOffset(rate) {
             return circumference.value - (rate / 100 * circumference.value)
         }
 
@@ -277,9 +264,8 @@ export default defineComponent({
             removeUsagePlan,
             addImprovement,
             removeImprovement,
-            goToRead,
             submitReport,
-            makeDashOffset,
+            dashOffset
         }
     }
 })
@@ -299,9 +285,5 @@ export default defineComponent({
 .auto-expand-textarea {
     min-height: 100px;
     transition: height 0.3s ease;
-}
-
-.custom-button-position {
-    margin-right: 100px;
 }
 </style>
