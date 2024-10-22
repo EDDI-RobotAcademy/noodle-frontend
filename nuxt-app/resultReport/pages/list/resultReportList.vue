@@ -46,9 +46,9 @@ export default defineComponent({
             router.push(`/resultReport/read/${item.id}`)
         }
 
-        onMounted(() => {
-            // resultReportStore.requestResultReportListToDjango()
-        })
+        // onMounted(() => {
+        //     resultReportStore.requestResultReportListToDjango()
+        // })
 
         return {
             headerTitle,
