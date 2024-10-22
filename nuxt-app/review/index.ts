@@ -12,9 +12,17 @@ export default defineNuxtModule({
 
     nuxt.hook("pages:extend", (pages) => {
       pages.push({
-        name: "ReviewPage",
+        name: "ReviewListPage",
         path: "/review/list",
-        file: resolve(themeDir, "review/pages/reviewPage.vue"),
+        file: resolve(themeDir, "review/pages/list/reviewList.vue"),
+      });
+    });
+
+    nuxt.hook("pages:extend", (pages) => {
+      pages.push({
+        name: "ReviewPage",
+        path: "/review/register",
+        file: resolve(themeDir, "review/pages/register/reviewRegister.vue"),
       });
     });
 

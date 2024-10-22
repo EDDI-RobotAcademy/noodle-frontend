@@ -37,9 +37,9 @@
   </v-container>
 </template>
 
-<script setup>
+<script>
 import { ref, computed, onMounted, watch } from 'vue';
-import { useReviewStore } from '../stores/reviewStore';
+import { useReviewStore } from '../../stores/reviewStore';
 
 const reviewStore = useReviewStore();
 

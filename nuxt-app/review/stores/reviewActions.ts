@@ -7,7 +7,8 @@ export const reviewActions = {
 		const {djangoAxiosInst} = axiosUtility.createAxiosInstances();
     try {
       const res = await djangoAxiosInst.post('/review/list', { pagination, perPage });
-      this.reviewList = res.data.list;
+      const reviewStore = useReviewStore();
+      reviewStore.reviewList = res.data.list;
     } catch (error) {
       console.error('requestReviewListToDjango():' + error);
       throw error;
@@ -17,7 +18,8 @@ export const reviewActions = {
 		const {djangoAxiosInst} = axiosUtility.createAxiosInstances();
     try {
       const res = await djangoAxiosInst.post('/review/entire-count');
-      this.totalCount = res.data.count;
+      const reviewStore = useReviewStore();
+      reviewStore.totalCount = res.data.count;
     } catch (error) {
       console.error('requestEntireReviewListCount():' + error);
       throw error;
