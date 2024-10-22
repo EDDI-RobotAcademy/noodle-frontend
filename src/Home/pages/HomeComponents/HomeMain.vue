@@ -16,6 +16,7 @@
           </transition>
         </div>
         <SearchBox class="searchbox" :class="{ 'fade-in': showElements }" />
+        <ScrollAnimation />
       </div>
       <RecentReport class="recentreport" :class="{ 'fade-in': showElements }" />
   </div>
@@ -27,12 +28,14 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import SearchBox from './SearchBox.vue';
 import RecentReport from './RecentReport.vue';
+import ScrollAnimation from './ScrollAnimation.vue'
 
 export default {
   name: 'HomeMain',
   components: {
     SearchBox,
-    RecentReport
+    RecentReport,
+    ScrollAnimation
   },
   data() {
     return {
@@ -64,10 +67,11 @@ export default {
 
 <style scoped>
 .home-main-body {
-  background-image: url('~@/assets/images/fixed/main.jpg');
-  background-size: 150% auto;
-  background-position: 0% 50%;
-  animation: moveBackground 35s ease-in-out infinite alternate;
+  background-image: url('~@/assets/images/fixed/main.png');
+  background-size: auto 100%;
+  background-position: 0% center;
+  background-repeat: repeat-x;
+  animation: moveBackgroundX 30s linear infinite;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -76,12 +80,12 @@ export default {
   overflow: hidden;
 }
 
-@keyframes moveBackground {
+@keyframes moveBackgroundX {
   0% {
-    background-position: 0% 50%;
+    background-position: 0% center;
   }
   100% {
-    background-position: 100% 50%;
+    background-position: 100% center;
   }
 }
 
@@ -92,7 +96,7 @@ export default {
   height: 50vh;
   width: 40%;
   margin-left: 10%;
-  margin-top: 30vh;
+  margin-top: 20vh;
 }
 
 .title-area {
@@ -166,14 +170,5 @@ export default {
 .searchbox.fade-in, .recentreport.fade-in, .main-title.visible, .sub-introduce.visible {
   opacity: 1;
   transform: translateY(0);
-}
-
-@keyframes moveBackground {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 100% 50%;
-  }
 }
 </style>
