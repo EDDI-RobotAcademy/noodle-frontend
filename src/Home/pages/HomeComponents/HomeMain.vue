@@ -75,7 +75,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: calc(100vh - var(--navigation-bar-height));
   width: 100vw;
   overflow: hidden;
 }
