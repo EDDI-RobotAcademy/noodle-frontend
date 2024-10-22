@@ -7,7 +7,8 @@ export default defineNuxtConfig({
 		"./authentication/nuxt.config.ts",
 		"./projectManage/nuxt.config.ts",
 		"./resultReport/nuxt.config.ts",
-		"./review/nuxt.config.ts"
+		"./review/nuxt.config.ts",
+		"./survey/nuxt.config.ts",
 	],
 
 	css: ["vuetify/styles", "@mdi/font/css/materialdesignicons.min.css"],
@@ -29,6 +30,7 @@ export default defineNuxtConfig({
 		"~/projectManage/index.ts",
 		"~/resultReport/index.ts",
 		"~/review/index.ts"
+		"~/survey/index.ts",
 	],
 
 	imports: {
