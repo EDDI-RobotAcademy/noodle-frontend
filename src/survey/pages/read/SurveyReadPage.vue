@@ -48,7 +48,7 @@ export default {
     return {
       surveyTitle: '', // 설문조사 이름
       answers: {}, // 사용자의 답안을 저장하는 객체
-      alreadyParticipated: localStorage.getItem('alreadyParticipated')
+      alreadyParticipated: sessionStorage.getItem('alreadyParticipated')
     };
   },
   computed: {
@@ -69,7 +69,7 @@ export default {
       const payload = { "surveyId": this.surveyId, "answers": answers }
       console.log(answers)
       await this.requestCreateAnswerToDjango(payload)
-      await localStorage.setItem('alreadyParticipated', this.surveyId)
+      await sessionStorage.setItem('alreadyParticipated', this.surveyId)
       await this.$router.push({ name: 'ThankYouPage' })
     }
   },
