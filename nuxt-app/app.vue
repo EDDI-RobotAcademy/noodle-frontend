@@ -60,7 +60,7 @@ export default defineComponent({
       router.push('/projectManage')
     }
     function goToResultReport() {
-      router.push('/result-report/list2')
+      router.push('/resultReport/list')
     }
     function goToReview() {
       router.push('/review/list')
