@@ -22,12 +22,12 @@ export default {
             console.log('code:', code)
             const res = await this.requestAccessTokenToDjangoRedirection({ code })
             console.log('res:', res)
-            await localStorage.setItem('userToken', res.userToken)
+            await sessionStorage.setItem('userToken', res.userToken)
             this.$router.push('/')
         }
     },
     async created() {
-        const userToken = localStorage.getItem('userToken')
+        const userToken = sessionStorage.getItem('userToken')
         if (userToken) {
             this.$router.push('/')
         } else {

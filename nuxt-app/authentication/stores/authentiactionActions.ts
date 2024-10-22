@@ -30,10 +30,10 @@ export const authenticationActions = {
         const authenticationStore = useAuthenticationStore()
 
         try{
-            const userToken = localStorage.getItem('userToken');
+            const userToken = sessionStorage.getItem('userToken');
             await djangoAxiosInst.post('/github-oauth/github/logout', {"userToken": userToken})
             authenticationStore.isAuthenticated = false
-            localStorage.removeItem('userToken')
+            sessionStorage.removeItem('userToken')
         } catch(error){
             console.error("requestLogoutToDjango() axios 오류!", error)
         }
