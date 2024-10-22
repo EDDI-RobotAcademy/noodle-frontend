@@ -133,6 +133,13 @@
           </v-card>
         </div>
       </div>
+
+
+<!------------------------------------결과 보고서 출력 영역 -------------------------------------------->
+      <DragSection>
+        <h3>추후에 결과 보고서가 출력되도록 추가하면 될 듯</h3>
+      </DragSection>
+      
       <!-- <div class="select-container" v-else>
         <v-select :value="selectedRepository"></v-select>
         <v-select :value="selectedBranches"></v-select>
@@ -162,9 +169,13 @@ import { toRaw } from 'vue';
 const productManageModule = 'productManageModule'
 const authenticationModule = 'authenticationModule'
 const backlogModule = 'backlogModule'
+import DragSection from '@/project_manage/pages/ProjectManageComponents/DragSection.vue';
 
 export default {
   name: "App",
+  components: {
+    DragSection,
+  },
   setup() {
     const store = useStore()
 

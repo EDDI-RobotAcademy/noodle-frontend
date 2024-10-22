@@ -103,13 +103,17 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Gothic+Coding:wght@400;700&family=Nanum+Myeongjo:wght@400;700;800&family=Orbit&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
+:root {
+  --navigation-bar-height: 70px;
+}
+
 .nevigationbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: rgb(36, 36, 36);
     border-bottom: 3px solid #ffcc00;
-    height: 70px;
+    height: var(--navigation-bar-height);
 }
 
 .footer-noodle-logo {

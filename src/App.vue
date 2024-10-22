@@ -23,3 +23,9 @@ export default defineComponent({
   },
 })
 </script>
+
+<style>
+:root {
+  --navigation-bar-height: 70px;
+}
+</style>
