@@ -34,7 +34,7 @@ export default defineNuxtModule({
 					path: "/resultReport/read/1",
 					file: resolve(
 						themeDir,
-						"resultReport/pages/read/resultReportRead.vue"
+						"resultReport/pages/read/newResultReportRead.vue"
 					),
 				},
 				{
