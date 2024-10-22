@@ -9,6 +9,7 @@ export default defineNuxtConfig({
 		"./resultReport/nuxt.config.ts",
 		"./review/nuxt.config.ts",
 		"./survey/nuxt.config.ts",
+		"./backlog/nuxt.config.ts",
 	],
 
 	css: ["vuetify/styles", "@mdi/font/css/materialdesignicons.min.css"],
@@ -31,6 +32,7 @@ export default defineNuxtConfig({
 		"~/resultReport/index.ts",
 		"~/review/index.ts",
 		"~/survey/index.ts",
+		"~/backlog/index.ts",
 	],
 
 	imports: {
