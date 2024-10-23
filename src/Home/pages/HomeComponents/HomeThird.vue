@@ -1,11 +1,11 @@
 <template>
   <div class="home-third-body">
     <div class="left-content">
-      <p>NOODLE만이 가능한</p>
-      <p>개발자들을 위한 혁신</p>
+      <p class="fade-in first">NOODLE만이 가능한</p>
+      <p class="fade-in second">개발자들을 위한 혁신</p>
     </div>
 
-    <div class="right-content">
+    <div class="right-content" :class="{ 'fade-up': showRightContent, 'hidden': !showRightContent }">
       <div class="image-container"></div>
       <div class="text-container">
         <p>NOODLE은 개발자들이 개발에만 몰두할 수 있도록</p>
@@ -18,6 +18,16 @@
 <script>
 export default {
   name: 'HomeThird',
+  data() {
+    return {
+      showRightContent: false
+    }
+  },
+  mounted() {
+    setTimeout(() => {
+      this.showRightContent = true;
+    }, 1800); // 1.8초 후 (0.8초 딜레이 + 1초 애니메이션)
+  }
 };
 </script>
 
@@ -89,5 +99,46 @@ export default {
   font-size: 23px;
   font-weight: bold;
   padding-bottom: 50px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1s ease-in forwards;
+}
+
+.first {
+  animation-delay: 0s;
+}
+
+.second {
+  animation-delay: 0.8s;
+}
+
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 1s ease-out forwards;
+  visibility: visible;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>
