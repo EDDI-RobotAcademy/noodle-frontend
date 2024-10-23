@@ -32,15 +32,15 @@ export default defineComponent({
 
     const reports = ref([
       { id: 1, title: '감자 여행 결과 보고서', author: ['김지민', '김철수', '김영희'], date: '2024-10-14' },
-      { id: 2, title: '두 번째 보고서', author: '김철수', date: '2024-10-13' },
-      { id: 3, title: '세 번째 보고서', author: '김철수', date: '2024-10-13' },
-      { id: 4, title: '네 번째 보고서', author: '김철수', date: '2024-10-13' },
-      { id: 5, title: '다섯 번째 보고서', author: '김철수', date: '2024-10-13' },
-      { id: 6, title: '여섯 번째 보고서', author: '김철수', date: '2024-10-13' },
+      { id: 2, title: '없는 보고서', author: '김철수', date: '2024-10-13' },
+      { id: 3, title: '없는 보고서', author: '김철수', date: '2024-10-13' },
+      { id: 4, title: '없는 보고서', author: '김철수', date: '2024-10-13' },
+      { id: 5, title: '없는 보고서', author: '김철수', date: '2024-10-13' },
+      { id: 6, title: '없는 보고서', author: '김철수', date: '2024-10-13' },
     ])
     const recentReports = computed(() => reports.value.slice(0, 4))
 
-    function goToReport() {
+    function goToReport(id) {
       router.push(`/resultReport/read/${id}`)
     }
 

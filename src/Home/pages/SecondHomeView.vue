@@ -162,7 +162,7 @@ export default {
 
     const goToGithubLogout = async () => {
       await store.dispatch("authenticationModule/requestLogoutToDjango")
-      sessionStorage.removeItem("userToken")
+      localStorage.removeItem("userToken")
     }
 
     return {
@@ -176,7 +176,7 @@ export default {
       showCards: [false, false, false],
       isSearchActive: false,
       searchQuery: '',  // Model to hold the search input value
-      userToken: sessionStorage.getItem("userToken")
+      userToken: localStorage.getItem("userToken")
     };
   },
   computed: {

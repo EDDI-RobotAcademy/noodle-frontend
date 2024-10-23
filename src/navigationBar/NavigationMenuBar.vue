@@ -52,7 +52,7 @@ export default {
 
         const goToGithubLogout = async () => {
             await store.dispatch("authenticationModule/requestLogoutToDjango")
-            sessionStorage.removeItem("userToken")
+            localStorage.removeItem("userToken")
         }
 
         return {
@@ -88,7 +88,7 @@ export default {
         }
     },
     mounted() {
-        const token = sessionStorage.getItem('userToken');
+        const token = localStorage.getItem('userToken');
         if (token !== null) {
             this.$store.commit('authenticationModule/REQUEST_IS_AUTHENTICATED_TO_DJANGO', true);
         } else {

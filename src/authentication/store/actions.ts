@@ -41,7 +41,7 @@ const actions: AuthenticationActions = {
   },
   async requestLogoutToDjango({commit, state}: ActionContext<AuthenticationState, any>):Promise<any> {
     try {
-        const userToken = sessionStorage.getItem("userToken");
+        const userToken = localStorage.getItem("userToken");
         const res = await axiosInst.djangoAxiosInst.post("/github-oauth/github/logout", {userToken: userToken})
         console.log("res:", res)
         commit("REQUEST_IS_AUTHENTICATED_TO_DJANGO", false);
