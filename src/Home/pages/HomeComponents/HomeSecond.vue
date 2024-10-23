@@ -204,6 +204,7 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .gradient-overlay {
@@ -249,7 +250,13 @@ export default {
 .v-img {
   width: 100%;
   height: 100%;
+  transition: transform 0.3s ease;
 }
+
+.image-container:hover .v-img {
+  transform: scale(1.05);
+}
+
 /* .content-area{
   display: flex;
   justify-content: center;
