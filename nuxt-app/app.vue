@@ -70,7 +70,7 @@ export default defineComponent({
     }
 
     onMounted(async () => {
-      if (sessionStorage.getItem('userToken') != undefined) {
+      if (localStorage.getItem('userToken') != undefined) {
         authenticationStore.isAuthenticated = true
       }
     })
