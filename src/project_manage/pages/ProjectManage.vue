@@ -247,7 +247,7 @@ export default {
     async setRepositorySelect(event) {
       const selectedValue = event
       // this.selectedBranches = selectedValue
-      const userToken = sessionStorage.getItem('userToken')
+      const userToken = localStorage.getItem('userToken')
       const payload = { 'userToken': userToken, 'reponame': this.selectedRepository }
       await this.requestSaveBranchListToDjango(payload)
       const res = await this.requestGetBranchListToDjango(payload)
@@ -256,7 +256,7 @@ export default {
     async setBranchSelect(event) {
       const selectedValue = event
       // this.selectedBranches = selectedValue
-      const userToken = sessionStorage.getItem('userToken')
+      const userToken = localStorage.getItem('userToken')
       const payload = { 'userToken': userToken, 'reponame': this.selectedRepository, 'branchname': this.selectedBranches }
       await this.requestSaveCommitListToDjango(payload)
       const res = await this.requestGetCommitListToDjango(payload)
@@ -265,7 +265,7 @@ export default {
     },
     async Refresh() {
       this.isExample = false
-      const userToken = sessionStorage.getItem('userToken')
+      const userToken = localStorage.getItem('userToken')
       const payload = { 'userToken': userToken }
       await this.requestSaveReposListToDjango(payload)
       const res = await this.requestGetReposListToDjango(payload)
@@ -359,7 +359,7 @@ export default {
     }
   },
   mounted() {
-    if (sessionStorage.getItem('userToken')) {
+    if (localStorage.getItem('userToken')) {
       // 사용자 인증 과정 추가해야 함
     } else {
       alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.")

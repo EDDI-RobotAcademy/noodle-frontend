@@ -1,12 +1,11 @@
-import SecondHomeView from "@/Home/pages/SecondHomeView.vue"
+import ThirdHomeView from "@/Home/pages/ThirdHomeView.vue";
 
 const HomeRoutes = [
-    {
-      path: '/',
-      name: 'SecondHomeView',
-      component: SecondHomeView,
-    },
-    
-]
+	{
+		path: "/",
+		name: "ThirdHomeView",
+		component: ThirdHomeView,
+	},
+];
 
-export default HomeRoutes
+export default HomeRoutes;
