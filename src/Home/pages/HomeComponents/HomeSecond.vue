@@ -195,7 +195,8 @@ export default {
 .v-card {
   width: 80%;
   height: 40%;
-  border-radius: 20px;
+  border-radius: 25px;
+  background-color: #080808;  
 }
 
 .image-container {
@@ -205,10 +206,12 @@ export default {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-}
+  border-radius: 25px;
 
 .gradient-overlay {
   position: absolute;
+  /* width: 100%;
+  height: 100%; */
   top: 0;
   left: 0;
   right: 0;
@@ -220,8 +223,8 @@ export default {
                                           rgb(0, 0, 0,1) 80%,
                                           rgb(0, 0, 0,1) 90%,
                                           rgb(0, 0, 0,1) 100%);
+  }
 }
-
 .text-container {
   position: absolute;
   bottom: 20px;
@@ -251,6 +254,7 @@ export default {
   width: 100%;
   height: 100%;
   transition: transform 0.3s ease;
+  border-radius: 25px;
 }
 
 .image-container:hover .v-img {
@@ -319,3 +323,4 @@ export default {
 } */
 
 </style>
+
