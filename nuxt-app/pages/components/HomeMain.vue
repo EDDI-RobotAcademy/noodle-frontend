@@ -82,7 +82,7 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: center;
-  height: calc(100vh - var(--navigation-bar-height));
+  
   height: calc(100vh - 64px);
   width: 100vw;
   overflow: hidden;
