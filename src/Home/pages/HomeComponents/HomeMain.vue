@@ -178,5 +178,16 @@ export default {
   bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
+  animation: bounce 6s ease 0s infinite;
+  animation-delay: 5s;
+}
+
+@keyframes bounce {
+  0%, 10%, 20%, 95%, 100% {
+    transform: translateY(0);
+  }
+  5%, 15% {
+    transform: translateY(-10px);
+  }
 }
 </style>
