@@ -69,13 +69,14 @@ export default {
 #search {
   max-width: 640px;
   text-align: center;
-  padding: 1em;
+  /*padding: 1em;*/
   width: 100%;
 }
 
 #search-form {
   position: relative;
   height: 3em;
+  margin-top: 2em;
   margin-bottom: 1em;
   width: 100%;
 }

@@ -1,6 +1,6 @@
 <template>
     <!-- <a class="scroll" href="#">If you want to know more about NOODLE</a> -->
-    <a class="scroll" href="#">스크롤을 내려서 NOODLE에 대해서 더 알아보세요!</a>
+    <a class="scroll" href="#">Read more</a>
 </template>
 
 <script>
@@ -16,20 +16,6 @@ export default {
     box-sizing: border-box;
 }
 
-body {
-  position:relative;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items:center;
-  align-content: center;
-  justify-content: center;
-  font-family: "Helvetica", sans-serif;
-  font-size:14px;
-  line-height:1;
-  color: rgba(255,255,255,1);
-  background:rgba(108,34,245,1);
-}
 
 .scroll {
   position: relative;
