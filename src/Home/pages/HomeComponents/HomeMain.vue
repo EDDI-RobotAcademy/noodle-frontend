@@ -18,7 +18,7 @@
         <SearchBox class="searchbox" :class="{ 'fade-in': showElements }" />
       </div>
       <RecentReport class="recentreport" :class="{ 'fade-in': showElements }" />
-      <ScrollAnimation class="scrollanimation" :class="{ 'fade-in': showElements }"/>
+      <ScrollAnimation class="scrollanimation" :class="{ 'fade-in': showElements }" @click="goToHomeSecond"/>
   </div>
 </template>
 
@@ -60,6 +60,9 @@ export default {
           AOS.refresh();
         });
       }
+    },
+    goToHomeSecond() {
+      this.$emit('scroll-to-home-second');
     },
   },
 };

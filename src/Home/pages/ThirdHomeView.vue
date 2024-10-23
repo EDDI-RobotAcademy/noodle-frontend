@@ -1,10 +1,10 @@
 <template>
   <div id="Home_main">
-    <section id="Home_title_section">
-      <HomeTitleSection />
+    <section id="HomeMain">
+      <HomeMain @scroll-to-home-second="goToHomeSecond" />
     </section>
-    <section id="Home_content_section1">
-      <HomeContentSection1 />
+    <section id="HomeSecond">
+      <HomeSecond />
     </section>
     <section id="Home_content_section2">
       <HomeContentSection2 />
@@ -21,17 +21,18 @@
 <script>
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import HomeTitleSection from '@/Home/pages/HomeComponents/HomeMain.vue';
-import HomeContentSection1 from '@/Home/pages/HomeComponents/HomeSecond.vue';
+import HomeMain from '@/Home/pages/HomeComponents/HomeMain.vue';
+import HomeSecond from '@/Home/pages/HomeComponents/HomeSecond.vue';
 import HomeContentSection2 from '@/Home/pages/HomeComponents/HomeThird.vue';
 import HomeContentSection3 from '@/Home/pages/HomeComponents/HomeFourth.vue';
 import HomeContentSection4 from '@/Home/pages/HomeComponents/HomeFifth.vue';
+import SearchBox from '@/Home/pages/HomeComponents/SearchBox.vue';
 
 export default {
   name: 'ThirdHomeView',
   components: {
-    HomeTitleSection,
-    HomeContentSection1,
+    HomeMain,
+    HomeSecond,
     HomeContentSection2,
     HomeContentSection3,
     HomeContentSection4,
@@ -41,6 +42,21 @@ export default {
       duration: 1000, // 애니메이션 발동 총 시간
     });
   },
+  methods: {
+    goToHomeSecond() {
+      const element = document.getElementById('HomeSecond');
+      if (element) {
+        const offset = 50; // 원하는 오프셋 값 (픽셀 단위)
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - offset;
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }
+  }
 };
 </script>
 
@@ -52,8 +68,8 @@ body {
   box-sizing: border-box;
 }
 
-section {
+/* section {
   padding: 0 0 0 0;
   min-height: 100vh;
-}
+} */
 </style>
