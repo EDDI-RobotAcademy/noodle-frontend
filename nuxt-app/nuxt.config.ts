@@ -2,7 +2,7 @@ import { defineNuxtConfig } from "nuxt/config";
 
 export default defineNuxtConfig({
 	compatibilityDate: "2024-04-03",
-	devtools: { enabled: true },
+	devtools: { enabled: false },
 	extends: [
 		"./authentication/nuxt.config.ts",
 		"./projectManage/nuxt.config.ts",
@@ -19,8 +19,12 @@ export default defineNuxtConfig({
 	},
 
 	vite: {
+		server: {
+			ws: false,
+			hmr: false,
+		},
 		ssr: {
-			noExternal: ["vuetify"], // SSR에서도 Vuetify를 외부 패키지로 처리하지 않도록 설정
+			noExternal: ["vuetify"],
 		},
 	},
 
