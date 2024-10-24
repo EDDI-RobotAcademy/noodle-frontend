@@ -70,8 +70,11 @@ export default defineComponent({
     }
 
     onMounted(async () => {
-      if (localStorage.getItem('userToken') != undefined) {
-        authenticationStore.isAuthenticated = true
+      if (authenticationStore.isAuthenticated != undefined) {
+        await authenticationStore.requestUserTokenValidationToDjango()
+        if (authenticationStore.isAuthenticated == false) {
+          localStorage.removeItem('userToken')
+        }
       }
     })
 

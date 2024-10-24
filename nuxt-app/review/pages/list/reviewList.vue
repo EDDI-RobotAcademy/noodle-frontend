@@ -72,7 +72,6 @@ export default defineComponent({
       reviewList.value = await reviewStore.requestEntireReviewListCount()
       const payload = { pagination: pagination.value, perPage: perPage.value }
       pagedItems.value = await reviewStore.requestReviewListToDjango(payload)
-      console.log(pagedItems.value)
       prompt.value = `${perPage.value * (pagination.value - 1) + 1}- ${perPage.value * (pagination.value - 1) + pagedItems.length} of ${reviewList.value}`
     })
 
