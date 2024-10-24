@@ -207,6 +207,7 @@ export default {
   flex-direction: column;
   overflow: hidden;
   border-radius: 25px;
+}
 
 .gradient-overlay {
   position: absolute;
@@ -224,7 +225,7 @@ export default {
                                           rgb(0, 0, 0,1) 90%,
                                           rgb(0, 0, 0,1) 100%);
   }
-}
+ 
 .text-container {
   position: absolute;
   bottom: 20px;
