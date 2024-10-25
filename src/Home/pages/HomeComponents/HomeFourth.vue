@@ -9,6 +9,16 @@
       </div>
     </div>
 
+
+    <div class="right-container">
+      <div class="background-image-container">
+        <div class="right-content">
+          <p>초기 구성</p>
+          <p>초기 구성</p>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -52,5 +62,48 @@ export default {
   font-weight: bold;
   padding-bottom: 50px;
 }
+.right-container {
+  width: 50%;
+  height: 100%;
+}
 
+.background-image-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.background-image-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('@/assets/images/fixed/homethird_image_right.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.3;
+  z-index: 1;
+}
+
+.right-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding-left: 100px;
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.right-content p {
+  font-size: 65px;
+  font-weight: bold;
+  color: #fff;
+}
 </style>
