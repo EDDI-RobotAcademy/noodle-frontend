@@ -116,10 +116,12 @@
 <script>
 import { defineComponent, onMounted } from 'vue';
 import { useProjectManageStore } from '../stores/projectManageStore';
+import { useBacklogStore } from '../../backlog/store/backlogStore';
 
 export default defineComponent({
     setup() {
         const projectManageStore = useProjectManageStore();
+        const backlogStore = useBacklogStore();
 
         const isChecked = ref(true)
         const columns = ref([
@@ -196,67 +198,70 @@ export default defineComponent({
                 console.log(proxyData.value)
                 exampleCommits.value = toRaw(proxyData.value)
 
-                // const payload = { 'username': 'EDDI-RobotAcademy', 'reponame': "noodle-backend", "branchname": "develop" }
-                backlogList.value = [
-                    {
-                        "Title": "Django Command-Line Utility",
-                        "Success Criteria": "The command-line utility should run without errors and set the Django settings module correctly.",
-                        "Domain Separation": "Core utility functions.",
-                        "Task List": [
-                            "Implement error handling for missing Django installation.",
-                            "Ensure the environment variable for settings is configurable.",
-                        ],
-                    },
-                    {
-                        "Title": "Commits Model Migration",
-                        "Success Criteria": "The migration should create the `Commits` table with the specified fields.",
-                        "Domain Separation": "Database migrations.",
-                        "Task List": [
-                            "Verify the migration file is generated correctly.",
-                            "Test the migration on a local database.",
-                        ],
-                    },
-                    {
-                        "Title": "Commits Repository Implementation",
-                        "Success Criteria": "The repository should save commits from GitHub and handle pagination correctly.",
-                        "Domain Separation": "Data access layer.",
-                        "Task List": [
-                            "Implement the `saveCommits` method.",
-                            "Handle API response and errors.",
-                            "Write unit tests for the repository methods.",
-                        ],
-                    },
-                    {
-                        "Title": "Commits Service Implementation",
-                        "Success Criteria": "The service should interact with the repository and return commit data correctly.",
-                        "Domain Separation": "Business logic layer.",
-                        "Task List": [
-                            "Implement the `save` and `list` methods.",
-                            "Ensure proper error handling and logging.",
-                            "Write unit tests for service methods.",
-                        ],
-                    },
-                    {
-                        "Title": "Commits View Implementation",
-                        "Success Criteria": "The view should handle HTTP requests and return appropriate responses.",
-                        "Domain Separation": "API layer.",
-                        "Task List": [
-                            "Implement the `save` and `list` methods in the view.",
-                            "Validate request data and handle errors.",
-                            "Write integration tests for the view.",
-                        ],
-                    },
-                    {
-                        "Title": "GitHub OAuth Integration",
-                        "Success Criteria": "The application should authenticate users via GitHub and store access tokens securely.",
-                        "Domain Separation": "Authentication layer.",
-                        "Task List": [
-                            "Implement OAuth flow in the `OauthView`.",
-                            "Store and retrieve access tokens using Redis.",
-                            "Write tests for the OAuth functionality.",
-                        ],
-                    },
-                ]
+                const payload = { 'username': 'EDDI-RobotAcademy', 'reponame': "noodle-backend", "branchname": "develop" }
+                await backlogStore.requestGenerateBacklogToFastAPI(payload)
+                backlogList.value = await backlogStore.requestBacklogListToFastAPI()
+
+                // backlogList.value = [
+                //     {
+                //         "Title": "Django Command-Line Utility",
+                //         "Success Criteria": "The command-line utility should run without errors and set the Django settings module correctly.",
+                //         "Domain Separation": "Core utility functions.",
+                //         "Task List": [
+                //             "Implement error handling for missing Django installation.",
+                //             "Ensure the environment variable for settings is configurable.",
+                //         ],
+                //     },
+                //     {
+                //         "Title": "Commits Model Migration",
+                //         "Success Criteria": "The migration should create the `Commits` table with the specified fields.",
+                //         "Domain Separation": "Database migrations.",
+                //         "Task List": [
+                //             "Verify the migration file is generated correctly.",
+                //             "Test the migration on a local database.",
+                //         ],
+                //     },
+                //     {
+                //         "Title": "Commits Repository Implementation",
+                //         "Success Criteria": "The repository should save commits from GitHub and handle pagination correctly.",
+                //         "Domain Separation": "Data access layer.",
+                //         "Task List": [
+                //             "Implement the `saveCommits` method.",
+                //             "Handle API response and errors.",
+                //             "Write unit tests for the repository methods.",
+                //         ],
+                //     },
+                //     {
+                //         "Title": "Commits Service Implementation",
+                //         "Success Criteria": "The service should interact with the repository and return commit data correctly.",
+                //         "Domain Separation": "Business logic layer.",
+                //         "Task List": [
+                //             "Implement the `save` and `list` methods.",
+                //             "Ensure proper error handling and logging.",
+                //             "Write unit tests for service methods.",
+                //         ],
+                //     },
+                //     {
+                //         "Title": "Commits View Implementation",
+                //         "Success Criteria": "The view should handle HTTP requests and return appropriate responses.",
+                //         "Domain Separation": "API layer.",
+                //         "Task List": [
+                //             "Implement the `save` and `list` methods in the view.",
+                //             "Validate request data and handle errors.",
+                //             "Write integration tests for the view.",
+                //         ],
+                //     },
+                //     {
+                //         "Title": "GitHub OAuth Integration",
+                //         "Success Criteria": "The application should authenticate users via GitHub and store access tokens securely.",
+                //         "Domain Separation": "Authentication layer.",
+                //         "Task List": [
+                //             "Implement OAuth flow in the `OauthView`.",
+                //             "Store and retrieve access tokens using Redis.",
+                //             "Write tests for the OAuth functionality.",
+                //         ],
+                //     },
+                // ]
             } catch (error) {
                 console.error("Error fetching commits:", error)
             }
