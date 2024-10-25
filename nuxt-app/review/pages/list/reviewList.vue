@@ -5,7 +5,7 @@
     <!-- 리뷰 목록 테이블 -->
     <v-data-table v-model:items-per-page.sync="perPage" :headers="headerTitle" :items="pagedItems"
       :pagination.sync="pagination" class="elevation-1 review-table" @click:row="readRow" item-value="reviewId"
-      :items-per-page-options="perPageOptions" :pageText="prompt" hide-default-footer />
+      :items-per-page-options="perPageOptions" :pageText="prompt" hide-default-footer :loading="isLoading" />
 
     <!-- 페이지네이션 -->
     <v-pagination v-model="pagination" :length="totalPages" color="primary" @input="updateItems" :total-visible="5"
@@ -25,11 +25,13 @@
 <script>
 import { defineComponent, onMounted } from 'vue';
 import { useReviewStore } from '../../stores/reviewStore';
+import { useRoute } from 'vue-router';
 
 export default defineComponent({
   setup() {
     const reviewStore = useReviewStore();
     const router = useRouter();
+    const route = useRoute();
 
     const headerTitle = ref([
       { text: '작성자', align: 'start', value: 'writer' },
@@ -37,7 +39,7 @@ export default defineComponent({
       { text: '작성일자', align: 'end', value: 'regDate' }
     ])
     const perPage = ref(10)
-    const pagination = ref(1)
+    const pagination = ref(Number(route.params.page))
     const reviewList = ref(0)
     const pagedItems = ref([])
     const perPageOptions = ref([
@@ -45,6 +47,7 @@ export default defineComponent({
       { value: 25, title: '25' },
       { value: 50, title: '50' }
     ])
+    const isLoading = ref(true)
     const prompt = ref('')
     const totalPages = computed(() => {
       return Math.ceil(reviewList.value / perPage.value)
@@ -56,7 +59,8 @@ export default defineComponent({
       prompt.value = `${perPage.value * (pagination.value - 1) + 1}- ${perPage.value * (pagination.value - 1) + pagedItems.length} of ${reviewList.value}`
     }
     function readRow(event, item) {
-      router.push(`/review/read/${item.item.id}`)
+      console.log(pagination)
+      router.push(`/review/read/${route.params.page}/${item.item.id}`)
     }
 
     watch(perPage, (newPerPage) => {
@@ -64,15 +68,16 @@ export default defineComponent({
       updateItems()
     })
     watch(pagination, (index) => {
-      pagination.value = index
-      updateItems()
+      router.push(`/review/list/${index}`)
     })
 
     onMounted(async () => {
+      const page = pagination.value
       reviewList.value = await reviewStore.requestEntireReviewListCount()
-      const payload = { pagination: pagination.value, perPage: perPage.value }
+      const payload = { pagination: page, perPage: perPage.value }
       pagedItems.value = await reviewStore.requestReviewListToDjango(payload)
-      prompt.value = `${perPage.value * (pagination.value - 1) + 1}- ${perPage.value * (pagination.value - 1) + pagedItems.length} of ${reviewList.value}`
+      prompt.value = `${perPage.value * (page - 1) + 1}- ${perPage.value * (page - 1) + pagedItems.length} of ${reviewList.value}`
+      isLoading.value = false
     })
 
     return {
@@ -84,6 +89,7 @@ export default defineComponent({
       perPageOptions,
       prompt,
       totalPages,
+      isLoading,
 
       readRow,
     }

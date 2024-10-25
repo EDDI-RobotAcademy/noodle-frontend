@@ -37,6 +37,7 @@ const reviewStore = useReviewStore();
 const route = useRoute();
 const router = useRouter();
 
+const beforeListPageNumber = ref(Number(route.params.page))
 const id = ref(route.params.id);
 
 const isSelectionReview = ref(true);
@@ -71,7 +72,7 @@ async function getReviewData() {
 }
 
 function goToReviewListPage() {
-    router.push("/review/list");
+    router.push(`/review/list/${beforeListPageNumber.value}`);
 }
 
 onMounted(async () => {
