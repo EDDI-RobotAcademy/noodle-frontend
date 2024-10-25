@@ -14,7 +14,7 @@ export default defineNuxtModule({
 			pages.push(
 				{
 					name: "ReviewListPage",
-					path: "/review/list",
+					path: "/review/list/:page",
 					file: resolve(themeDir, "review/pages/list/reviewList.vue"),
 				},
 				{
@@ -27,7 +27,7 @@ export default defineNuxtModule({
 				},
 				{
 					name: "reviewRead",
-					path: "/review/read/:id",
+					path: "/review/read/:page/:id",
 					file: resolve(themeDir, "review/pages/read/reviewRead.vue"),
 				}
 			);
