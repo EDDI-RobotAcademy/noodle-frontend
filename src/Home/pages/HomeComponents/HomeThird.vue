@@ -13,9 +13,9 @@
 
     <div class="right-content" 
         data-aos="fade-up" 
-        data-aos-delay="2000"
+        data-aos-delay="1500"
         data-aos-anchor="#second-text"
-        data-aos-duration="1300">
+        data-aos-duration="1500">
       <div class="image-container"></div>
       <div class="text-container">
         <p>NOODLE은 개발자들이 개발에만 몰두할 수 있도록</p>
