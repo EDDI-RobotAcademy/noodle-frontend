@@ -34,8 +34,8 @@ export default {
   mounted() {
     AOS.init({
       once: false,
-      duration: 2000,
-      offset: 600,
+      duration: 1500,
+      offset: 500,
     });
   }
 };
