@@ -118,7 +118,62 @@ import { defineComponent, onMounted } from 'vue';
 import { useProjectManageStore } from '../stores/projectManageStore';
 import { useBacklogStore } from '../../backlog/store/backlogStore';
 
+
 export default defineComponent({
+    head() {
+        return {
+        title: '코드 기반 백로그 생성 및 프로젝트 관리 - NOODLE',
+        meta: [
+            {
+            name: 'description',
+            content: 'Noodle을 통해 GitHub 코드에서 백로그를 자동 생성하고 프로젝트를 효과적으로 관리하세요. 코드 기반 백로그 생성을 통해 개발 효율성을 극대화하세요.'
+            },
+            {
+            name: 'keywords',
+            content: '코드 기반 백로그 생성, 프로젝트 관리, NOODLE, GitHub 연동, 백로그 관리, 애자일, 애자일 프로세스, 협업, 협업 관리 도구, AI 협업 도구'
+            },
+            {
+            property: 'og:title',
+            content: '코드 기반 백로그 생성 및 프로젝트 관리 - NOODLE'
+            },
+            {
+            property: 'og:description',
+            content: 'NOODLE을 통해 GitHub 코드에서 백로그를 자동 생성하고 프로젝트를 효과적으로 관리하세요.'
+            },
+            {
+            property: 'og:image',
+            content: '/public/fixed/NOODLE_logo.png'
+            },
+            {
+            property: 'og:type',
+            content: 'website'
+            },
+            {
+            name: 'twitter:card',
+            content: 'summary_large_image'
+            },
+            {
+            name: 'twitter:title',
+            content: 'NOODLE | Use Your Noodle!'
+            },
+            {
+            name: 'twitter:description',
+            content: 'NOODLE을 통해 GitHub 코드에서 백로그를 자동 생성하고 프로젝트를 효과적으로 관리하세요.'
+            },
+            {
+            name: 'twitter:image',
+            content: '/public/fixed/NOODLE_logo.png'
+            }
+        ],
+         link: [
+          {
+             rel: 'canonical',
+           href: 'https://noo-dle.com/projectManage'
+          }
+        ]
+      };
+    },
+
     setup() {
         const projectManageStore = useProjectManageStore();
         const backlogStore = useBacklogStore();
