@@ -10,6 +10,7 @@ export default defineNuxtConfig({
 		"./review/nuxt.config.ts",
 		"./survey/nuxt.config.ts",
 		"./backlog/nuxt.config.ts",
+		"./payments/nuxt.config.ts",
 	],
 
 	css: ["vuetify/styles", "@mdi/font/css/materialdesignicons.min.css"],
@@ -37,6 +38,7 @@ export default defineNuxtConfig({
 		"~/review/index.ts",
 		"~/survey/index.ts",
 		"~/backlog/index.ts",
+		"~/payments/index.ts",
 	],
 
 	imports: {
@@ -47,6 +49,7 @@ export default defineNuxtConfig({
 		public: {
 			MAIN_API_URL: process.env.VUE_APP_BASE_URL,
 			AI_BASE_URL: process.env.VUE_APP_AI_BASE_URL,
+			TOSS_CLIENT_KEY : process.env.TOSS_CLIENT_KEY
 			// AWS_REGION: process.env.VUE_APP_AWS_REGION,
 			// AWS_S3_IDENTITY_POOL: process.env.VUE_APP_AWS_S3_IDENTITY_POOL_ID,
 		},
