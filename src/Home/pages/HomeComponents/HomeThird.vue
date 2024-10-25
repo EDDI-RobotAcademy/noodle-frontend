@@ -13,8 +13,9 @@
         >
       <div class="image-container"></div>
       <div class="text-container">
-        <p>NOODLE은 개발자들이 개발에만 몰두할 수 있도록</p>
-        <p>업무의 Backlog를 자동 생성하여 개발 업무의 혁신을 꿈꿉니다.</p>
+        <p>NOODLE은 개발자들의 업무 효율을 높이기 위해</p>
+        <p>Backlog를 자동으로 생성해드리는 서비스를 제공하여</p>
+        <p>개발 업무의 혁신을 꿈꿉니다.</p>
       </div>
     </div>
   </div>
@@ -108,7 +109,7 @@ export default {
 
 .text-container {
   color: #fff;
-  font-size: 23px;
+  font-size: 20px;
   font-weight: bold;
   padding-bottom: 50px;
 }
