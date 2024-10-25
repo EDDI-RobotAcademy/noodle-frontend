@@ -11,11 +11,32 @@ export default defineNuxtModule({
 		const themeDir = resolve(__dirname, "..");
 
 		nuxt.hook("pages:extend", (pages) => {
-			pages.push({
-				name: "paymentsTestPage",
-				path: "/payments/test/page/90785634",
-				file: resolve(themeDir, "payments/pages/testPayments.vue"),
-			});
+			pages.push(
+				{
+					name: "paymentsTestPage",
+					path: "/payments/test/page/90785634",
+					file: resolve(
+						themeDir,
+						"payments/pages/startPayment/testPayments.vue"
+					),
+				},
+				{
+					name: "paymentSuccessed",
+					path: "/payment/success",
+					file: resolve(
+						themeDir,
+						"payments/pages/paymentStatus/paymentSuccessed.vue"
+					),
+				},
+				{
+					name: "paymentFailed",
+					path: "/payment/fail",
+					file: resolve(
+						themeDir,
+						"payments/pages/paymentStatus/paymentFailed.vue"
+					),
+				}
+			);
 		});
 
 		nuxt.hook("imports:dirs", (dirs) => {

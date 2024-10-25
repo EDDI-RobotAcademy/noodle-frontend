@@ -20,10 +20,10 @@ export default defineNuxtConfig({
 	},
 
 	vite: {
-		server: {
-			ws: false,
-			hmr: false,
-		},
+		// server: {
+		// 	ws: false,
+		// 	hmr: true,
+		// },
 		ssr: {
 			noExternal: ["vuetify"],
 		},
@@ -49,7 +49,8 @@ export default defineNuxtConfig({
 		public: {
 			MAIN_API_URL: process.env.VUE_APP_BASE_URL,
 			AI_BASE_URL: process.env.VUE_APP_AI_BASE_URL,
-			TOSS_CLIENT_KEY : process.env.TOSS_CLIENT_KEY
+			TOSS_CLIENT_KEY : process.env.TOSS_CLIENT_KEY,
+			TOSS_SECRET_KEY : process.env.TOSS_SECRET_KEY,
 			// AWS_REGION: process.env.VUE_APP_AWS_REGION,
 			// AWS_S3_IDENTITY_POOL: process.env.VUE_APP_AWS_S3_IDENTITY_POOL_ID,
 		},
