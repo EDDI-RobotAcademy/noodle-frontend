@@ -1,7 +1,9 @@
 <template>
   <div class="home-fourth-body">
 
-    <div class="left-container">
+    <div class="left-container"
+          data-aos="fade-up"
+          data-aos-delay="600">
       <div class="image-container"></div>
       <div class="text-container">
         <p>초기 구성</p>
@@ -12,7 +14,8 @@
 
     <div class="right-container">
       <div class="background-image-container">
-        <div class="right-content">
+        <div class="right-content"
+              data-aos="fade-in">
           <p>초기 구성</p>
           <p>초기 구성</p>
         </div>
@@ -23,8 +26,18 @@
 </template>
 
 <script>
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
 export default {
   name: 'HomeFourth',
+  mounted() {
+    AOS.init({
+      once: false,
+      duration: 2000,
+      offset: 600,
+    });
+  }
 };
 </script>
 
