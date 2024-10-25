@@ -63,7 +63,7 @@ export default defineComponent({
       router.push('/resultReport/list')
     }
     function goToReview() {
-      router.push('/review/list')
+      router.push('/review/list/1')
     }
     function goToHome() {
       router.push('/')
