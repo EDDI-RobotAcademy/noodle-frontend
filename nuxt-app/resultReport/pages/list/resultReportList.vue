@@ -15,6 +15,56 @@ import { useResultReportStore } from '../../stores/resultReportStore';
 import { useRouter } from 'vue-router';
 
 export default defineComponent({
+    head() {
+        return {
+            title: 'AI를 활용한 코드 기반 결과 보고서 생성 - NOODLE',
+            meta: [
+                {
+                    name: 'description',
+                    content: 'Noodle을 통해 GitHub 코드에서 개발 보고서를 자동으로 생성하고 프로젝트를 효과적으로 관리하세요. 코드 기반 보고서 생성을 통해 개발 효율성을 극대화하세요.'
+                },
+                {
+                    name: 'keywords',
+                    content: 'AI, LLM, 코드 기반 보고서 생성, 보고서 생성, 프로젝트 관리, NOODLE, GitHub 연동, 보고서 관리, LLM, AI 생성'
+                },
+                {
+                    property: 'og:title',
+                    content: 'AI를 활용한 코드 기반 보고서 생성 - NOODLE'
+                },
+                {
+                    property: 'og:description',
+                    content: 'NOODLE을 통해 GitHub 코드에서 개발 보고서를 자동으로 생성하고 프로젝트를 효과적으로 관리하세요. 코드 기반 보고서 생성을 통해 개발 효율성을 극대화하세요.'
+                },
+                {
+                    property: 'og:image',
+                    content: '/public/fixed/NOODLE_logo.png'
+                },
+                {
+                    property: 'og:type',
+                    content: 'website'
+                },
+                {
+                    name: 'twitter:title',
+                    content: 'NOODLE | Use Your Noodle!'
+                },
+                {
+                    name: 'twitter:description',
+                    content: 'NOODLE을 통해 GitHub 코드에서 개발 보고서를 자동으로 생성하고 프로젝트를 효과적으로 관리하세요.'
+                },
+                {
+                    name: 'twitter:image',
+                    content: '/public/fixed/NOODLE_logo.png'
+                }
+            ],
+            link: [
+                {
+                    rel: 'canonical',
+                    href: 'https://noo-dle.com/resultReport/list'
+                }
+            ]
+        };
+    },
+
     setup() {
         const resultReportStore = useResultReportStore();
         const router = useRouter();
