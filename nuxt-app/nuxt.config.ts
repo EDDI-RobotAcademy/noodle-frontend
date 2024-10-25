@@ -20,6 +20,10 @@ export default defineNuxtConfig({
 	},
 
 	vite: {
+    server: {
+			ws: false,
+			hmr: true,
+		},
 		ssr: {
 			noExternal: ["vuetify"], // SSR에서도 Vuetify를 외부 패키지로 처리하지 않도록 설정
 		},
@@ -46,7 +50,8 @@ export default defineNuxtConfig({
 		public: {
 			MAIN_API_URL: process.env.VUE_APP_BASE_URL,
 			AI_BASE_URL: process.env.VUE_APP_AI_BASE_URL,
-			TOSS_CLIENT_KEY : process.env.TOSS_CLIENT_KEY
+			TOSS_CLIENT_KEY : process.env.TOSS_CLIENT_KEY,
+			TOSS_SECRET_KEY : process.env.TOSS_SECRET_KEY,
 			// AWS_REGION: process.env.VUE_APP_AWS_REGION,
 			// AWS_S3_IDENTITY_POOL: process.env.VUE_APP_AWS_S3_IDENTITY_POOL_ID,
 		},
