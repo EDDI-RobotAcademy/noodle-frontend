@@ -1,32 +1,38 @@
 <template>
   <div class="home-third-body">
-    <div class="left-content">
-      <p class="fade-in first">NOODLE만이 가능한</p>
-      <p class="fade-in second">개발자들을 위한 혁신</p>
+    <div class="background-image-container">
+      <div class="left-content" 
+          data-aos="fade-in">
+        <p>NOODLE만이 가능한</p>
+        <p>개발자들을 위한 혁신</p>
+      </div>
     </div>
-
-    <div class="right-content" :class="{ 'fade-up': showRightContent, 'hidden': !showRightContent }">
+    <div class="right-content" 
+        data-aos="fade-up" 
+        data-aos-delay="600"
+        >
       <div class="image-container"></div>
       <div class="text-container">
-        <p>NOODLE은 개발자들이 개발에만 몰두할 수 있도록</p>
-        <p>업무의 Backlog를 자동 생성하여 개발 업무의 혁신을 꿈꿉니다.</p>
+        <p>NOODLE은 개발자들의 업무 효율을 높이기 위해</p>
+        <p>Backlog를 자동으로 생성해드리는 서비스를 제공하여</p>
+        <p>개발 업무의 혁신을 꿈꿉니다.</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
 export default {
-  name: 'HomeThird',
-  data() {
-    return {
-      showRightContent: false
-    }
-  },
+  name: 'HomeTHird',
   mounted() {
-    setTimeout(() => {
-      this.showRightContent = true;
-    }, 1800); // 1.8초 후 (0.8초 딜레이 + 1초 애니메이션)
+    AOS.init({
+      once: false,
+      duration: 2000,
+      offset: 600,
+    });
   }
 };
 </script>
@@ -39,20 +45,13 @@ export default {
   height: 100vh;
 }
 
-.left-content {
+.background-image-container {
   width: 50%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-end;
-  padding-right: 100px;
-  padding-bottom: 100px;
   position: relative;
-  overflow: hidden;
 }
 
-.left-content::before {
+.background-image-container::before {
   content: "";
   position: absolute;
   top: 0;
@@ -67,11 +66,25 @@ export default {
   z-index: 1;
 }
 
+.left-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  padding-right: 100px;
+  padding-bottom: 100px;
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+}
+
+
 .left-content p {
   font-size: 65px;
   font-weight: bold;
   color: #fff;
-  z-index: 2;
 }
 
 .right-content {
@@ -96,49 +109,9 @@ export default {
 
 .text-container {
   color: #fff;
-  font-size: 23px;
+  font-size: 20px;
   font-weight: bold;
   padding-bottom: 50px;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.fade-in {
-  opacity: 0;
-  animation: fadeIn 1s ease-in forwards;
-}
-
-.first {
-  animation-delay: 0s;
-}
-
-.second {
-  animation-delay: 0.8s;
-}
-
-.hidden {
-  opacity: 0;
-  visibility: hidden;
-}
-
-.fade-up {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeUp 1s ease-out forwards;
-  visibility: visible;
-}
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 </style>
