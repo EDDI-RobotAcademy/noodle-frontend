@@ -45,12 +45,12 @@ export default defineComponent({
                 if (paymentWidget.value) {
                     await paymentWidget.value.requestPayment({
                         orderId: nanoid(),
-                        orderName: "크아아악",
-                        customerName: "뭐 어쩌라고",
-                        customerEmail: "fuck@gmail.com",
+                        orderName: "Noodle",
+                        customerName: "Meue-L",
+                        customerEmail: "abcdabcd@gmail.com",
                         customerMobilePhone: "01012341234",
-                        successUrl: `${window.location.origin}/success`,
-                        failUrl: `${window.location.origin}/fail`
+                        successUrl: `${window.location.origin}/payment/success`,
+                        failUrl: `${window.location.origin}/payment/fail`
                     })
                 }
             } catch (error) {
@@ -65,7 +65,6 @@ export default defineComponent({
             } else {
                 paymentMethodWidget.value.updateAmount(amount.value);
             }
-            console.log(amount.value)
         }
 
         onMounted(async () => {
