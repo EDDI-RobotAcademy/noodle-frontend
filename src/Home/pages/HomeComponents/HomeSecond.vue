@@ -7,13 +7,13 @@
     </div>
   <div class="content-area">
     <div class="content-container">
-      <div class="content-title" data-aos="fade-up" data-aos-delay="100">
+      <div class="content-title" data-aos="fade-up">
         <p>NOODLE에서는</p>
         <p>이런 서비스를 제공합니다.</p>
       </div>
       <div class="image-container">
         <div class="image-card-container">
-        <v-card data-aos="fade-up" data-aos-delay="100">
+        <v-card data-aos="fade-up" data-aos-anchor=".content-title">
             <div class="image-card">
               <v-img src="@/assets/images/fixed/github_logo2.png" cover>
                 <div class="gradient-overlay"></div>
@@ -29,7 +29,7 @@
               </div>
             </div>
           </v-card>
-          <v-card data-aos="fade-up" data-aos-delay="300">
+          <v-card data-aos="fade-up" data-aos-anchor=".content-title" data-aos-delay="200">
             <div class="image-card">
               <v-img src="@/assets/images/fixed/search.jpg" cover>
                 <div class="gradient-overlay"></div>
@@ -45,7 +45,7 @@
               </div>
             </div>
           </v-card>
-          <v-card data-aos="fade-up" data-aos-delay="500">
+          <v-card data-aos="fade-up" data-aos-anchor=".content-title" data-aos-delay="400">
             <div class="image-card">
               <v-img src="@/assets/images/fixed/create_backlog.jpg" cover>
                 <div class="gradient-overlay"></div>
@@ -61,7 +61,7 @@
               </div>
             </div>
           </v-card>
-          <v-card data-aos="fade-up" data-aos-delay="700">
+          <v-card data-aos="fade-up" data-aos-anchor=".content-title" data-aos-delay="600">
             <div class="image-card">
               <v-img src="@/assets/images/fixed/create_report.jpg" cover>
                 <div class="gradient-overlay"></div>
@@ -113,7 +113,7 @@ export default {
 
 }
 .home-second-body {
-  width: 80%;
+  width: 70%;
   height: 100%;
   background-color: #080808;
 }
@@ -129,7 +129,6 @@ export default {
 
 .title-container p{
   color: #ffffff;
-  padding-left: 200px;
 }
 
 .title{
@@ -167,7 +166,6 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-left: 200px;
 }
 
 .content-title p{
@@ -187,13 +185,12 @@ export default {
   height: 490px;
   display: flex;
   align-items: center;
-  padding-left: 200px;
   gap: 60px;
 }
 
 .v-card {
   width: 500px;
-  height: 500px;
+  height: 450px;
   border-radius: 25px;
   background-color: #080808;  
 }
