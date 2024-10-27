@@ -39,8 +39,7 @@
                   <p>생성된 보고서 검색</p>
                 </div>
                 <div class="image-card-text">
-                  <p>생성한 프로젝트 보고서를 쉽게 검색하여</p>
-                  <p>확인할 수 있습니다.</p>
+                  <p>생성한 프로젝트 보고서를 쉽게 검색하여 확인할 수 있습니다.</p>
                 </div>
               </div>
             </div>
@@ -93,7 +92,7 @@ export default {
   name: 'HomeSecond',
   mounted() {
     AOS.init({
-      duration: 1100,
+      duration: 1300,
       once: true,
     });
   }
@@ -107,24 +106,24 @@ export default {
   height: 90vh;
   background-color: #080808;
   display: flex;
-    flex-direction: column;
+  flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
-
 }
+
 .home-second-body {
   width: 70%;
   height: 100%;
   background-color: #080808;
 }
+
 .title-container{
   width: 100%;
-  height: 300px;
+  height: 25%;
   background-color: #080808;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding-bottom: 50px;
+  /* padding-bottom: 50px; */
 }
 
 .title-container p{
@@ -143,29 +142,34 @@ export default {
 
 .content-area{
   width: 100%;
-  height: 845px;
+  height: 70%;
   background-color: #080808;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end; /* align-items 대신 justify-content 사용 */
-  padding-bottom: 150px;
+  justify-content: flex-end;
+  /* padding-bottom: 150px; */
 }
+
 .content-container{
   width: 100%;
-  height: 590px;
+  height: 100%;
   background-color: #080808;
   display: flex;
   flex-direction: column;
-  gap:50px;
+  /* align-items: flex-end; */
+  /* justify-content: flex-end; */
+  justify-content: center;
+  gap:10px;
 }
 
 .content-title{
   width: 100%;
-  height: 100px;
+  height: 10%;
   background-color: #080808;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-top: 5%;
 }
 
 .content-title p{
@@ -176,21 +180,21 @@ export default {
 
 .image-container{
   width: 100%;
-  height: 490px;
+  height: 60%;
   background-color: #080808;
 }
 
 .image-card-container{
   width: 100%;
-  height: 490px;
+  height: 100%;
   display: flex;
   align-items: center;
-  gap: 60px;
+  gap: 30px;
 }
 
 .v-card {
-  width: 500px;
-  height: 450px;
+  width: 40%;
+  height: 90%;
   border-radius: 25px;
   background-color: #080808;  
 }
@@ -207,8 +211,6 @@ export default {
 
 .gradient-overlay {
   position: absolute;
-  /* width: 100%;
-  height: 100%; */
   top: 0;
   left: 0;
   right: 0;
@@ -227,11 +229,11 @@ export default {
   bottom: 20px;
   left: 20px;
   right: 0;
-  padding: 20px;
+  padding: 15px;
   z-index: 2;
   display: flex;
   flex-direction: column;
-  gap: 25px; /* 제목과 본문 사이의 간격 */
+  gap: 25px;
 }
 
 .image-card-title {
@@ -242,9 +244,9 @@ export default {
 
 .image-card-text p {
   color: #fff;
-  font-size: 17px;
-  margin: 0; /* 문단 사이의 기본 마진 제거 */
-  line-height: 1.4; /* 줄 간격 조절 */
+  font-size: 16px;
+  margin: 0;
+  line-height: 1.4;
 }
 
 .v-img {
