@@ -7,13 +7,13 @@
     </div>
   <div class="content-area">
     <div class="content-container">
-      <div class="content-title" data-aos="fade-up">
+      <div class="content-title" data-aos="fade-up" data-aos-offset="300">
         <p>NOODLE에서는</p>
         <p>이런 서비스를 제공합니다.</p>
       </div>
       <div class="image-container">
         <div class="image-card-container">
-        <v-card data-aos="fade-up" data-aos-anchor=".content-title">
+        <v-card data-aos="fade-up" data-aos-anchor=".content-title" data-aos-offset="300">
             <div class="image-card">
               <v-img src="@/assets/images/fixed/github_logo2.png" cover>
                 <div class="gradient-overlay"></div>
@@ -29,7 +29,7 @@
               </div>
             </div>
           </v-card>
-          <v-card data-aos="fade-up" data-aos-anchor=".content-title" data-aos-delay="200">
+          <v-card data-aos="fade-up" data-aos-anchor=".content-title" data-aos-delay="200" data-aos-offset="300">
             <div class="image-card">
               <v-img src="@/assets/images/fixed/search.jpg" cover>
                 <div class="gradient-overlay"></div>
@@ -44,7 +44,7 @@
               </div>
             </div>
           </v-card>
-          <v-card data-aos="fade-up" data-aos-anchor=".content-title" data-aos-delay="400">
+          <v-card data-aos="fade-up" data-aos-anchor=".content-title" data-aos-delay="400" data-aos-offset="300">
             <div class="image-card">
               <v-img src="@/assets/images/fixed/create_backlog.jpg" cover>
                 <div class="gradient-overlay"></div>
@@ -60,7 +60,7 @@
               </div>
             </div>
           </v-card>
-          <v-card data-aos="fade-up" data-aos-anchor=".content-title" data-aos-delay="600">
+          <v-card data-aos="fade-up" data-aos-anchor=".content-title" data-aos-delay="600" data-aos-offset="300">
             <div class="image-card">
               <v-img src="@/assets/images/fixed/create_report.jpg" cover>
                 <div class="gradient-overlay"></div>
