@@ -32,11 +32,6 @@ export default {
     HomeThird,
     HomeFooter,
   },
-  mounted() {
-    AOS.init({
-      duration: 1000, // 애니메이션 발동 총 시간
-    });
-  },
   methods: {
     goToHomeSecond() {
       const element = document.getElementById('HomeSecond');
