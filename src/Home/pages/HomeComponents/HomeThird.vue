@@ -2,7 +2,7 @@
 <div class="home-third">
   <div class="home-third-body">
 
-    <div class="content-container" data-aos="fade-left">
+    <div class="content-container" data-aos="fade-left" data-aos-offset="400">
       <v-card class="content-image" id="github-image"></v-card>
       <div class="text-container">
         <p class="number-icon">1</p>
@@ -18,7 +18,7 @@
     </div>
 
 
-    <div class="content-container" data-aos="fade-right">
+    <div class="content-container" data-aos="fade-right" data-aos-offset="400">
       <div class="text-container">
         <p class="number-icon">2</p>
         <div class="text-title-container">
@@ -34,7 +34,7 @@
     </div>
 
 
-    <div class="content-container" data-aos="fade-left">
+    <div class="content-container" data-aos="fade-left" data-aos-offset="400">
       <v-card class="content-image" id="backlog-image"></v-card>
       <div class="text-container">
         <p class="number-icon">3</p>
@@ -51,7 +51,7 @@
     </div>
 
 
-    <div class="content-container" data-aos="fade-right">
+    <div class="content-container" data-aos="fade-right" data-aos-offset="400">
       <div class="text-container">
         <p class="number-icon">4</p>
         <div class="text-title-container">
