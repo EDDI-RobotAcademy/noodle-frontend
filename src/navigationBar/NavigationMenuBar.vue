@@ -1,36 +1,47 @@
 <template>
-    <v-app-bar class="nevigationbar">
-        <!-- <img class="footer-noodle-logo" :src="require('@/assets/images/fixed/NOODLE_logo.png')" alt="Noodle Logo" /> -->
-        <v-btn @click="goToHome" alt="GO TO HOME">
-            <v-toolbar-title class="goToHomeButton">
-                <span>NOODLE</span>
-            </v-toolbar-title>
-        </v-btn>
+  <v-app-bar class="nevigationbar">
+    <v-spacer>
+      <!-- <img class="footer-noodle-logo" :src="require('@/assets/images/fixed/NOODLE_logo.png')" alt="Noodle Logo" /> -->
+      <v-btn @click="goToHome" alt="GO TO HOME">
+        <v-toolbar-title class="goToHomeButton">
+          <span>NOODLE</span>
+        </v-toolbar-title>
+      </v-btn>
 
-        <!-- 메뉴 이동 버튼 -->
-        <v-container class="manuBtn">
-            <v-btn @click="goToBacklogBoard" text class="custom-btn" alt="GO TO BACKLOGBOARD">
-                <span class="btn-text">Backlog Board</span>
+      <!-- 메뉴 이동 버튼 -->
+      <v-container class="manuBtn">
+        <!-- Service 드롭다운 메뉴 -->
+        <v-menu open-on-hover>
+          <template v-slot:activator="{ props }">
+            <v-btn text class="custom-btn" v-bind="props">
+              <span class="btn-text">Service</span>
             </v-btn>
-            <span class="separator">|</span>
-            <v-btn @click="goToResultReport" text class="custom-btn" alt="GO TO RESULTREPORT">
-                <span class="btn-text">RESULT REPORT</span>
-            </v-btn>
-            <span class="separator">|</span>
-            <v-btn @click="goToReview" text class="custom-btn" alt="GO TO REVIEW">
-                <span class="btn-text">REVIEW</span>
-            </v-btn>
-            <span class="separator">|</span>
-            <v-btn v-if="this.isAuthenticated == false" @click="goToGithubLogin" text class="custom-btn"
-                alt="GO TO GITHUBLOGIN">
-                <span class="btn-text">LOGIN</span>
-            </v-btn>
-            <v-btn v-if="this.isAuthenticated == true" @click="goToGithubLogout" text class="custom-btn"
-                alt="GO TO GITHUBLOGIN">
-                <span class="btn-text">LOGOUt</span>
-            </v-btn>
-        </v-container>
-    </v-app-bar>
+          </template>
+          <v-list>
+            <v-list-item @click="goToBacklogBoard">
+              <v-list-item-title class="dropdown-item">Backlog Board</v-list-item-title>
+            </v-list-item>
+            <v-list-item @click="goToResultReport">
+              <v-list-item-title class="dropdown-item">RESULT REPORT</v-list-item-title>
+            </v-list-item>
+            <v-list-item @click="goToReview">
+              <v-list-item-title class="dropdown-item">REVIEW</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+
+        <span class="separator">|</span>
+        
+        <!-- 로그인/로그아웃 버튼 -->
+        <v-btn v-if="this.isAuthenticated == false" @click="goToGithubLogin" text class="custom-btn" alt="GO TO GITHUBLOGIN">
+          <span class="btn-text">LOGIN</span>
+        </v-btn>
+        <v-btn v-if="this.isAuthenticated == true" @click="goToGithubLogout" text class="custom-btn" alt="GO TO GITHUBLOGIN">
+          <span class="btn-text">LOGOUT</span>
+        </v-btn>
+      </v-container>
+    </v-spacer>
+  </v-app-bar>
 </template>
 
 <script>
@@ -107,84 +118,112 @@ export default {
   --navigation-bar-height: 70px;
 }
 
+/* v-app-bar 관련 */
 .nevigationbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: rgb(36, 36, 36);
-    border-bottom: 3px solid #ffcc00;
-    height: var(--navigation-bar-height);
+  background-color: rgb(0, 0, 0);
+  border-bottom: 3px solid #ffffff;
+  height: var(--navigation-bar-height);
 }
 
+/* v-spacer 관련 */
+.v-spacer {
+  width: 70% !important;
+  flex: 0 0 70% !important; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+/* 로고 관련 */
 .footer-noodle-logo {
-    width: 50px;
-    height: 50px;
-    margin-left: 20px;
+  width: 50px;
+  height: 50px;
+  margin-left: 20px;
 }
 
 .goToHomeButton {
-    color: #ffcc00;
-    font-family: "Playfair Display", serif;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 30px;
-    /* margin-left: -10px; */
+  color: #ffffff;
+  font-family: "Playfair Display", serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+/* 메뉴 버튼 관련 */
+.manuBtn {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 20px;
+  gap: 5px;
+  margin-right: 20px;
 }
 
 .custom-btn {
-    height: auto !important;
-    padding: 6px 8px !important;
+  height: auto !important;
+  padding: 6px 8px !important;
 }
 
 .btn-text {
-    color: #ffcc00 !important;
-    font-family: "Playfair Display", serif;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 20px;
-    position: relative;
-    transition: all 0.3s ease;
+  color: #ffffff !important;
+  font-family: "Playfair Display", serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  position: relative;
+  transition: all 0.1s ease;
 }
 
 .btn-text::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: -5px;
-    left: 50%;
-    background-color: #ffcc00;
-    transition: all 0.3s ease;
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -5px;
+  left: 50%;
+  background-color: #ffffff;
+  transition: all 0.3s ease;
 }
 
 .custom-btn:hover .btn-text::after {
-    width: 100%;
-    left: 0;
+  width: 100%;
+  left: 0;
 }
 
-.manuBtn {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding-right: 20px;
-    gap: 5px;
-    margin-right: 20px;
-}
-
+/* 구분선 관련 */
 .separator {
-    color: #ffcc00;
-    font-size: 20px;
-    margin: 0 10px;
+  color: #ffffff;
+  font-size: 20px;
+  margin: 0 10px;
 }
 
+/* 드롭다운 메뉴 관련 */
+.dropdown-item {
+  color: #ffffff !important;
+  font-family: "Playfair Display", serif;
+  font-size: 16px;
+  padding: 8px 16px;
+}
+
+:deep(.v-list) {
+  background-color: rgb(36, 36, 36) !important;
+  border: 1px solid #ffffff;
+}
+
+:deep(.v-list-item:hover) {
+  background-color: rgba(255, 204, 0, 0.1) !important;
+}
+
+/* 기타 */
 .temporarily {
-    display: flex;
-    justify-content: flex-end;
-    color: rgb(0, 0, 0);
-    font-family: "Playfair Display", serif;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 20px;
-    padding-right: 70px;
+  display: flex;
+  justify-content: flex-end;
+  color: rgb(0, 0, 0);
+  font-family: "Playfair Display", serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  padding-right: 70px;
 }
 </style>
