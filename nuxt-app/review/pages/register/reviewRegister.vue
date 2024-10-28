@@ -66,7 +66,7 @@
                 <v-text class="question-text">리뷰 제목</v-text>
                 <input type="text" id="domain-title" v-model="domainTitle" required />
 
-                <v-text class="question-text">기타 리뷰</v-text>
+                <v-text class="question-text">리뷰 본문</v-text>
                 <textarea v-model="domainContent" id="domain-content" class="review-text-field" required></textarea>
                 <button type="submit">리뷰 제출</button>
             </form>
@@ -100,12 +100,12 @@ const submitReview = async () => {
         } else {
             const payload = {
                 userToken: user.value,
-                ratingList: [designScore.value, qualityScore.value, usabilityScore.value, responsiveScore.value],
+                ratingList: [designScore.value, usabilityScore.value, responsiveScore.value, qualityScore.value],
                 content: statusContent.value,
             };
             await reviewStore.requestRegisterSelectionFormReviewToDjango(payload);
             clearForm();
-            router.push('/review/list');
+            router.push('/review/list/1');
         }
     } else {
         const payload = {
@@ -115,7 +115,7 @@ const submitReview = async () => {
         };
         await reviewStore.requestRegisterFreeFormReviewToDjango(payload);
         clearForm();
-        router.push('/review/list');
+        router.push('/review/list/1');
     }
 };
 
