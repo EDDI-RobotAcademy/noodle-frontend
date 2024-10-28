@@ -13,9 +13,9 @@
           </div>
         </div>
         <!-- 생성된 백로그 출력부 -->
-        <v-card v-if="backlogList" class="backlog-list-container">
+        <v-card v-if="displayBacklogList.length > 0" class="backlog-list-container">
           <v-list style="background-color: #2f2f2f;">
-            <v-list-item v-for="(backlog, index) in backlogList" :key="index">
+            <v-list-item v-for="(backlog, index) in displayBacklogList" :key="index" class="fade-in">
               <v-card style="background-color: #3c3c3c;">
                 <v-list-item v-for="(key, item, index) in backlog" :key="index">
                   <v-card-item>
@@ -190,6 +190,7 @@ export default {
   data() {
     return {
       isChecked: true, // 스위치의 초기 상태
+      displayBacklogList: [], // 지연 렌더링 백로그 리스트
       columns: [
         {
           name: 'To Do',
@@ -355,6 +356,11 @@ export default {
 
       } catch (error) {
         console.error("Error fetching commits:", error)
+      }
+      this.displayBacklogList = [];
+      for (let i = 0; i < this.backlogList.length; i++) {
+        await new Promise(resolve => setTimeout(resolve, 2000)); // 딜레이 조정
+        this.displayBacklogList.push(this.backlogList[i]);
       }
     }
   },
@@ -711,5 +717,18 @@ body {
   width: 95%;
   height: 50%;
   margin-left: 15px;
+}
+
+.fade-in {
+  animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 </style>
