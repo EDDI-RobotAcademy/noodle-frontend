@@ -13,7 +13,7 @@
           </div>
         </div>
         <!-- 생성된 백로그 출력부 -->
-        <v-card v-if="displayBacklogList.length > 0" class="backlog-list-container">
+        <v-card class="backlog-list-container">
           <v-list style="background-color: #2f2f2f;">
             <v-list-item v-for="(backlog, index) in displayBacklogList" :key="index" class="fade-in">
               <v-card style="background-color: #3c3c3c;">
@@ -517,6 +517,7 @@ body {
 .backlog-list-container {
   overflow: auto;
   height: 800px;
+  background-color: #2f2f2f;
 }
 
 /* ---------- SWITCH ---------- */
