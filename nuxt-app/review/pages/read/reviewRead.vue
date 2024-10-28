@@ -26,6 +26,7 @@
         </div>
     </div>
     <button class="back-button" @click="goToReivewModifyPage()" :disabled="modifyingAllowed == false">수정</button>
+    <button class="back-button" @click="deleteThisReview()" :disabled="modifyingAllowed == false">삭제</button>
     <button class="back-button" @click="goToReviewListPage()">목록으로 돌아가기</button>
 </template>
 
@@ -80,6 +81,9 @@ function goToReviewListPage() {
 }
 function goToReivewModifyPage() {
     router.push(`/review/modify/${beforeListPageNumber.value}/${id.value}`)
+}
+function deleteThisReview() {
+    // 삭제 관련 백엔드 로직 연결
 }
 
 onMounted(async () => {
