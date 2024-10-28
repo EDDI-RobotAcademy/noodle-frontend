@@ -12,28 +12,36 @@
                 item-value="resultReportId"/> 
             <v-pagination
                 v-model="pagination.page"
-                :length="Math.ceil(reports.length / perPage)"
+                :length="Math.ceil(resultReports.length / perPage)"
                 color="primary"
                 @input="updateItems"/>
     </v-container>
 </template>
 
 <script>
+import { toRaw } from 'vue';
 import {mapActions, mapState} from 'vuex'
 
 const resultReportModule = 'resultReportModule'
 
 export default{
     computed:{
-        ...mapState(resultReportModule, ['resultReports']),
+        // ...mapState(resultReportModule, ['resultReports']),
         pageItems() {
             const startIdx = (this.pagination.page - 1)*this.perPage
             const endIdx = startIdx + this.perPage
             return this.resultReports.slice(startIdx, endIdx)
         }
     },
-    mounted() {
-        this.requestResultReportToDjango()
+    async mounted() {
+        this.resultReports = await this.requestResultReportListToDjango()
+        const reports = []
+        for (let i = 0; i < this.resultReports.length; i++) {
+            reports.push(this.resultReports[i])
+        }
+        console.log("resultReports:", reports)
+        this.resultReports = toRaw(reports)
+        console.log("resultReports:", this.resultReports)
     },
     methods: {
         ...mapActions(resultReportModule, ['requestResultReportListToDjango']),
@@ -46,6 +54,7 @@ export default{
     },
     data() {
         return{
+            resultReports: [],
             headerTitle: [
                 {title: 'No', align: 'start', sortable: true, key: 'resultReportId'},
                 {title: '제목', align: 'end', key: 'title'},
