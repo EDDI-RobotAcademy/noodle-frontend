@@ -86,7 +86,6 @@ export default defineComponent({
         // const reports = computed(() => resultReportStore.resultReportList)
         const reports = [
             { id: 1, title: '감자 여행 결과 보고서', author: '김지민', date: '2024-10-14' },
-            { id: 2, title: '두 번째 보고서', author: '김철수', date: '2024-10-13' },
         ]
         const pagedItems = computed(() => resultReportStore.resultReportList.slice((pagination.page - 1) * perPage, (pagination.page - 1) * perPage + perPage))
         // 백엔드 접근 방식 완화 필요.

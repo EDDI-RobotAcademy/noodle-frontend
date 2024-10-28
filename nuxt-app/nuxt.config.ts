@@ -22,7 +22,7 @@ export default defineNuxtConfig({
 	vite: {
     server: {
 			ws: false,
-			hmr: true,
+			hmr: false,
 		},
 		ssr: {
 			noExternal: ["vuetify"], // SSR에서도 Vuetify를 외부 패키지로 처리하지 않도록 설정
