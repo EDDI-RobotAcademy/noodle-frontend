@@ -3,6 +3,7 @@
     <v-row justify="center">
       <v-col cols="12" class="report-list-area">
         <h1>Report List</h1>
+        <!-- 실제 보고서 카드 -->
         <v-card 
           v-for="report in paginatedReports" 
           :key="report.id" 
@@ -26,6 +27,35 @@
               <p class="member">구성원: {{ report.author }}</p>
               <p class="function">주요 기능에 대한 내용</p>
             </v-card-text>
+            </div>
+            <div class="open-button">
+              <v-btn class="open-btn">Open</v-btn>
+            </div>
+          </div>
+        </v-card>
+        
+        <!-- 빈 카드 슬롯 -->
+        <v-card 
+          v-for="n in remainingSlots" 
+          :key="`empty-${n}`" 
+          class="custom-card-spacing empty-card"
+        >
+          <div class="report-content invisible">
+            <!-- 기존 카드와 동일한 구조를 유지하되 보이지 않게 처리 -->
+            <div class="image"></div>
+            <div class="section1">
+              <v-card-title class="department">
+                <p>개발3팀</p>
+              </v-card-title>
+              <v-card-title class="report-title">
+                <p class="report-link">빈 슬롯</p>
+              </v-card-title>
+            </div>
+            <div class="section2">
+              <v-card-text>
+                <p class="member">구성원: -</p>
+                <p class="function">주요 기능에 대한 내용</p>
+              </v-card-text>
             </div>
             <div class="open-button">
               <v-btn class="open-btn">Open</v-btn>
@@ -79,6 +109,10 @@ export default {
       const start = (this.page - 1) * this.itemsPerPage
       const end = start + this.itemsPerPage
       return this.reports.slice(start, end)
+    },
+    remainingSlots() {
+      const currentPageItems = this.paginatedReports.length
+      return this.itemsPerPage - currentPageItems
     }
   },
   methods: {
@@ -104,7 +138,7 @@ export default {
   padding-top: 4%;
   width: 70%;
   margin: 0 auto;
-  flex: none !important;  /* Vuetify의 flex 속성을 덮어씁니다 */
+  flex: none !important;
 }
 
 .pagination{
@@ -202,6 +236,15 @@ h1 {
 }
 
 .custom-card-spacing {
-  margin-bottom: 25px; /* 원하는 간격으로 조절 */
+  margin-bottom: 25px;
+}
+
+.empty-card {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.invisible {
+  opacity: 0;
 }
 </style>
