@@ -34,34 +34,6 @@
           </div>
         </v-card>
         
-        <!-- 빈 카드 슬롯 -->
-        <v-card 
-          v-for="n in remainingSlots" 
-          :key="`empty-${n}`" 
-          class="custom-card-spacing empty-card"
-        >
-          <div class="report-content invisible">
-            <!-- 기존 카드와 동일한 구조를 유지하되 보이지 않게 처리 -->
-            <div class="image"></div>
-            <div class="section1">
-              <v-card-title class="department">
-                <p>개발3팀</p>
-              </v-card-title>
-              <v-card-title class="report-title">
-                <p class="report-link">빈 슬롯</p>
-              </v-card-title>
-            </div>
-            <div class="section2">
-              <v-card-text>
-                <p class="member">구성원: -</p>
-                <p class="function">주요 기능에 대한 내용</p>
-              </v-card-text>
-            </div>
-            <div class="open-button">
-              <v-btn class="open-btn">Open</v-btn>
-            </div>
-          </div>
-        </v-card>
         <v-pagination
           v-model="page"
           :length="pageCount"
@@ -109,10 +81,6 @@ export default {
       const start = (this.page - 1) * this.itemsPerPage
       const end = start + this.itemsPerPage
       return this.reports.slice(start, end)
-    },
-    remainingSlots() {
-      const currentPageItems = this.paginatedReports.length
-      return this.itemsPerPage - currentPageItems
     }
   },
   methods: {
@@ -134,15 +102,22 @@ export default {
   background-color: #080808;  
 }
 
-.report-list-area{
+.report-list-area {
   padding-top: 4%;
   width: 70%;
   margin: 0 auto;
   flex: none !important;
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: 60px;
+  display: flex;
+  flex-direction: column;
 }
 
-.pagination{
+.pagination {
   color: #ffffff;
+  position: relative;
+  margin-top: 20px;
 }
 
 h1 {
@@ -239,12 +214,4 @@ h1 {
   margin-bottom: 25px;
 }
 
-.empty-card {
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.invisible {
-  opacity: 0;
-}
 </style>
