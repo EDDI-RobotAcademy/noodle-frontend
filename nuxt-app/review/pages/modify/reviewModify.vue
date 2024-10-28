@@ -71,8 +71,10 @@
 import { ref, onMounted } from 'vue';
 import { useReviewStore } from '../../stores/reviewStore';
 import { useRouter, useRoute } from '#imports';
+import { useAuthenticationStore } from '../../../authentication/stores/authenticationStore';
 
 const reviewStore = useReviewStore();
+const authenticationStore = useAuthenticationStore();
 const route = useRoute();
 const router = useRouter();
 
@@ -158,6 +160,11 @@ onMounted(async () => {
     await getReviewData();
     isLoading.value = false
     user.value = localStorage.getItem('userToken') || 'anonymous';
+    const response = await authenticationStore.requestCheckModifyingAllowedUserToDjango(reviewWriter.value, user.value)
+    if (response.data.response == false) {
+        alert('작성자만 수정이 가능합니다!')
+        router.push(`/review/read/${beforeListPageNumber.value}/${id.value}`)
+    }
 });
 </script>
 
