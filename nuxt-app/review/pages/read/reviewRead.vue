@@ -83,7 +83,8 @@ function goToReivewModifyPage() {
     router.push(`/review/modify/${beforeListPageNumber.value}/${id.value}`)
 }
 function deleteThisReview() {
-    // 삭제 관련 백엔드 로직 연결
+    reviewStore.requestDeleteReviewToDjango(id.value)
+    router.push(`/review/list/${beforeListPageNumber.value}`)
 }
 
 onMounted(async () => {
