@@ -59,7 +59,7 @@
                     <v-text class="question-text">리뷰 본문</v-text>
                     <textarea v-model="reviewContent" id="domain-content" class="review-text-field" required></textarea>
                     <button @click="goToReivewReadPage()">취소</button>
-                    <button type="submit">리뷰 제출</button>
+                    <button type="submit">수정 완료</button>
                     <button @click="goToReviewListPage()">목록으로 돌아가기</button>
                 </form>
             </div>
