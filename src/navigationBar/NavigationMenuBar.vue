@@ -16,8 +16,8 @@
       <v-container class="manuBtn">
         <!-- Service 드롭다운 메뉴 -->
         <v-menu open-on-hover>
-          <template v-slot:activator="{ props }">
-            <v-btn text class="custom-btn" v-bind="props">
+          <template v-slot:activator="{ props, isActive }">
+            <v-btn text class="custom-btn" v-bind="props" :class="{ 'active': isActive }">
               <span class="btn-text">Service</span>
             </v-btn>
           </template>
@@ -221,7 +221,8 @@ export default {
   transition: all 0.3s ease;
 }
 
-.custom-btn:hover .btn-text::after {
+.custom-btn:hover .btn-text::after,
+.custom-btn.active .btn-text::after {
   width: 100%;
   left: 0;
 }
@@ -256,7 +257,7 @@ export default {
 /* 네비게이션 바 */
 .nevigationbar.scrolled {
   background-color: rgb(250, 250, 250);
-  border-bottom: 3px solid rgba(128, 128, 128, 0.8);
+  border-bottom: 3px solid rgb(31, 31, 31);
   height: var(--navigation-bar-scrolled-height) !important;
   min-height: var(--navigation-bar-scrolled-height) !important;
   max-height: var(--navigation-bar-scrolled-height) !important;
@@ -299,7 +300,8 @@ export default {
 }
 
 /* 스크롤 시 밑줄 효과 */
-.nevigationbar.scrolled .btn-text::after {
+.nevigationbar.scrolled .custom-btn:hover .btn-text::after,
+.nevigationbar.scrolled .custom-btn.active .btn-text::after {
   background-color: rgba(0, 0, 0, 0.9);
 }
 </style>
