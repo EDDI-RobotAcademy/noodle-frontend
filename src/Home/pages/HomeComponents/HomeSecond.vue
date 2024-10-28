@@ -3,12 +3,12 @@
   <div class="home-second-body">
     <div class="title-container">
         <p class="title">AI를 활용하여 업무의 효율을 높이는 세상.</p>
-        <p class="sub-title">NOODLE이 고객에게 경험시켜드리고자 하는 것은 바로 이런 편리함입니다.</p>
+        <p class="sub-title"><span class="NOODLE-span">NOODLE</span>이 고객에게 경험시켜드리고자 하는 것은 바로 이런 편리함입니다.</p>
     </div>
   <div class="content-area">
     <div class="content-container">
       <div class="content-title" data-aos="fade-up" data-aos-offset="400">
-        <p>NOODLE에서는</p>
+        <p><span class="NOODLE-span">NOODLE</span>에서는</p>
         <p>이런 서비스를 제공합니다.</p>
       </div>
       <div class="image-container">
@@ -258,5 +258,9 @@ export default {
 
 .image-card:hover .v-img {
   transform: scale(1.05);
+}
+
+.NOODLE-span{
+  color: rgb(255, 240, 30);
 }
 </style>

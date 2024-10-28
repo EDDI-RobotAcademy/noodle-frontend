@@ -11,7 +11,7 @@
           <p class="text-subtitle">누구든, 복잡한 회원가입 절차 없이 이용할 수 있도록</p>
         </div>
         <div class="text-content-container">
-          <p class="text-content">NOODLE에서는 복잡한 회원가입 절차 없이 누구나 쉽게 서비스를</p>
+          <p class="text-content"><span class="NOODLE-span">NOODLE</span>에서는 복잡한 회원가입 절차 없이 누구나 쉽게 서비스를</p>
           <p class="text-content">이용할 수 있도록 GitHub Login만으로 서비스를 이용하실 수 있습니다.</p>
         </div>
       </div>
@@ -27,7 +27,7 @@
         </div>
         <div class="text-content-container">
           <p class="text-content">오랜 기간동안 쌓여온 보고서들 중에서 내가 원하는 보고서를 찾는 건</p>
-          <p class="text-content">어려운 일이죠. NOODLE에선 검색을 통해 쉽게 찾을 수 있습니다.</p>
+          <p class="text-content">어려운 일이죠. <span class="NOODLE-span">NOODLE</span>에선 검색을 통해 쉽게 찾을 수 있습니다.</p>
         </div>
       </div>
       <v-card class="content-image" id="search-image"></v-card>
@@ -184,5 +184,9 @@ export default {
   font-size: 20px;
   /* font-weight: bold; */
   color: #ffffff;
+}
+
+.NOODLE-span{
+  color: rgb(255, 240, 30);
 }
 </style>

@@ -111,7 +111,7 @@ export default {
 }
 
 .main-title {
-  color: #ffffff;
+  color: rgb(255, 240, 30);
   font-size: 140px;
   animation: fadeDown 0.8s ease-out;
   line-height: 0.8;
