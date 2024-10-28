@@ -25,6 +25,7 @@
             <p class="review-content">{{ reviewContent }}</p>
         </div>
     </div>
+    <button class="back-button" @click="goToReivewModifyPage()" :disabled="modifyingAllowed == false">수정</button>
     <button class="back-button" @click="goToReviewListPage()">목록으로 돌아가기</button>
 </template>
 
@@ -32,8 +33,10 @@
 import { ref, onMounted } from 'vue';
 import { useReviewStore } from '../../stores/reviewStore';
 import { useRouter, useRoute } from '#imports';
+import { useAuthenticationStore } from '../../../authentication/stores/authenticationStore';
 
 const reviewStore = useReviewStore();
+const authenticationStore = useAuthenticationStore();
 const route = useRoute();
 const router = useRouter();
 
@@ -49,6 +52,7 @@ const designScore = ref(0);
 const usabilityScore = ref(0);
 const qualityScore = ref(0);
 const responsiveScore = ref(0);
+const modifyingAllowed = ref(false)
 
 async function getReviewData() {
     const res = await reviewStore.requestReviewDetailsToDjango({ "reviewID": id.value });
@@ -74,9 +78,15 @@ async function getReviewData() {
 function goToReviewListPage() {
     router.push(`/review/list/${beforeListPageNumber.value}`);
 }
+function goToReivewModifyPage() {
+    router.push(`/review/modify/${beforeListPageNumber.value}/${id.value}`)
+}
 
 onMounted(async () => {
     await getReviewData();
+    const response = await authenticationStore.requestCheckModifyingAllowedUserToDjango(reviewWriter.value, localStorage.getItem('userToken') || 'anonymous')
+    console.log(response.data.response)
+    modifyingAllowed.value = response.data.response
 });
 </script>
 
@@ -143,5 +153,12 @@ onMounted(async () => {
 
 .back-button:hover {
     background-color: #0056b3;
+}
+
+.back-button:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+    opacity: 0.6;
 }
 </style>
