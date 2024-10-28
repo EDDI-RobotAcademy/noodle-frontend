@@ -21,7 +21,7 @@
                 <v-btn color="primary" large @click="goToList">목록</v-btn>
             </v-col>
             <v-col cols="auto">
-                <v-btn color="secondary" large @click="editReport">수정</v-btn>
+                <v-btn color="secondary" large disabled @click="editReport">수정</v-btn>
             </v-col>
         </v-row>
     </v-container>
@@ -61,7 +61,7 @@ export default defineComponent({
             { department: '개발3팀', name: '정아람', role: '팀원' },
 
         ])
-        const techStack = ref(['Vue.js', 'Python', 'Django', 'FastAPI'])
+        const techStack = ref(['Vue.js', 'Python', 'Django', 'FastAPI', 'MySQL'])
         const features = ref(['여행지 추천', '패키지 상품을 통한 손쉬운 예약과 일정 관리', '리뷰 페이지로 확인 가능한 사용자들의 피드백'],)
         const usagePlans = ref([
             {

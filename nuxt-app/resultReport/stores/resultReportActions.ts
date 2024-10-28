@@ -9,7 +9,6 @@ export const resultReportActions = {
 		try {
 			const response = await djangoAxiosInst.get("/report/list");
 			resultReportStore.resultReportList = response.data;
-			// state 반영 코드 필요
 		} catch (error) {
 			console.error(
 				"requestResultReportListToDjango() axios 오류!",

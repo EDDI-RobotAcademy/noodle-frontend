@@ -66,4 +66,22 @@ export const authenticationActions = {
 			console.error("requestUserTokenValidationToDjango() error!", error);
 		}
 	},
+	async requestCheckModifyingAllowedUserToDjango(name, token): Promise<void> {
+		const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+		try {
+			const payload = {
+				userName: name,
+				userToken: token,
+			};
+			return await djangoAxiosInst.post(
+				"/github-oauth/is-modifying-allowed-user",
+				payload
+			);
+		} catch (error) {
+			console.error(
+				"requestCheckModifyingAllowedUserToDjango() error!",
+				error
+			);
+		}
+	},
 };
