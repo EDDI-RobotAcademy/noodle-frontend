@@ -58,4 +58,13 @@ export const reviewActions = {
 			console.error("error occured while getting details!" + error);
 		}
 	},
+	async requestModifyReviewToDjango(payload): Promise<void> {
+		const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+
+		try {
+			await djangoAxiosInst.post("/review/modify", payload);
+		} catch (error) {
+			console.error("error occured while modifying review!" + error);
+		}
+	},
 };
