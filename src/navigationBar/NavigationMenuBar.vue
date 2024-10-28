@@ -256,8 +256,8 @@ export default {
 /* 8. 스크롤 시 적용되는 스타일 */
 /* 네비게이션 바 */
 .nevigationbar.scrolled {
-  background-color: rgb(250, 250, 250);
-  border-bottom: 3px solid rgb(31, 31, 31);
+  /* background-color: rgb(240, 240, 240); */
+  border-bottom: 2px solid rgb(255, 240, 30);;
   height: var(--navigation-bar-scrolled-height) !important;
   min-height: var(--navigation-bar-scrolled-height) !important;
   max-height: var(--navigation-bar-scrolled-height) !important;
@@ -265,21 +265,21 @@ export default {
 
 /* 홈 버튼 */
 .nevigationbar.scrolled .goToHomeButton {
-  color: rgba(0, 0, 0, 0.9) !important;
+  color: rgb(255, 240, 30) !important;
   font-size: 25px;
 }
 
 /* 메뉴 버튼 */
-.nevigationbar.scrolled .btn-text {
+/* .nevigationbar.scrolled .btn-text {
   color: rgba(0, 0, 0, 0.9) !important;
   font-size: 20px;
-}
+} */
 
 /* 구분선 */
-.nevigationbar.scrolled .separator {
+/* .nevigationbar.scrolled .separator {
   color: rgba(0, 0, 0, 0.9) !important;
   font-size: 16px;
-}
+} */
 
 /* 스크롤 시 드롭다운 메뉴 */
 :deep(.menu-scrolled) {
