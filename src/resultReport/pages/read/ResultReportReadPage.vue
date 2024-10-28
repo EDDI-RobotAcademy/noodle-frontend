@@ -162,7 +162,7 @@
             <!-- 수정 버튼 -->
             <v-col cols="auto">
               <router-link :to="{ name: 'ResultReportModifyPage', params: {resultReportId} }">
-                <v-btn color="primary" large @click="editReport">수정</v-btn>
+                <v-btn color="primary">수정</v-btn>
               </router-link>
             </v-col>
 
@@ -175,7 +175,7 @@
             <!-- 목록 버튼 -->
             <v-col cols="auto">
               <router-link :to="{ name: 'ResultReportListPage' }">
-                <v-btn color="secondary" large @click="goToList">목록</v-btn>
+                <v-btn color="secondary">목록</v-btn>
               </router-link>
             </v-col>
             
@@ -194,7 +194,6 @@ export default {
       required: true,
     }
   },
-  name: 'ResultReport',
   data() {
     return {
       projectTitle: '',
@@ -222,18 +221,8 @@ export default {
     }
   },
   methods: {
-    submitReport() {
-      console.log('프로젝트 보고서가 등록되었습니다.')
-    },
     dashOffset(rate) {
       return this.circumference - (rate / 100 * this.circumference);
-    },
-    goToList() {
-        this.$router.push(`/result-report/list2`)
-    },
-    editReport() {
-      this.$router.push(`/result-report/modify/1`)
-      console.log('프로젝트 보고서 수정 페이지로 넘어갑니다.')
     },
     ...mapActions(resultReportModule, ['requestResultReportToDjango', 'requestDeleteResultReportToDjango']),
     async onDelete() {
