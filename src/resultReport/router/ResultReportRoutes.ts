@@ -7,35 +7,30 @@ import ResultReportReadPage12 from "../pages/read/ResultReportReadPage12.vue"
 
 const ResultReportRoutes = [
     {
-        path: "/result-report/register",
+        path: "/report/register",
         name: "ResultReportRegisterPage",
         component: ResultReportRegisterPage,
     },
 
     {
-        path: "/result-report/list",
+        path: "/report/list",
         name: "ResultReportListPage",
         component: ResultReportListPage
     },
     {
-        path: "/result-report/list2",
-        name: "ResultReportListPage2",
-        component: ResultReportListPage2
-    },
-    {
-        path: "/result-report/read/1",
+        path: "/report/read/:resultReportId",
         name: "ResultReportReadPage",
-        component: ResultReportReadPage
+        components: {
+            default: ResultReportReadPage
+        },
+        props: {
+            default: true
+        }
     },
     {
         path: "/result-report/modify/1",
         name: "ResultReportModifyPage",
         component: ResultReportModifyPage
-    },
-    {
-        path: "/result-report/read/12",
-        name: "ResultReportReadPage12",
-        component: ResultReportReadPage12
     },
 ]
 
