@@ -67,4 +67,13 @@ export const reviewActions = {
 			console.error("error occured while modifying review!" + error);
 		}
 	},
+	async requestDeleteReviewToDjango(id): Promise<void> {
+		const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+
+		try {
+			await djangoAxiosInst.post("review/delete", { reviewID: id });
+		} catch (error) {
+			console.error("error occured while deleting review!" + error);
+		}
+	},
 };
