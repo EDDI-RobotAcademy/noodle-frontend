@@ -1,5 +1,9 @@
 <template>
-  <v-app-bar class="nevigationbar">
+  <v-app-bar 
+    class="nevigationbar" 
+    :class="{ 'scrolled': isScrolled }"
+    :height="isScrolled ? 50 : 70"
+  >
     <v-spacer>
       <!-- <img class="footer-noodle-logo" :src="require('@/assets/images/fixed/NOODLE_logo.png')" alt="Noodle Logo" /> -->
       <v-btn @click="goToHome" alt="GO TO HOME">
@@ -17,15 +21,15 @@
               <span class="btn-text">Service</span>
             </v-btn>
           </template>
-          <v-list>
+          <v-list :class="menuClass">
             <v-list-item @click="goToBacklogBoard">
-              <v-list-item-title class="dropdown-item">Backlog Board</v-list-item-title>
+              <v-list-item-title :class="menuItemClass">Backlog Board</v-list-item-title>
             </v-list-item>
             <v-list-item @click="goToResultReport">
-              <v-list-item-title class="dropdown-item">RESULT REPORT</v-list-item-title>
+              <v-list-item-title :class="menuItemClass">RESULT REPORT</v-list-item-title>
             </v-list-item>
             <v-list-item @click="goToReview">
-              <v-list-item-title class="dropdown-item">REVIEW</v-list-item-title>
+              <v-list-item-title :class="menuItemClass">REVIEW</v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>
@@ -74,7 +78,7 @@ export default {
     data() {
         return {
             searchQuery: '',  // Model to hold the search input value
-
+            isScrolled: false  // 스크롤 상태를 추적하는 변수 추가
         };
     },
     computed: {
@@ -82,6 +86,18 @@ export default {
 
         flag() {
             return this.isAuthenticated; // Vuex 상태를 직접 참조
+        },
+        menuClass() {
+            return {
+                'menu-default': !this.isScrolled,
+                'menu-scrolled': this.isScrolled
+            }
+        },
+        menuItemClass() {
+            return {
+                'menu-item-default': !this.isScrolled,
+                'menu-item-scrolled': this.isScrolled
+            }
         }
     },
     methods: {
@@ -96,7 +112,10 @@ export default {
         },
         goToResultReport() {
             this.$router.push('/result-report/list2')
-        }
+        },
+        handleScroll() {
+            this.isScrolled = window.scrollY > 50; // 스크롤이 50px 이상이면 true
+        },
     },
     mounted() {
         const token = localStorage.getItem('userToken');
@@ -105,8 +124,14 @@ export default {
         } else {
             this.$store.commit('authenticationModule/REQUEST_IS_AUTHENTICATED_TO_DJANGO', false);
         }
-    }
 
+        // 스크롤 이벤트 리스너 추가
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    beforeUnmount() {
+        // 컴포넌트가 제거될 때 이벤트 리스너 제거
+        window.removeEventListener('scroll', this.handleScroll);
+    }
 }
 </script>
 
@@ -114,18 +139,23 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Gothic+Coding:wght@400;700&family=Nanum+Myeongjo:wght@400;700;800&family=Orbit&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
+/* 전역 변수 */
 :root {
   --navigation-bar-height: 70px;
+  --navigation-bar-scrolled-height: 50px;
 }
 
-/* v-app-bar 관련 */
+/* 1. v-app-bar 기본 스타일 */
 .nevigationbar {
   background-color: rgb(0, 0, 0);
   border-bottom: 3px solid #ffffff;
-  height: var(--navigation-bar-height);
+  height: var(--navigation-bar-height) !important;
+  min-height: var(--navigation-bar-height) !important;
+  max-height: var(--navigation-bar-height) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* v-spacer 관련 */
+/* 2. v-spacer 스타일 */
 .v-spacer {
   width: 70% !important;
   flex: 0 0 70% !important; 
@@ -135,7 +165,7 @@ export default {
   margin: 0 auto;
 }
 
-/* 로고 관련 */
+/* 3. 홈 버튼/로고 관련 */
 .footer-noodle-logo {
   width: 50px;
   height: 50px;
@@ -148,9 +178,11 @@ export default {
   font-style: normal;
   font-weight: bold;
   font-size: 30px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: left center;
 }
 
-/* 메뉴 버튼 관련 */
+/* 4. 메뉴 버튼 컨테이너 */
 .manuBtn {
   display: flex;
   justify-content: flex-end;
@@ -158,8 +190,10 @@ export default {
   padding-right: 20px;
   gap: 5px;
   margin-right: 20px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* 5. 공통 버튼 스타일 */
 .custom-btn {
   height: auto !important;
   padding: 6px 8px !important;
@@ -170,11 +204,12 @@ export default {
   font-family: "Playfair Display", serif;
   font-style: normal;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 25px;
   position: relative;
-  transition: all 0.1s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* 버튼 호버 효과 */
 .btn-text::after {
   content: '';
   position: absolute;
@@ -191,39 +226,81 @@ export default {
   left: 0;
 }
 
-/* 구분선 관련 */
-.separator {
-  color: #ffffff;
-  font-size: 20px;
-  margin: 0 10px;
-}
-
-/* 드롭다운 메뉴 관련 */
-.dropdown-item {
-  color: #ffffff !important;
-  font-family: "Playfair Display", serif;
-  font-size: 16px;
-  padding: 8px 16px;
-}
-
-:deep(.v-list) {
+/* 6. 드롭다운 메뉴 스타일 */
+:deep(.menu-default) {
   background-color: rgb(36, 36, 36) !important;
   border: 1px solid #ffffff;
 }
 
-:deep(.v-list-item:hover) {
-  background-color: rgba(255, 204, 0, 0.1) !important;
-}
-
-/* 기타 */
-.temporarily {
-  display: flex;
-  justify-content: flex-end;
-  color: rgb(0, 0, 0);
-  font-family: "Playfair Display", serif;
+:deep(.menu-item-default) {
+  color: #ffffff !important;
+  font-family: "Playfair Display", serif !important;
   font-style: normal;
   font-weight: bold;
+  font-size: 16px;
+}
+
+:deep(.menu-default .v-list-item:hover) {
+  background-color: rgba(206, 206, 206, 0.199) !important;
+}
+
+/* 7. 구분선 */
+.separator {
+  color: #ffffff;
   font-size: 20px;
-  padding-right: 70px;
+  margin: 0 10px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 8. 스크롤 시 적용되는 스타일 */
+/* 네비게이션 바 */
+.nevigationbar.scrolled {
+  background-color: rgb(250, 250, 250);
+  border-bottom: 3px solid rgba(128, 128, 128, 0.8);
+  height: var(--navigation-bar-scrolled-height) !important;
+  min-height: var(--navigation-bar-scrolled-height) !important;
+  max-height: var(--navigation-bar-scrolled-height) !important;
+}
+
+/* 홈 버튼 */
+.nevigationbar.scrolled .goToHomeButton {
+  color: rgba(0, 0, 0, 0.9) !important;
+  font-size: 25px;
+}
+
+/* 메뉴 버튼 */
+.nevigationbar.scrolled .btn-text {
+  color: rgba(0, 0, 0, 0.9) !important;
+  font-size: 20px;
+}
+
+/* 구분선 */
+.nevigationbar.scrolled .separator {
+  color: rgba(0, 0, 0, 0.9) !important;
+  font-size: 16px;
+}
+
+/* 스크롤 시 드롭다운 메뉴 */
+:deep(.menu-scrolled) {
+  background-color: rgb(255, 255, 255) !important;
+  border: 1px solid rgba(0, 0, 0, 0.9) !important;
+}
+
+:deep(.menu-item-scrolled) {
+  color: rgba(0, 0, 0, 0.9) !important;
+  font-family: "Playfair Display", serif !important;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+:deep(.menu-scrolled .v-list-item:hover) {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* 스크롤 시 밑줄 효과 */
+.nevigationbar.scrolled .btn-text::after {
+  background-color: rgba(0, 0, 0, 0.9);
 }
 </style>
+
