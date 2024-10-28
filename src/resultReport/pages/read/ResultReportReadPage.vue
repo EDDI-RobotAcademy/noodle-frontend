@@ -194,7 +194,7 @@ export default {
       required: true,
     }
   },
-  name: 'ProjectReport',
+  name: 'ResultReport',
   data() {
     return {
       projectTitle: '',
