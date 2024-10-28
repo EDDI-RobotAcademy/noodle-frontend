@@ -29,6 +29,14 @@ export default defineNuxtModule({
 					name: "reviewRead",
 					path: "/review/read/:page/:id",
 					file: resolve(themeDir, "review/pages/read/reviewRead.vue"),
+				},
+				{
+					name: "ReviewModifyPage",
+					path: "/review/modify/:page/:id",
+					file: resolve(
+						themeDir,
+						"review/pages/modify/reviewModify.vue"
+					)
 				}
 			);
 		});
