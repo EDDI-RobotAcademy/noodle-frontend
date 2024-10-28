@@ -5,15 +5,18 @@ import axiosInst from "@/utility/axiosInstance"
 import { REQUEST_RESULTREPORT_LIST_TO_DJANGO } from "./mutation-types"
 
 export type ResultReportActions = {
-    requestResultReportListToDjango(context: ActionContext<ResultReportState, any>): Promise<void>
+    requestResultReportListToDjango(context: ActionContext<ResultReportState, any>): Promise<any>
 }
 
 const actions: ResultReportActions = {
-    async requestResultReportListToDjango(context: ActionContext<ResultReportState, any>): Promise<void> {
+    async requestResultReportListToDjango(context: ActionContext<ResultReportState, any>): Promise<any> {
         try {
-            const res: AxiosResponse<any, any> = await axiosInst.djangoAxiosInst.get('/report/list')
-            const data: ResultReport[] = res.data
-            context.commit(REQUEST_RESULTREPORT_LIST_TO_DJANGO, data)
+            const res: AxiosResponse<any, any> = await axiosInst.djangoAxiosInst.post('/report/list')
+            // const data: ResultReport[] = res.data
+            const data: any[] = res.data
+            // context.commit(REQUEST_RESULTREPORT_LIST_TO_DJANGO, data)
+            console.log(data)
+            return data
         }catch(error){
             console.error('requestResultReportListToDjango():'+ error)
             throw error
