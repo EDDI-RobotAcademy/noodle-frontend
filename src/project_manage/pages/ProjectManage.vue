@@ -154,7 +154,7 @@ export default {
   },
   data() {
     return {
-      isChecked: true, // 스위치의 초기 상태
+      isChecked: 'Commit-List', // 스위치의 초기 상태
       displayBacklogList: [], // 지연 렌더링 백로그 리스트
       columns: [
         {
@@ -205,7 +205,10 @@ export default {
       if (newVal !== null) {
         await this.setBranchSelect()
       }
-    }
+    },
+    isChecked(newVal) {
+    console.log('스위치 상태:', newVal)
+  }
   },
   methods: {
     ...mapActions(productManageModule, ["requestSaveReposListToDjango", "requestGetReposListToDjango", "requestSaveBranchListToDjango", "requestGetBranchListToDjango", "requestSaveCommitListToDjango", "requestGetCommitListToDjango"]),

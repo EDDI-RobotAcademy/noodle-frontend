@@ -1,7 +1,7 @@
 <template>
   <div class="switch white">
-    <input type="radio" id="switch-on" v-model="localChecked" :value="true" />
-    <input type="radio" id="switch-off" v-model="localChecked" :value="false" />
+    <input type="radio" id="switch-on" v-model="localChecked" value="Commit-List" />
+    <input type="radio" id="switch-off" v-model="localChecked" value="Report" />
     <label for="switch-on">{{ leftLabel }}</label>
     <label for="switch-off">{{ rightLabel }}</label>
     <span class="toggle" :class="{ 'checked': localChecked }"></span>
@@ -13,16 +13,16 @@ export default {
   name: 'ReportSwitch',
   props: {
     modelValue: {
-      type: Boolean,
+      type: String,
       required: true
     },
     leftLabel: {
       type: String,
-      default: 'Domain'
+      default: 'Commit-List'
     },
     rightLabel: {
       type: String,
-      default: 'Status'
+      default: 'Report'
     }
   },
   computed: {
