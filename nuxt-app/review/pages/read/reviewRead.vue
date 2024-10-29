@@ -83,7 +83,7 @@ function goToReivewModifyPage() {
     router.push(`/review/modify/${beforeListPageNumber.value}/${id.value}`)
 }
 function deleteThisReview() {
-    reviewStore.requestDeleteReviewToDjango(id.value)
+    reviewStore.requestDeleteReviewToDjango(id.value, reviewWriter.value)
     router.push(`/review/list/${beforeListPageNumber.value}`)
 }
 
