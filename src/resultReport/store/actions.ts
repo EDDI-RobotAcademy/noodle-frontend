@@ -11,6 +11,8 @@ export type ResultReportActions = {
     requestCreateResultReportToDjango(context: ActionContext<ResultReportState, any>, payload: {
         title: string, overview: string, teamMemberList: [[string]], skillList: [string], featureList: [string], usage: string, improvementList: [string], completionList: [[string]], userToken: string
     }): Promise<AxiosResponse>
+    requestGenerateResultReportToFastAPI(context: ActionContext<any, any>, payload: { userToken: string, reponame: string, branchname: string }): Promise<boolean>
+    requestGetResultReportResultToFastAPI(context: ActionContext<any, any>, userToken: string): Promise<any>
 }
 
 const actions: ResultReportActions = {
@@ -59,6 +61,46 @@ const actions: ResultReportActions = {
             return res.data
         } catch (error) {
             alert('requestCreateResultReportToDjango() 문제 발생')
+            throw error
+        }
+    },
+    async requestGenerateResultReportToFastAPI(context: ActionContext<any, any>, payload: { userToken: string, reponame: string, branchname: string }): Promise<boolean> {
+        console.log("requestGenerateResultReportToFastAPI")
+        const { userToken, reponame, branchname } = payload
+        console.log("userToken:", userToken)
+        console.log("reponame:", reponame)
+        console.log("branchname:", branchname)
+
+        try {
+            const res = await axiosInst.djangoAxiosInst.post('/ai-request/send', { userToken: userToken, command: 31, data: [userToken, reponame, branchname] })
+            return res.data
+        } catch (error) {
+            console.error('requestGenerateResultReportToFastAPI() 문제 발생')
+            throw error
+        }
+    },
+    async requestGetResultReportResultToFastAPI(context: ActionContext<any, any>, userToken: string): Promise<any> {
+        try {
+            let response: AxiosResponse<any>
+
+            const maxAttempts = 50
+            const delay = 5000
+
+            for (let attempt = 0; attempt < maxAttempts; attempt++) {
+                response = await axiosInst.fastapiAxiosInst.get('/generate-result-report-result')
+
+                if (response.data && response.data.userToken === userToken && response.data.message) {
+                    console.log("response.data:", response.data)
+                    return response.data
+                }
+
+                console.log(`Attempt ${attempt} failed.`)
+                await new Promise(resolve => setTimeout(resolve, delay))
+            }
+
+            throw new Error('결과를 가져오는 데 실패했습니다.')
+        } catch (error) {
+            console.log('requestGetResultReportResultToFastAPI() 중 문제 발생:', error)
             throw error
         }
     }

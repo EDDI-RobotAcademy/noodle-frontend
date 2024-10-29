@@ -113,7 +113,6 @@
           </v-card>
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -126,7 +125,10 @@ import { toRaw } from 'vue';
 const productManageModule = 'productManageModule'
 const authenticationModule = 'authenticationModule'
 const backlogModule = 'backlogModule'
-// import DragSection from '@/project_manage/pages/ProjectManageComponents/DragSection.vue';
+
+import DragSection from '@/project_manage/pages/ProjectManageComponents/DragSection.vue';
+
+const resultReportModule = 'resultReportModule'
 
 export default {
   name: "App",
@@ -202,6 +204,7 @@ export default {
   methods: {
     ...mapActions(productManageModule, ["requestSaveReposListToDjango", "requestGetReposListToDjango", "requestSaveBranchListToDjango", "requestGetBranchListToDjango", "requestSaveCommitListToDjango", "requestGetCommitListToDjango"]),
     ...mapActions(backlogModule, ["requestGenerateBacklogToFastAPI", "requestBacklogListToFastAPI"]),
+    ...mapActions(resultReportModule, ["requestGenerateResultReportToFastAPI", "requestGetResultReportResultToFastAPI"]),
     async setRepositorySelect(event) {
       const selectedValue = event
       // this.selectedBranches = selectedValue
@@ -220,6 +223,10 @@ export default {
       const res = await this.requestGetCommitListToDjango(payload)
       console.log("commits response:", res)
       console.log("commits:", this.commits)
+      const response = await this.requestGenerateResultReportToFastAPI(payload)
+      console.log("FastAPI response:", response)
+      const getResultReportData = await this.requestGetResultReportResultToFastAPI(userToken)
+      console.log("getResultReportData:", getResultReportData)
     },
     async Refresh() {
       this.isExample = false
@@ -703,6 +710,7 @@ export default {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
