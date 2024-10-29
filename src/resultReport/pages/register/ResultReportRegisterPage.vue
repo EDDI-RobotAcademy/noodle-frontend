@@ -1,8 +1,9 @@
 <template>
-  <v-container>
+  <v-container class="pa-0">
     <v-card class="mx-auto" max-width="1000">
       <!-- 프로젝트 제목 섹션 -->
       <v-card-title class="text-h4 font-weight-bold text-center pa-4">
+        <h2 class="text-h5 mb-4">프로젝트 제목</h2>
         <v-text-field
           v-model="projectTitle"
           label="프로젝트 제목"
@@ -10,6 +11,22 @@
           dense
         ></v-text-field>
       </v-card-title>
+
+      <v-divider></v-divider>
+
+      <!-- 개요 섹션 -->
+      <v-card-title class="text-h4 font-weight-bold pa-4">
+        <h2 class="text-h5 mb-4">개요</h2>
+        <v-text-field
+          v-model="overview"
+          label="개요"
+          outlined
+          dense
+        ></v-text-field>
+      </v-card-title>
+
+
+      <v-divider></v-divider>
 
       <!-- 팀 구성 섹션 -->
       <v-card-text>
@@ -223,43 +240,36 @@
       </v-card-text>
     </v-card>
 
-    <!-- 등록 버튼 -->
-    <v-row justify="end" class="mt-4">
+    
+    <v-row justify="end" class="mt-4 mx-0">
       <v-col cols="auto">
-        <v-btn color="primary" large @click="submitReport">등록</v-btn>
+        <v-btn color="primary" large @click="onSubmit">등록</v-btn>
+      </v-col>
+
+      <v-col cols="auto">
+        <router-link :to="{ name: 'ResultReportListPage' }">
+          <v-btn class="ml-1" color="error">취소</v-btn>
+        </router-link>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+const resultReportModule = 'resultReportModule'
 export default {
-  name: 'ProjectReport',
   data() {
     return {
       projectTitle: '',
-      teamMembers: [
-        { department: '', name: '', role: '' }
-      ],
-      techStack: ['Vue.js'],
-      features: ['사용자 인증 및 권한 관리'],
-      usagePlans: [
-        {
-          title: '서비스 확장',
-          description: '현재 서비스를 기반으로 추가 기능을 개발하여 서비스 범위 확대'
-        }
-      ],
-      improvements: ['성능 최적화 필요'],
-      completionRates: [
-        { label: '보안', rate: 85, color: 'red' },
-        { label: '유지보수', rate: 70, color: 'green' },
-        { label: '전체', rate: 75, color: 'blue' },
-      ],
-      completionFeedback: [
-        '보안 측면에서 추가적인 암호화 적용이 필요합니다.',
-        '유지보수성 향상을 위해 코드 리팩토링이 권장됩니다.',
-        '전반적으로 양호하나 일부 기능의 개선이 필요합니다.'
-      ],
+      overview: '',
+      teamMembers: [],
+      techStack: [],
+      features: [],
+      usagePlans: [],
+      improvements: [],
+      completionRates: [],
+      completionFeedback: [],
       size: 120,
       strokeWidth: 10
     }
@@ -312,8 +322,33 @@ export default {
     },
     dashOffset(rate) {
       return this.circumference - (rate / 100 * this.circumference);
-    }
-  }
+    },
+    ...mapActions(resultReportModule, ['requestCreateResultReportToDjango']),
+    async onSubmit () {
+        console.log('작성 완료 버튼 눌렀지 ?')
+
+        const payload = {
+            title: this.title,
+            overview: this.overview,
+            teamMemberList: this.teamMemberList,
+            skillList: this.skillList,
+            featureList: this.featureList,
+            usage: this.usage,
+            imporvementList: this.imporvementList,
+            completionList: this.completionList,
+            userToken: localStorage.getItem("userToken")
+        }
+
+        const resultReport = await this.requestCreateResultReportToDjango(payload)
+      
+        await this.$router.push({
+            name: 'ResultReportReadPage',
+            params: {resultReportId: resultReport.resultReportId.toString()}
+        })
+    },
+  },
+  // async created () {
+  // }
 }
 </script>
 
