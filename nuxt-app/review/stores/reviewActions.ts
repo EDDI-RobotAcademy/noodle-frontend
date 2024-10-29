@@ -65,6 +65,9 @@ export const reviewActions = {
 			await djangoAxiosInst.post("/review/modify", payload);
 		} catch (error) {
 			console.error("error occured while modifying review!" + error);
+			if (error.response && error.response.status === 401) {
+				alert("작성자만 수정할 수 있습니다.");
+			}
 		}
 	},
 	async requestDeleteReviewToDjango(id, name): Promise<void> {

@@ -113,6 +113,8 @@ const submitReview = async () => {
                 reviewID: Number(id.value),
                 ratingList: [designScore.value, usabilityScore.value, responsiveScore.value, qualityScore.value],
                 content: reviewContent.value,
+                writer: reviewWriter.value,
+                userToken: localStorage.getItem('userToken')
             };
             await reviewStore.requestModifyReviewToDjango(payload)
             goToReivewReadPage()
@@ -122,6 +124,8 @@ const submitReview = async () => {
             reviewID: Number(id.value),
             title: reviewTitle.value,
             content: reviewContent.value,
+            writer: reviewWriter.value,
+            userToken: localStorage.getItem('userToken')
         };
         await reviewStore.requestModifyReviewToDjango(payload)
         goToReivewReadPage()
