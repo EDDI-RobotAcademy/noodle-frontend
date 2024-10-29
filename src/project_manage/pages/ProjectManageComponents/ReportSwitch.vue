@@ -55,23 +55,23 @@ export default {
 /* 스위치 글자 관련 설정 */
 .switch label {
   color: #fff;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: bold;
   line-height: var(--switch-height, 20px);
   text-transform: uppercase;
   transition: color 0.2s ease;
-  width: 35px;
+  width: 100px;
 }
 
 .switch label:nth-of-type(1) {
   position: absolute;
-  left: -85%;
+  left: -180%;
   text-align: right;
 }
 
 .switch label:nth-of-type(2) {
   position: absolute;
-  right: -70%;
+  right: -180%;
   text-align: left;
 }
 
