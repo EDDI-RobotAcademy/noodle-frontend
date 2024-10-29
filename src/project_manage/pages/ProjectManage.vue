@@ -1,6 +1,8 @@
 <template>
   <div class="app-container">
     <div class="container">
+
+
       <div class="leftbox">
         <div class="leftbox_title">
           <span>Backlog Board</span>
@@ -12,6 +14,8 @@
             <span class="toggle" :class="{ 'checked': isChecked }"></span>
           </div>
         </div>
+
+
         <!-- 생성된 백로그 출력부 -->
         <v-card class="backlog-list-container">
           <v-list style="background-color: #2f2f2f;">
@@ -38,44 +42,19 @@
             </v-list-item>
           </v-list>
         </v-card>
-        <!-- <img class="example_backlog" :src="require('@/assets/images/fixed/example_backlog.png')" alt="example_backlog"> -->
-        <!-- <v-container>
-            <v-divider></v-divider>
-            <v-row>
-              <v-col cols="12" sm="4" v-for="(column, columnIndex) in columns" :key="columnIndex">
-                <v-card>
-                  <v-card-title class="KanbanBoardTitle" >{{ column.name }}</v-card-title>
-                  <v-diver></v-diver>
-                  <v-card-text class="KanbanBoardCard">
-                    <v-card
-                      eslint-disable-next-line
-                      v-for="task in column.tasks"
-                      :key="task.id"
-                      class="mb-2"
-                    >
-                      <v-card-text>{{ task.name }}</v-card-text>
-                    </v-card>
-                  </v-card-text>
-                </v-card>
-              </v-col>
-            </v-row>
-          </v-container> -->
-        <!-- <div class="chat-bar">
-            <input type="email" placeholder="생성을 원하시는 Backlog를 입력해주세요!" v-model="email" />
-            <a href="/" @click.prevent="handleSubmit">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                <path
-                  d="M15.6 15.47A4.99 4.99 0 0 1 7 12a5 5 0 0 1 10 0v1.5a1.5 1.5 0 1 0 3 0V12a8 8 0 1 0-4.94 7.4 1 1 0 1 1 .77 1.84A10 10 0 1 1 22 12v1.5a3.5 3.5 0 0 1-6.4 1.97zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-              </svg>
-            </a>
-          </div> -->
       </div>
+
+
+
       <div class="rightbox">
         <div class="rightbox_title">
           <span>Commit List</span>
-          <v-btn @click="example" class="example_btn">클릭해보세요!</v-btn>
-          <v-btn @click="Refresh" class="Refresh">Refresh</v-btn>
+          <div class="rightbox_title_btn">
+            <v-btn @click="example" class="example_btn">클릭해보세요!</v-btn>
+            <v-btn @click="Refresh" class="Refresh">Refresh</v-btn>
+          </div>
         </div>
+
         <div v-if="!isExample">
           <div class="select-container" v-if="repos">
             <v-select v-model="selectedRepository" :value="selectedRepository" :items="repos" class="repository"
@@ -111,6 +90,7 @@
           <v-card v-else class="commit-list-container">
           </v-card>
         </div>
+        
         <div v-else>
           <div class="select-container">
             <v-select :value="exampleRepository"></v-select>
@@ -134,29 +114,6 @@
         </div>
       </div>
 
-
-<!------------------------------------결과 보고서 출력 영역 -------------------------------------------->
-      <DragSection>
-        <h3>추후에 결과 보고서가 출력되도록 추가하면 될 듯</h3>
-      </DragSection>
-      
-      <!-- <div class="select-container" v-else>
-        <v-select :value="selectedRepository"></v-select>
-        <v-select :value="selectedBranches"></v-select>
-      </div> -->
-      <!-- <v-card v-if="commits" class="commit-list-container">
-        <v-list>
-          <v-list-item v-for="(item, index) in commits" :key="index">
-            <v-card>
-              <v-card-item>
-                <v-card-text>{{ item }}</v-card-text>
-              </v-card-item>
-            </v-card>
-          </v-list-item>
-        </v-list>
-      </v-card>
-      <v-card v-else class="commit-list-container">
-      </v-card> -->
     </div>
   </div>
 </template>
@@ -169,12 +126,12 @@ import { toRaw } from 'vue';
 const productManageModule = 'productManageModule'
 const authenticationModule = 'authenticationModule'
 const backlogModule = 'backlogModule'
-import DragSection from '@/project_manage/pages/ProjectManageComponents/DragSection.vue';
+// import DragSection from '@/project_manage/pages/ProjectManageComponents/DragSection.vue';
 
 export default {
   name: "App",
   components: {
-    DragSection,
+    // DragSection,
   },
   setup() {
     const store = useStore()
@@ -365,12 +322,12 @@ export default {
     }
   },
   mounted() {
-    if (localStorage.getItem('userToken')) {
+    // if (localStorage.getItem('userToken')) {
       // 사용자 인증 과정 추가해야 함
-    } else {
-      alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.")
-      this.goToGithubLogin()
-    }
+    // } else {
+      // alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.")
+      // this.goToGithubLogin()
+    // }
   }
 };
 </script>
@@ -378,33 +335,28 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Gothic+Coding:wght@400;700&family=Nanum+Myeongjo:wght@400;700;800&family=Orbit&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
-
-html,
-body {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-}
-
 .app-container {
   display: flex;
   flex-direction: column;
-  /* height: 100vh; */
   height: 100%;
+  width: 100%;
+  /* height: calc(100vh - var(--navigation-bar-height)); */
+  /* margin: 0;
+  padding: 0; */
+  /* overflow: hidden; */
 }
 
 .container {
   display: flex;
-  /* Flexbox로 레이아웃 설정 */
   height: 100%;
-  /* Viewport height를 100%로 설정 (화면 전체 높이) */
+  width: 100%;
   /* align-items: stretch; */
 }
 
 /* 왼쪽 box */
 .leftbox {
   position: relative;
-  width: 75%;
+  width: 50%;
   /* 왼쪽 박스의 너비를 75%로 설정 */
   height: 100%;
   /* 왼쪽 박스의 높이를 100%로 설정 (화면 전체 높이) */
@@ -412,21 +364,17 @@ body {
   /* 왼쪽 박스의 배경색을 파란색으로 설정 */
   border-right: 3px solid rgba(204, 159, 1);
   /* 오른쪽에 두께 3px의 노란색 테두리 추가 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .leftbox_title {
   display: flex;
-  /* Flexbox로 레이아웃 설정 */
   justify-content: space-between;
-  /* 좌우 요소 사이에 공간을 균등 분배 */
   align-items: center;
-  /* 요소들을 수직 가운데 정렬 */
-  margin-top: 20px;
-  /* 위쪽 여백을 20px 추가 */
-  margin-left: 20px;
-  /* 왼쪽 여백을 20px 추가 */
-  margin-right: 20px;
-  /* 오른쪽 여백을 20px 추가 */
+  width: 95%;
+  height: 10%;
   font-size: 30px;
   /* 폰트 크기를 30px로 설정 */
   color: rgba(204, 159, 1);
@@ -439,14 +387,29 @@ body {
   font-weight: bold;
 }
 
-.KanbanBoardTitle {
-  background-color: rgba(204, 159, 1);
+.backlog-list-container {
+  overflow: auto;
+  width: 99%;
+  height: 88.5%;
+  background-color: #2f2f2f;
 }
 
-.KanbanBoardCard {
-  background-color: #444444;
+.backlog-list-container::-webkit-scrollbar {
+  width: 10px;
 }
 
+.backlog-list-container::-webkit-scrollbar-thumb {
+  background-color: black;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+.backlog-list-container::-webkit-scrollbar-track {
+  background-color: grey;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
+}
 
 .mb-2 {
   background-color: #c5c5c5;
@@ -454,13 +417,19 @@ body {
 
 /* 오른쪽 box */
 .rightbox {
-  /* align-items: stretch; */
-  width: 25%;
-  /* 오른쪽 박스의 너비를 25%로 설정 */
+  width: 50%;
   height: 100%;
-  /* 오른쪽 박스의 높이를 100%로 설정 (화면 전체 높이) */
   background-color: #1c1c1c;
-  /* 오른쪽 박스의 배경색을 초록색으로 설정 */
+}
+
+.rightbox_title {
+  width: 95%;
+  height: 10%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 20px;
+  font-size: 30px;
 }
 
 .rightbox_title span {
@@ -470,21 +439,9 @@ body {
   font-weight: bold;
 }
 
-.rightbox_title {
+.rightbox_title_btn {
   display: flex;
-  /* Flexbox로 레이아웃 설정 */
-  justify-content: space-between;
-  /* 좌우 요소 사이에 공간을 균등 분배 */
-  align-items: center;
-  /* 요소들을 수직 가운데 정렬 */
-  margin-top: 20px;
-  /* 위쪽 여백을 20px 추가 */
-  margin-left: 10px;
-  /* 왼쪽 여백을 10px 추가 */
-  margin-right: 10px;
-  /* 오른쪽 여백을 10px 추가 */
-  font-size: 30px;
-  /* 폰트 크기를 30px로 설정 */
+  gap: 20px;
 }
 
 .example_btn {
@@ -501,6 +458,12 @@ body {
   border: none;
   cursor: pointer;
   font-size: 16px;
+}
+
+.rightbox-content {
+  width: 99%;
+  height: 80%;
+  background-color: #2f2f2f;
 }
 
 /* 커밋리스트 나오는 v-card 설정 */
@@ -531,28 +494,6 @@ body {
   box-shadow: inset 0px 0px 5px white;
 }
 
-.backlog-list-container {
-  overflow: auto;
-  height: 800px;
-  background-color: #2f2f2f;
-}
-
-.backlog-list-container::-webkit-scrollbar {
-  width: 10px;
-}
-
-.backlog-list-container::-webkit-scrollbar-thumb {
-  background-color: black;
-  border-radius: 10px;
-  background-clip: padding-box;
-  border: 2px solid transparent;
-}
-
-.backlog-list-container::-webkit-scrollbar-track {
-  background-color: grey;
-  border-radius: 10px;
-  box-shadow: inset 0px 0px 5px white;
-}
 
 /* ---------- SWITCH ---------- */
 
