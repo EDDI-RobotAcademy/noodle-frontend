@@ -55,6 +55,8 @@ export default defineComponent({
     }
     async function goToGithubLogout() {
       await authenticationStore.requestLogoutToDjango()
+      alert('로그아웃 되었습니다. 홈페이지로 이동합니다.')
+      goToHome()
     }
     function goToBacklogBoard() {
       router.push('/projectManage')
