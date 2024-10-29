@@ -3,12 +3,12 @@
     <v-row justify="center">
       <v-col cols="12" class="report-list-area">
         <h1>Report List</h1>
-        <!-- 실제 보고서 카드 -->
+        <!-- v-for를 pageItems로 변경 -->
         <v-card 
-          v-for="report in paginatedReports" 
-          :key="report.id" 
+          v-for="report in pageItems" 
+          :key="report.resultReportId" 
           class="custom-card-spacing"
-          @click="goToReport(report.id)"
+          @click="readRow($event, { item: report })"
         >
           <div class="report-content">
             <div class="image">
@@ -24,7 +24,7 @@
             </div>
             <div class="section2">
             <v-card-text >
-              <p class="member">구성원: {{ report.author }}</p>
+              <p class="member">구성원: {{ report.writer }}</p>
               <p class="function">주요 기능에 대한 내용</p>
             </v-card-text>
             </div>
@@ -34,10 +34,11 @@
           </div>
         </v-card>
         
+        <!-- 페이지네이션 업데이트 -->
         <v-pagination
-          v-model="page"
-          :length="pageCount"
-          @input="updatePage"
+          v-model="pagination.page"
+          :length="Math.ceil(resultReports.length / perPage)"
+          color="primary"
           class="pagination"
         ></v-pagination>
       </v-col>
@@ -46,53 +47,56 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      reports: [
-        { id: 1, title: '감자 여행 결과 보고서', author: ['김지민', '김철수', '김영희'], date: '2024-10-14' },
-        { id: 2, title: '두 번째 보고서', author: '김철수', date: '2024-10-13' },
-        { id: 3, title: '세 번째 보고서', author: '김철수', date: '2024-10-13' },
-        { id: 4, title: '네 번째 보고서', author: '김철수', date: '2024-10-13' },
-        { id: 5, title: '다섯 번째 보고서', author: '김철수', date: '2024-10-13' },
-        { id: 6, title: '두 번째 보고서', author: '김철수', date: '2024-10-13' },
-        { id: 7, title: '두 번째 보고서', author: '김철수', date: '2024-10-13' },
-        { id: 8, title: '두 번째 보고서', author: '김철수', date: '2024-10-13' },
-        { id: 9, title: '두 번째 보고서', author: '김철수', date: '2024-10-13' },
-        { id: 10, title: '두 번째 보고서', author: '김철수', date: '2024-10-13' },
-        { id: 11, title: '두 번째 보고서', author: '김철수', date: '2024-10-13' },
-        { id: 12, title: '두 번째 보고서', author: '김철수', date: '2024-10-13' },
-        { id: 13, title: '두 번째 보고서', author: '김철수', date: '2024-10-13' },
-        { id: 14, title: '두 번째 보고서', author: '김철수', date: '2024-10-13' },
-        { id: 15, title: '두 번째 보고서', author: '김철수', date: '2024-10-13' },
-        { id: 16, title: '두 번째 보고서', author: '김철수', date: '2024-10-13' },
-        { id: 17, title: '두 번째 보고서', author: '김철수', date: '2024-10-13' },
-        // 더 많은 보고서 데이터를 여기에 추가할 수 있습니다.
-      ],
-      page: 1,
-      itemsPerPage: 8
-    }
-  },
-  computed: {
-    pageCount() {
-      return Math.ceil(this.reports.length / this.itemsPerPage)
+import { toRaw } from 'vue';
+import {mapActions, mapState} from 'vuex'
+
+const resultReportModule = 'resultReportModule'
+
+export default{
+    computed:{
+        // ...mapState(resultReportModule, ['resultReports']),
+        pageItems() {
+            const startIdx = (this.pagination.page - 1)*this.perPage
+            const endIdx = startIdx + this.perPage
+            return this.resultReports.slice(startIdx, endIdx)
+        }
     },
-    paginatedReports() {
-      const start = (this.page - 1) * this.itemsPerPage
-      const end = start + this.itemsPerPage
-      return this.reports.slice(start, end)
-    }
-  },
-  methods: {
-    goToReport(id) {
-      this.$router.push(`/result-report/read/${id}`)
-      console.log(`보고서 ${id}로 이동`)
+    async mounted() {
+        this.resultReports = await this.requestResultReportListToDjango()
+        const reports = []
+        for (let i = 0; i < this.resultReports.length; i++) {
+            reports.push(this.resultReports[i])
+        }
+        console.log("resultReports:", reports)
+        this.resultReports = toRaw(reports)
+        console.log("resultReports:", this.resultReports)
     },
-    updatePage(page) {
-      this.page = page
+    methods: {
+        ...mapActions(resultReportModule, ['requestResultReportListToDjango']),
+        readRow (event, { item }) {
+            this.$router.push({
+                name: 'ResultReportReadPage',
+                params: { resultReportId: item['resultReportId'].toString() }
+            })
+        }
+    },
+    data() {
+        return{
+            resultReports: [],
+            headerTitle: [
+                {title: 'No', align: 'start', sortable: true, key: 'resultReportId'},
+                {title: '제목', align: 'end', key: 'title'},
+                {title: '작성자', align: 'end', key: 'writer'},
+                {title: '작성일자', align: 'end', key: 'regDate'},
+            ],
+            perPage: 5,
+            pagination: {
+                page: 1
+            }
+        }
     }
-  }
 }
+
 </script>
 
 <style scoped>
