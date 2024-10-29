@@ -11,6 +11,8 @@ export type ResultReportActions = {
     requestCreateResultReportToDjango(context: ActionContext<ResultReportState, any>, payload: {
         title: string, overview: string, teamMemberList: [[string]], skillList: [string], featureList: [string], usage: string, improvementList: [string], completionList: [[string]], userToken: string
     }): Promise<AxiosResponse>
+    requestGenerateResultReportToFastAPI(context: ActionContext<any, any>, payload: { userToken: string, reponame: string, branchname: string }): Promise<boolean>
+    requestGetResultReportResultToFastAPI(context: ActionContext<any, any>, userToken: string): Promise<any>
 }
 
 const actions: ResultReportActions = {
@@ -61,6 +63,22 @@ const actions: ResultReportActions = {
             alert('requestCreateResultReportToDjango() 문제 발생')
             throw error
         }
+    },
+    async requestGenerateResultReportToFastAPI(context: ActionContext<any, any>, payload: { userToken: string, reponame: string, branchname: string }): Promise<boolean> {
+        console.log("requestGenerateResultReportToFastAPI")
+        const { userToken, reponame, branchname } = payload
+        console.log("userToken:", userToken)
+        console.log("reponame:", reponame)
+        console.log("branchname:", branchname)
+
+        try {
+            const res = await axiosInst.djangoAxiosInst.post('/ai-request/send', { userToken: userToken, command: 31, data: [userToken, reponame, branchname] })
+            return res.data
+        } catch (error) {
+            console.error('requestGenerateResultReportToFastAPI() 문제 발생')
+            throw error
+        }
+    },
     }
 }
 

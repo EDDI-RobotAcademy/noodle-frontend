@@ -135,11 +135,11 @@
       </div>
 
 
-<!------------------------------------결과 보고서 출력 영역 -------------------------------------------->
+      <!------------------------------------결과 보고서 출력 영역 -------------------------------------------->
       <DragSection>
         <h3>추후에 결과 보고서가 출력되도록 추가하면 될 듯</h3>
       </DragSection>
-      
+
       <!-- <div class="select-container" v-else>
         <v-select :value="selectedRepository"></v-select>
         <v-select :value="selectedBranches"></v-select>
@@ -169,6 +169,7 @@ import { toRaw } from 'vue';
 const productManageModule = 'productManageModule'
 const authenticationModule = 'authenticationModule'
 const backlogModule = 'backlogModule'
+const resultReportModule = 'resultReportModule'
 import DragSection from '@/project_manage/pages/ProjectManageComponents/DragSection.vue';
 
 export default {
@@ -245,6 +246,7 @@ export default {
   methods: {
     ...mapActions(productManageModule, ["requestSaveReposListToDjango", "requestGetReposListToDjango", "requestSaveBranchListToDjango", "requestGetBranchListToDjango", "requestSaveCommitListToDjango", "requestGetCommitListToDjango"]),
     ...mapActions(backlogModule, ["requestGenerateBacklogToFastAPI", "requestBacklogListToFastAPI"]),
+    ...mapActions(resultReportModule, ["requestGenerateResultReportToFastAPI", "requestGetResultReportResultToFastAPI"]),
     async setRepositorySelect(event) {
       const selectedValue = event
       // this.selectedBranches = selectedValue
@@ -263,6 +265,8 @@ export default {
       const res = await this.requestGetCommitListToDjango(payload)
       console.log("commits response:", res)
       console.log("commits:", this.commits)
+      const response = await this.requestGenerateResultReportToFastAPI(payload)
+      console.log("FastAPI response:", response)
     },
     async Refresh() {
       this.isExample = false
@@ -728,6 +732,7 @@ body {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
