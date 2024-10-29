@@ -267,6 +267,8 @@ export default {
       console.log("commits:", this.commits)
       const response = await this.requestGenerateResultReportToFastAPI(payload)
       console.log("FastAPI response:", response)
+      const getResultReportData = await this.requestGetResultReportResultToFastAPI(userToken)
+      console.log("getResultReportData:", getResultReportData)
     },
     async Refresh() {
       this.isExample = false
