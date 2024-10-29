@@ -37,7 +37,7 @@
         </v-card>
       </div>
 
-      <div class="rightbox">
+      <div class="rightbox" v-show="isChecked === 'Commit-List'">
         <div class="rightbox_title">
           <span>Commit List</span>
           <div class="rightbox_title_btn">
@@ -118,6 +118,17 @@
           <v-card v-else class="commit-list-container"></v-card>
         </div>
       </div>
+
+<!-------------------Switch가 Report일 때 (Report)-------------------------->
+      <div class="rightbox" v-show="isChecked === 'Report'">
+        <div class="rightbox_title">
+          <span>Report</span>
+        </div>
+
+      </div>
+
+
+
     </div>
   </div>
 </template>
@@ -540,4 +551,12 @@ export default {
     opacity: 1;
   }
 }
+
+
+
+
+
+/* Report 관련 CSS */
+
+
 </style>
