@@ -8,6 +8,9 @@ export type ResultReportActions = {
     requestResultReportListToDjango(context: ActionContext<ResultReportState, any>): Promise<any>
     requestResultReportToDjango(context: ActionContext<ResultReportState, any>, resultReportId: number): Promise<any>
     requestDeleteResultReportToDjango(context: ActionContext<ResultReportState, unknown>, resultReportId: number): Promise<void>
+    requestCreateResultReportToDjango(context: ActionContext<ResultReportState, any>, payload: {
+        title: string, overview: string, teamMemberList: [[string]], skillList: [string], featureList: [string], usage: string, improvementList: [string], completionList: [[string]], userToken: string
+    }): Promise<AxiosResponse>
 }
 
 const actions: ResultReportActions = {
@@ -40,6 +43,22 @@ const actions: ResultReportActions = {
             await axiosInst.djangoAxiosInst.delete(`/report/delete/${resultReportId}`)
         } catch (error) {
             console.log('requestDeleteResultReportToDjango() 과정에서 문제 발생')
+            throw error
+        }
+    },
+    async requestCreateResultReportToDjango(context: ActionContext<ResultReportState, any>, payload: {
+        title: string, overview: string, teamMemberList: [[string]], skillList: [string], featureList: [string], usage: string, improvementList: [string], completionList: [[string]], userToken: string
+    }): Promise<AxiosResponse> {
+        const {title, overview, teamMemberList, skillList, featureList, usage, improvementList, completionList, userToken} = payload
+        console.log('전송할 데이터:', {title, overview, teamMemberList, skillList, featureList, usage, improvementList, completionList, userToken})
+
+        try {
+            const res: AxiosResponse = await axiosInst.djangoAxiosInst.post('/report/create', {title, overview, teamMemberList, skillList, featureList, usage, improvementList, completionList, userToken})
+
+            console.log('res:', res.data)
+            return res.data
+        } catch (error) {
+            alert('requestCreateResultReportToDjango() 문제 발생')
             throw error
         }
     }
