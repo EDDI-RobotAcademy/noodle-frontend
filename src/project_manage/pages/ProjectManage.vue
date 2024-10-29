@@ -390,7 +390,7 @@ body {
   display: flex;
   flex-direction: column;
   /* height: 100vh; */
-  height: 100%
+  height: 100%;
 }
 
 .container {
@@ -514,10 +514,44 @@ body {
   margin-top: 15px;
 }
 
+.commit-list-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.commit-list-container::-webkit-scrollbar-thumb {
+  background-color: black;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+.commit-list-container::-webkit-scrollbar-track {
+  background-color: grey;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
+}
+
 .backlog-list-container {
   overflow: auto;
   height: 800px;
   background-color: #2f2f2f;
+}
+
+.backlog-list-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.backlog-list-container::-webkit-scrollbar-thumb {
+  background-color: black;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+.backlog-list-container::-webkit-scrollbar-track {
+  background-color: grey;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
 }
 
 /* ---------- SWITCH ---------- */
