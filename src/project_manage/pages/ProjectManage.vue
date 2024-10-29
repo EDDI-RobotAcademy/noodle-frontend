@@ -37,6 +37,9 @@
         </v-card>
       </div>
 
+
+
+  <!------------------------------ Switch가 Commit-List일 때 ---------------------->
       <div class="rightbox" v-show="isChecked === 'Commit-List'">
         <div class="rightbox_title">
           <span>Commit List</span>
@@ -588,12 +591,12 @@ export default {
   }
   },
   mounted() {
-    // if (localStorage.getItem('userToken')) {
+    if (localStorage.getItem('userToken')) {
       // 사용자 인증 과정 추가해야 함
-    // } else {
-      // alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.")
-      // this.goToGithubLogin()
-    // }
+    } else {
+      alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.")
+      this.goToGithubLogin()
+    }
   }
 };
 </script>
