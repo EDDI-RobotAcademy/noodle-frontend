@@ -1,8 +1,6 @@
 <template>
   <div class="app-container">
     <div class="container">
-
-
       <div class="leftbox">
         <div class="leftbox_title">
           <span>Backlog Board</span>
@@ -15,7 +13,6 @@
           </div>
         </div>
 
-
         <!-- 생성된 백로그 출력부 -->
         <v-card class="backlog-list-container">
           <v-list style="background-color: #2f2f2f;">
@@ -23,12 +20,14 @@
               <v-card style="background-color: #3c3c3c;">
                 <v-list-item v-for="(key, item, index) in backlog" :key="index">
                   <v-card-item>
-                    <v-card-text style="color: white; font-weight:bold; margin-top:-10px; margin-bottom: -10px;">{{ item
-                      }}</v-card-text>
+                    <v-card-text style="color: white; font-weight:bold; margin-top:-10px; margin-bottom: -10px;">
+                      {{ item }}
+                    </v-card-text>
                     <div v-if="item === `Task List`">
                       <v-list-item v-for="(item, index) in key" :key="index">
-                        <v-card-text style="color: white; margin-top: -10px; margin-bottom: -10px;">{{ item
-                          }}</v-card-text>
+                        <v-card-text style="color: white; margin-top: -10px; margin-bottom: -10px;">
+                          {{ item }}
+                        </v-card-text>
                       </v-list-item>
                     </div>
                     <div v-else>
@@ -44,8 +43,6 @@
         </v-card>
       </div>
 
-
-
       <div class="rightbox">
         <div class="rightbox_title">
           <span>Commit List</span>
@@ -54,26 +51,42 @@
             <v-btn @click="Refresh" class="Refresh">Refresh</v-btn>
           </div>
         </div>
-
-        <div v-if="!isExample">
-          <div class="select-container" v-if="repos">
-            <v-select v-model="selectedRepository" :value="selectedRepository" :items="repos" class="repository"
-              @change="setRepositorySelect($event)">
-              <option v-for="(item, index) in repos" :key="index" :value="item.value">{{ item.value }}</option>
-            </v-select>
-            <div v-if="branches">
-              <v-select v-model="selectedBranches" :value="selectedBranch" :items="branches" class="branch"
-                @change="setBranchSelect($event)">
-                <option v-for="(item, index) in branches" :key="index" :value="item.value">{{ item.value }}</option>
+        
+        <div class="rightbox-content" v-if="!isExample">
+          <div class="select-container-area">
+            <div class="select-container" v-if="repos">
+              <v-select 
+                v-model="selectedRepository" 
+                :value="selectedRepository" 
+                :items="repos" 
+                class="repository"
+                @change="setRepositorySelect($event)"
+              >
+                <option v-for="(item, index) in repos" :key="index" :value="item.value">
+                  {{ item.value }}
+                </option>
               </v-select>
+              <div v-if="branches">
+                <v-select 
+                  v-model="selectedBranches" 
+                  :value="selectedBranch" 
+                  :items="branches" 
+                  class="branch"
+                  @change="setBranchSelect($event)"
+                >
+                  <option v-for="(item, index) in branches" :key="index" :value="item.value">
+                    {{ item.value }}
+                  </option>
+                </v-select>
+              </div>
+              <div v-else>
+                <v-select :value="selectedBranches" class="branches"></v-select>
+              </div>
             </div>
-            <div v-else>
-              <v-select :value="selectedBranches" class="branches"></v-select>
+            <div class="select-container" v-else>
+              <v-select :value="selectedRepository"></v-select>
+              <v-select :value="selectedBranches"></v-select>
             </div>
-          </div>
-          <div class="select-container" v-else>
-            <v-select :value="selectedRepository"></v-select>
-            <v-select :value="selectedBranches"></v-select>
           </div>
 
           <v-card v-if="commits" class="commit-list-container">
@@ -87,21 +100,20 @@
               </v-list-item>
             </v-list>
           </v-card>
-          <v-card v-else class="commit-list-container">
-          </v-card>
+          <v-card v-else class="commit-list-container"></v-card>
         </div>
         
-        <div v-else>
-          <div class="select-container">
-            <v-select :value="exampleRepository"></v-select>
-            <v-select :value="exampleBranch"></v-select>
+        <div class="rightbox-content" v-else>
+          <div class="select-container-area">
+            <div class="select-container">
+              <v-select :value="exampleRepository"></v-select>
+              <v-select :value="exampleBranch"></v-select>
+            </div>
           </div>
           <v-card v-if="exampleCommits" class="commit-list-container">
             <v-list style="background-color: #2f2f2f;">
-              <!-- 카드 색상 -->
               <v-list-item v-for="(item, index) in exampleCommits" :key="index">
                 <v-card style="background-color: #444444;">
-                  <!-- 위는 카드 아래는 글씨 -->
                   <v-card-item>
                     <v-card-text style="color: white;">{{ item }}</v-card-text>
                   </v-card-item>
@@ -109,8 +121,7 @@
               </v-list-item>
             </v-list>
           </v-card>
-          <v-card v-else class="commit-list-container">
-          </v-card>
+          <v-card v-else class="commit-list-container"></v-card>
         </div>
       </div>
     </div>
@@ -345,19 +356,14 @@ export default {
 .app-container {
   display: flex;
   flex-direction: column;
-  height: 100%;
   width: 100%;
-  /* height: calc(100vh - var(--navigation-bar-height)); */
-  /* margin: 0;
-  padding: 0; */
-  /* overflow: hidden; */
+  height: calc(100vh - var(--navigation-bar-height));
 }
 
 .container {
   display: flex;
   height: 100%;
   width: 100%;
-  /* align-items: stretch; */
 }
 
 /* 왼쪽 box */
@@ -467,21 +473,43 @@ export default {
   font-size: 16px;
 }
 
-.rightbox-content {
-  width: 99%;
-  height: 80%;
-  background-color: #2f2f2f;
+
+.rightbox-content{
+  width: 100%;
+  height: 90%;
 }
+
+.select-container-area{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 10%;
+}
+
+.select-container {
+  width: 96%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  color: rgb(248, 235, 54);
+}
+
+/* v-if로 감싸진 div들의 높이 설정 */
+/* rightbox_title이 10%이므로 나머지 90% */
+/* .rightbox > div:nth-child(2) {
+  height: 90%;
+} */
+
 
 /* 커밋리스트 나오는 v-card 설정 */
 .commit-list-container {
   background-color: #2F2F2F;
   color: #B4B4B4;
   overflow: auto;
-  width: calc(100% - 10px);
-  height: 650px;
-  margin-left: 5px;
-  margin-top: 15px;
+  width: 99%;
+  height: 87.5%;
+  margin: 4px;
 }
 
 .commit-list-container::-webkit-scrollbar {
@@ -637,69 +665,6 @@ export default {
 .toggle.checked {
   left: calc(var(--switch-width, 100px) - calc(var(--switch-height, 20px) - 8px));
   /* 스위치가 선택되었을 때 토글이 오른쪽에 위치 */
-}
-
-
-/* chat bar부분 */
-.chat-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: rgb(228, 228, 228);
-  padding: 10px;
-  width: 50%;
-  /* Set the width to 50% */
-  border-radius: 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  position: absolute;
-  /* Absolute positioning */
-  left: 50%;
-  /* Center it horizontally relative to .leftbox */
-  transform: translateX(-50%);
-  /* Adjust for perfect centering */
-  bottom: 20px;
-  /* Position at the bottom of .leftbox */
-}
-
-.chat-bar input {
-  flex-grow: 1;
-  border: none;
-  outline: none;
-  padding: 5px;
-  font-size: 14px;
-}
-
-.chat-bar a {
-  background-color: rgba(204, 159, 1);
-  border-radius: 50%;
-  padding: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 10px;
-}
-
-.chat-bar a svg {
-  width: 20px;
-  height: 20px;
-  fill: white;
-}
-
-
-.select-container {
-  display: flex;
-  justify-content: space-between;
-  padding: 0 5px;
-  margin-top: 20px;
-  gap: 20px;
-  color: rgb(248, 235, 54);
-}
-
-
-.example_backlog {
-  width: 95%;
-  height: 50%;
-  margin-left: 15px;
 }
 
 .fade-in {
