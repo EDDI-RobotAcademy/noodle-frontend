@@ -4,13 +4,7 @@
       <div class="leftbox">
         <div class="leftbox_title">
           <span>Backlog Board</span>
-          <div class="switch white">
-            <input type="radio" id="switch-off" v-model="isChecked" :value="false" />
-            <input type="radio" id="switch-on" v-model="isChecked" :value="true" />
-            <label for="switch-off">status</label>
-            <label for="switch-on">Domain</label>
-            <span class="toggle" :class="{ 'checked': isChecked }"></span>
-          </div>
+          <ReportSwitch v-model="isChecked" />
         </div>
 
         <!-- 생성된 백로그 출력부 -->
@@ -43,7 +37,10 @@
         </v-card>
       </div>
 
-      <div class="rightbox">
+
+
+  <!------------------------------ Switch가 Commit-List일 때 ---------------------->
+      <div class="rightbox" v-show="isChecked === 'Commit-List'">
         <div class="rightbox_title">
           <span>Commit List</span>
           <div class="rightbox_title_btn">
@@ -124,6 +121,200 @@
           <v-card v-else class="commit-list-container"></v-card>
         </div>
       </div>
+
+<!-------------------Switch가 Report로 변경됐을 때 (Report)-------------------------->
+      <div class="rightbox" v-show="isChecked === 'Report'">
+        <div class="rightbox_title">
+          <span>Report</span>
+        </div>
+
+    <v-container class="pa-0">
+      <v-card class="mx-auto" max-width="1000">
+        <!-- 프로젝트 제목 섹션 -->
+        <v-card-title class="text-h4 font-weight-bold text-center pa-4">
+          {{ projectTitle }}
+        </v-card-title>
+
+        <!-- 개요 섹션 -->
+        <v-card-text>
+          <h2 class="text-h5 mb-4">개요</h2>
+          <v-list dense>
+            <v-list-item v-for="(overview, index) in overviews" :key="index">
+              <v-list-item-content>
+                <v-list-item-title>{{ overview }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-card-text>
+
+        <v-divider></v-divider>
+  
+        <!-- 팀 구성 섹션 -->
+        <v-card-text>
+          <h2 class="text-h5 mb-4">팀 구성</h2>
+          <v-simple-table class="team-table">
+            <template v-slot:default>
+              <!-- <thead>
+                <tr>
+                  <th style="equal-width">부서</th>
+                  <th style="equal-width">이름</th>
+                  <th style="equal-width">역할</th>
+                </tr>
+              </thead> -->
+              <tbody>
+                <tr v-for="(member, index) in teamMembers" :key="index">
+                  <td class="equal-width">{{ member.department }}</td>
+                  <td class="equal-width">{{ member.name }}</td>
+                  <td class="equal-width">{{ member.role }}</td>
+                </tr>
+              </tbody>
+            </template>
+          </v-simple-table>
+        </v-card-text>
+  
+        <v-divider></v-divider>
+  
+        <!-- 기술 스택 섹션 -->
+        <v-card-text>
+          <h2 class="text-h5 mb-4">기술 스택</h2>
+          <v-chip-group>
+            <v-chip v-for="(tech, index) in techStack" :key="index" outlined>
+              {{ tech }}
+            </v-chip>
+          </v-chip-group>
+        </v-card-text>
+  
+        <v-divider></v-divider>
+  
+        <!-- 주요 기능 섹션 -->
+        <v-card-text>
+          <h2 class="text-h5 mb-4">주요 기능</h2>
+          <v-list dense>
+            <v-list-item v-for="(feature, index) in features" :key="index">
+              <v-list-item-content>
+                <v-list-item-title>{{ feature }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-card-text>
+  
+        <v-divider></v-divider>
+  
+        <!-- 활용 방안 섹션 -->
+        <v-card-text>
+          <h2 class="text-h5 mb-4">활용 방안</h2>
+          <v-list dense>
+            <v-list-item v-for="(usage, index) in usagePlans" :key="index">
+              <v-list-item-content>
+                <v-list-item-title class="text-h6">{{ usage.title }}</v-list-item-title>
+                <v-list-item-title class="mt-2">{{ usage.description }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-card-text>
+  
+        <v-divider></v-divider>
+  
+        <!-- 보완할 점 섹션 -->
+        <v-card-text>
+          <h2 class="text-h5 mb-4">보완할 점</h2>
+          <v-list dense>
+            <v-list-item v-for="(improvement, index) in improvements" :key="index">
+              <v-list-item-content>
+                <v-list-item-title>{{ improvement }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-card-text>
+  
+        <v-divider></v-divider>
+  
+        <!-- 완성도 섹션 -->
+        <v-card-text>
+          <h2 class="text-h5 mb-4">완성도</h2>
+          <v-row v-for="(item, index) in completionRates" :key="index" class="mb-6" align="center">
+            <v-col cols="4" class="text-center">
+              <h3 class="mb-2">{{ item.label }}</h3>
+              <svg :width="size" :height="size" class="progress-ring">
+                <circle
+                  :stroke="'#e0e0e0'"
+                  :stroke-width="strokeWidth"
+                  fill="transparent"
+                  :r="radius"
+                  :cx="center"
+                  :cy="center"
+                />
+                <circle
+                  :stroke="item[3]"
+                  :stroke-width="strokeWidth"
+                  fill="transparent"
+                  :r="radius"
+                  :cx="center"
+                  :cy="center"
+                  :stroke-dasharray="circumference"
+                  :stroke-dashoffset="dashOffset(item[1])"
+                />
+                <text
+                  :x="center"
+                  :y="center"
+                  text-anchor="middle"
+                  :fill="item[3]"
+                  font-size="20"
+                  font-weight="bold"
+                  dy=".3em"
+                >
+                {{ item[1] }}%
+                </text>
+              </svg>
+            </v-col>
+            <v-col cols="8">
+                <v-card-text class="pa-0">
+                    {{ item[2] }}
+                </v-card-text>
+            </v-col>
+          </v-row>
+          <!-- <v-row class="mt-4">
+            <v-col cols="12">
+              <v-list dense>
+                <v-list-item v-for="(feedback, index) in completionFeedback" :key="index">
+                  <v-list-item-content>
+                    <v-list-item-title>{{ feedback }}</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                        </v-list>
+                    </v-col>
+                </v-row> -->
+            </v-card-text>
+        </v-card>
+
+        <v-row justify="end" class="mt-4 mx-0">
+            <!-- 수정 버튼 -->
+            <v-col cols="auto">
+              <router-link :to="{ name: 'ResultReportModifyPage', params: {resultReportId} }">
+                <v-btn color="primary">수정</v-btn>
+              </router-link>
+            </v-col>
+
+            <!-- 삭제 버튼 -->
+            <v-col cols="auto">
+              <v-btn color="error" @click="onDelete">삭제</v-btn>
+            </v-col>
+
+            
+            <!-- 목록 버튼 -->
+            <v-col cols="auto">
+              <router-link :to="{ name: 'ResultReportListPage' }">
+                <v-btn color="secondary">목록</v-btn>
+              </router-link>
+            </v-col>
+            
+        </v-row>
+    </v-container>
+
+      </div>
+
+
+
     </div>
   </div>
 </template>
@@ -136,16 +327,26 @@ import { toRaw } from 'vue';
 const productManageModule = 'productManageModule'
 const authenticationModule = 'authenticationModule'
 const backlogModule = 'backlogModule'
-
+const resultReportModule = 'resultReportModule'
+import ReportSwitch from '@/project_manage/pages/ProjectManageComponents/ReportSwitch.vue'
 import DragSection from '@/project_manage/pages/ProjectManageComponents/DragSection.vue';
 
-const resultReportModule = 'resultReportModule'
 
 export default {
   name: "App",
   components: {
+    ReportSwitch,
     // DragSection,
   },
+
+  // Report 관련
+  props: {
+    resultReportId: {
+      type: String,
+      required: true,
+    }
+  },
+
   setup() {
     const store = useStore()
 
@@ -159,8 +360,21 @@ export default {
   },
   data() {
     return {
-      isChecked: true, // 스위치의 초기 상태
+      isChecked: 'Commit-List', // 스위치의 초기 상태
       displayBacklogList: [], // 지연 렌더링 백로그 리스트
+
+      // Report 관련 데이터
+      projectTitle: '',
+      overviews: '',
+      teamMembers: [],
+      techStack: [],
+      features: [],
+      usagePlans: [],
+      improvements: [],
+      completionRates: [],
+      size: 120,
+      strokeWidth: 10,
+      
       columns: [
         {
           name: 'To Do',
@@ -195,7 +409,20 @@ export default {
   },
   computed: {
     ...mapState(productManageModule, ["repos", "branches", "commits"]),
+
+    // Report 관련
+    ...mapState(resultReportModule, ['resultReport']),
+    radius() {
+      return (this.size / 2) - (this.strokeWidth / 2);
+    },
+    center() {
+      return this.size / 2;
+    },
+    circumference() {
+      return 2 * Math.PI * this.radius;
+    }
   },
+
   watch: {
     async selectedRepository(newVal) {
       console.log('selectedRepository:', newVal)
@@ -210,12 +437,15 @@ export default {
       if (newVal !== null) {
         await this.setBranchSelect()
       }
-    }
+    },
+    isChecked(newVal) {
+    console.log('스위치 상태:', newVal)
+  }
   },
   methods: {
     ...mapActions(productManageModule, ["requestSaveReposListToDjango", "requestGetReposListToDjango", "requestSaveBranchListToDjango", "requestGetBranchListToDjango", "requestSaveCommitListToDjango", "requestGetCommitListToDjango"]),
     ...mapActions(backlogModule, ["requestGenerateBacklogToFastAPI", "requestBacklogListToFastAPI"]),
-    ...mapActions(resultReportModule, ["requestGenerateResultReportToFastAPI", "requestGetResultReportResultToFastAPI"]),
+    ...mapActions(resultReportModule, ["requestGenerateResultReportToFastAPI", "requestGetResultReportResultToFastAPI", "requestResultReportToDjango", "requestDeleteResultReportToDjango"]),
     async setRepositorySelect(event) {
       const selectedValue = event
       // this.selectedBranches = selectedValue
@@ -337,15 +567,36 @@ export default {
         await new Promise(resolve => setTimeout(resolve, 2000)); // 딜레이 조정
         this.displayBacklogList.push(this.backlogList[i]);
       }
-    }
+    },
+
+    // Report 관련
+    dashOffset(rate) {
+      return this.circumference - (rate / 100 * this.circumference);
+    },
+    async onDelete() {
+      console.log('삭제를 누르셨습니다!')
+      await this.requestDeleteResultReportToDjango(this.resultReportId)
+      await this.$router.push({name: 'ResultReportListPage'})
+    },
+    async created () {
+      this.resultReport = await this.requestResultReportToDjango(this.resultReportId)
+      this.projectTitle = this.resultReport.title
+      this.overviews = this.resultReport.overview
+      this.teamMembers = this.resultReport.teamMemberList
+      this.techStack = this.resultReport.skillList
+      this.features = this.resultReport.featureList
+      this.usagePlans = this.resultReport.usage
+      this.improvements = this.resultReport.improvementList
+      this.completionRates = this.resultReport.completionList
+  }
   },
   mounted() {
-    // if (localStorage.getItem('userToken')) {
+    if (localStorage.getItem('userToken')) {
       // 사용자 인증 과정 추가해야 함
-    // } else {
-      // alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.")
-      // this.goToGithubLogin()
-    // }
+    } else {
+      alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.")
+      this.goToGithubLogin()
+    }
   }
 };
 </script>
@@ -529,144 +780,6 @@ export default {
   box-shadow: inset 0px 0px 5px white;
 }
 
-
-/* ---------- SWITCH ---------- */
-
-/* 스위치에 관한 설정 */
-.switch {
-  display: flex;
-  align-items: center;
-  background: #fff;
-  /* 스위치의 배경색을 흰색으로 설정 */
-  border-radius: 32px;
-  /* 스위치의 테두리를 둥글게 설정 (32px의 반경) */
-  height: var(--switch-height, 20px);
-  /* 스위치의 높이 설정 (변경 가능하도록 변수 사용) */
-  position: relative;
-  /* 자식 요소의 위치를 기준으로 상대적으로 위치 설정 */
-  width: var(--switch-width, 60px);
-  /* 스위치의 너비 설정 (변경 가능하도록 변수 사용) */
-  padding: 0 10px;
-  /* 라벨을 위한 패딩 추가 */
-  /* 위치 조정 */
-  transform: translateX(-80px);
-  /* 왼쪽으로 20px 이동 (값을 조정하여 위치 변경 가능) */
-}
-
-/* 스위치 글자 관련 설정 */
-.switch label {
-  color: #fff;
-  /* 라벨의 텍스트 색상을 흰색으로 설정 */
-  font-size: 12px;
-  /* 라벨의 폰트 크기를 12px로 설정 */
-  font-weight: 500;
-  /* 라벨의 폰트 두께를 500으로 설정 */
-  line-height: var(--switch-height, 20px);
-  /* 글의 세로 정렬을 위해 line-height를 스위치 높이에 맞춤 */
-  text-transform: uppercase;
-  /* 라벨 텍스트를 대문자로 변환 */
-  transition: color 0.2s ease;
-  /* 라벨의 색상 변화에 0.2초의 전환 효과 적용 */
-  width: 35px;
-  /* 라벨의 너비 설정 */
-}
-
-.switch label:nth-of-type(1) {
-  position: absolute;
-  /* 라벨의 위치를 절대 위치로 설정 */
-  left: -85%;
-  /* 첫 번째 라벨을 스위치 왼쪽에 위치시키기 위해 왼쪽으로 85% 이동 */
-  text-align: right;
-  /* 첫 번째 라벨의 텍스트를 오른쪽 정렬 */
-}
-
-.switch label:nth-of-type(2) {
-  position: absolute;
-  /* 라벨의 위치를 절대 위치로 설정 */
-  right: -70%;
-  /* 두 번째 라벨을 스위치 오른쪽에 위치시키기 위해 오른쪽으로 70% 이동 */
-  text-align: left;
-  /* 두 번째 라벨의 텍스트를 왼쪽 정렬 */
-}
-
-.switch input {
-  height: var(--switch-height, 20px);
-  /* 스위치 입력의 높이 설정 */
-  left: 0;
-  /* 입력 요소를 왼쪽에 위치 */
-  opacity: 0;
-  /* 입력 요소를 보이지 않도록 투명도 0으로 설정 */
-  position: absolute;
-  /* 입력 요소의 위치를 절대 위치로 설정 */
-  top: 0;
-  /* 입력 요소를 상단에 위치 */
-  width: var(--switch-width, 100px);
-  /* 스위치 입력의 너비를 100px로 설정 */
-  z-index: 2;
-  /* 입력 요소를 다른 요소보다 앞에 표시 (레이어 순서 설정) */
-}
-
-.switch input:checked~label:nth-of-type(1) {
-  color: #fff;
-  /* 첫 번째 라벨의 텍스트 색상을 흰색으로 설정 (스위치가 선택되었을 때) */
-}
-
-.switch input:checked~label:nth-of-type(2) {
-  color: #808080;
-  /* 두 번째 라벨의 텍스트 색상을 회색으로 설정 (스위치가 선택되었을 때) */
-}
-
-.switch input~ :checked~label:nth-of-type(1) {
-  color: #808080;
-  /* 첫 번째 라벨의 텍스트 색상을 회색으로 설정 (스위치가 선택되지 않았을 때) */
-}
-
-.switch input~ :checked~label:nth-of-type(2) {
-  color: #fff;
-  /* 두 번째 라벨의 텍스트 색상을 흰색으로 설정 (스위치가 선택되지 않았을 때) */
-}
-
-.switch input:checked~.toggle {
-  left: 10px;
-  /* 스위치가 선택되었을 때 토글이 왼쪽에 위치 */
-}
-
-.switch input~ :checked~.toggle {
-  left: 40px;
-  /* 스위치가 선택되지 않았을 때 토글이 오른쪽에 위치 */
-}
-
-.switch input:checked {
-  z-index: 0;
-  /* 입력 요소의 z-index를 0으로 설정하여 다른 요소보다 뒤로 감 */
-}
-
-.toggle {
-  background: #4a4a4a;
-  /* 토글의 배경색을 어두운 회색으로 설정 */
-  border-radius: 50%;
-  /* 토글의 모양을 원형으로 설정 (50% 반경) */
-  height: calc(var(--switch-height, 20px) - 8px);
-  /* 토글의 높이를 스위치 높이보다 약간 작게 설정 */
-  left: 0;
-  /* 토글을 왼쪽에 위치 */
-  position: absolute;
-  /* 토글의 위치를 절대 위치로 설정 */
-  top: 4px;
-  /* 토글을 위에서 4px 내려서 위치 */
-  transition: left 0.2s ease;
-  /* 토글이 이동할 때 0.2초의 전환 효과 적용 */
-  width: calc(var(--switch-height, 20px) - 8px);
-  /* 토글의 너비를 스위치 높이와 비슷하게 설정 */
-  z-index: 1;
-  /* 토글을 다른 요소보다 앞에 표시 */
-}
-
-.toggle.checked {
-  left: calc(var(--switch-width, 100px) - calc(var(--switch-height, 20px) - 8px));
-  /* 스위치가 선택되었을 때 토글이 오른쪽에 위치 */
-}
-
 .fade-in {
   animation: fadeIn 1s ease-in;
 }
@@ -679,5 +792,45 @@ export default {
   100% {
     opacity: 1;
   }
+}
+
+
+
+
+
+/* Report 관련 CSS */
+
+.v-card-title {
+  word-break: keep-all;
+}
+
+.progress-ring circle {
+  transition: stroke-dashoffset 0.35s;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+.auto-expand-textarea {
+  min-height: 100px;
+  transition: height 0.3s ease;
+}
+
+.v-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.team-table {
+  width: 100%;
+}
+
+.equal-width {
+  width: 33.33%;
+  padding: 12px;
+  text-align: center;
+}
+
+.table {
+  table-layout: fixed;
 }
 </style>
