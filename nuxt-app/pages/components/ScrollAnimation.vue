@@ -1,66 +1,56 @@
 <template>
-    <!-- <a class="scroll" href="#">If you want to know more about NOODLE</a> -->
-    <a class="scroll" href="#">스크롤을 내려서 NOODLE에 대해서 더 알아보세요!</a>
+  <!-- <a class="scroll" href="#">If you want to know more about NOODLE</a> -->
+  <a class="scroll" href="#">Read more</a>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-    name: 'ScrollAnimation'
+  name: 'ScrollAnimation'
 })
 </script>
 
 <style scoped>
- *, *:before, *:after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body {
-  position:relative;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items:center;
-  align-content: center;
-  justify-content: center;
-  font-family: "Helvetica", sans-serif;
-  font-size:14px;
-  line-height:1;
-  color: rgba(255,255,255,1);
-  background:rgba(108,34,245,1);
-}
 
 .scroll {
   position: relative;
   display: block;
   font-size: 0.933rem;
-  color: rgba(255,255,255,1);
+  color: rgba(255, 255, 255, 1);
   text-decoration: none;
   padding: 10px 10px 10px 40px;
+
   &::before {
     display: block;
     position: absolute;
-    top:-2px;
-    left:0;
+    top: -2px;
+    left: 0;
     width: 24px;
     height: 40px;
-    border: 2px solid rgba(255,255,255,1);
+    border: 2px solid rgba(255, 255, 255, 1);
     border-radius: 12px;
-    content:"";
+    content: "";
   }
+
   &::after {
     display: block;
     position: absolute;
-    top:9px;
-    left:11px;
+    top: 9px;
+    left: 11px;
     width: 2px;
     height: 8px;
-    background: rgba(255,255,255,1);
+    background: rgba(255, 255, 255, 1);
     border-radius: 1px;
-    content:"";
+    content: "";
     animation-name: scroll;
     animation-duration: 2s;
     animation-iteration-count: infinite;
@@ -69,13 +59,41 @@ body {
 }
 
 @keyframes scroll {
-  0% { opacity: 1; height: 8px;}
-  20% { opacity: 1; height: 8px;}
-  30% { transform: translateY(0); opacity: 1; height: 19px;}
-  40% { opacity: 1;}
-  80% { transform: translateY(19px); opacity: 0; height: 0;}
-  81% { transform: translateY(0); opacity: 0; height: 8px;}
-  100% { opacity: 1; height: 8px;}
-}
+  0% {
+    opacity: 1;
+    height: 8px;
+  }
 
+  20% {
+    opacity: 1;
+    height: 8px;
+  }
+
+  30% {
+    transform: translateY(0);
+    opacity: 1;
+    height: 19px;
+  }
+
+  40% {
+    opacity: 1;
+  }
+
+  80% {
+    transform: translateY(19px);
+    opacity: 0;
+    height: 0;
+  }
+
+  81% {
+    transform: translateY(0);
+    opacity: 0;
+    height: 8px;
+  }
+
+  100% {
+    opacity: 1;
+    height: 8px;
+  }
+}
 </style>

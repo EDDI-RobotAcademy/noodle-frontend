@@ -13,7 +13,7 @@
               <v-card-subtitle class="department">개발3팀</v-card-subtitle>
               <v-card-title class="report-title">{{ report.title }}</v-card-title>
               <v-card-subtitle class="member">구성원: {{ report.author }}</v-card-subtitle>
-              <v-card-text class="function">ㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹ</v-card-text>
+              <v-card-text class="function">보고서 내용 출력</v-card-text>
             </div>
           </v-card-text>
         </v-card>
