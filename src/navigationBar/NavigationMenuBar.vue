@@ -149,10 +149,7 @@ export default {
 .nevigationbar {
   background-color: rgb(0, 0, 0);
   border-bottom: 3px solid #ffffff;
-  height: var(--navigation-bar-height) !important;
-  min-height: var(--navigation-bar-height) !important;
-  max-height: var(--navigation-bar-height) !important;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s ease;
 }
 
 /* 2. v-spacer 스타일 */
@@ -270,16 +267,16 @@ export default {
 }
 
 /* 메뉴 버튼 */
-/* .nevigationbar.scrolled .btn-text {
-  color: rgba(0, 0, 0, 0.9) !important;
+.nevigationbar.scrolled .btn-text {
+  /* color: rgba(0, 0, 0, 0.9) !important; */
   font-size: 20px;
-} */
+}
 
 /* 구분선 */
-/* .nevigationbar.scrolled .separator {
-  color: rgba(0, 0, 0, 0.9) !important;
+.nevigationbar.scrolled .separator {
+  /* color: rgba(0, 0, 0, 0.9) !important; */
   font-size: 16px;
-} */
+}
 
 /* 스크롤 시 드롭다운 메뉴 */
 :deep(.menu-scrolled) {
