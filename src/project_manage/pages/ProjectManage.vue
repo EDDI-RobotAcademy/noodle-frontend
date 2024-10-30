@@ -591,12 +591,12 @@ export default {
   }
   },
   mounted() {
-    if (localStorage.getItem('userToken')) {
+   if (localStorage.getItem('userToken')) {
       // 사용자 인증 과정 추가해야 함
-    } else {
-      alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.")
-      this.goToGithubLogin()
-    }
+   } else {
+     alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.")
+     this.goToGithubLogin()
+   }
   }
 };
 </script>
@@ -626,7 +626,7 @@ export default {
   /* 왼쪽 박스의 높이를 100%로 설정 (화면 전체 높이) */
   background-color: #1c1c1c;
   /* 왼쪽 박스의 배경색을 파란색으로 설정 */
-  border-right: 3px solid rgba(204, 159, 1);
+  border-right: 3px solid rgb(255, 255, 255);
   /* 오른쪽에 두께 3px의 노란색 테두리 추가 */
   display: flex;
   flex-direction: column;
@@ -641,11 +641,11 @@ export default {
   height: 10%;
   font-size: 30px;
   /* 폰트 크기를 30px로 설정 */
-  color: rgba(204, 159, 1);
+  /* color: rgba(204, 159, 1); */
 }
 
 .leftbox_title span {
-  color: rgba(204, 159, 1);
+  color: rgb(255, 240, 30);
   font-family: "Playfair Display", serif;
   font-style: normal;
   font-weight: bold;
@@ -697,7 +697,7 @@ export default {
 }
 
 .rightbox_title span {
-  color: rgba(204, 159, 1);
+  color: rgb(255, 240, 30);
   font-family: "Playfair Display", serif;
   font-style: normal;
   font-weight: bold;
@@ -709,19 +709,21 @@ export default {
 }
 
 .example_btn {
-  background-color: rgba(204, 159, 1);
+  background-color: rgb(255, 255, 255);
   padding: 5px 10px;
   border: none;
   cursor: pointer;
   font-size: 15px;
+  font-weight: bold;
 }
 
 .Refresh {
-  background-color: rgba(204, 159, 1);
+  background-color: rgb(255, 255, 255);
   padding: 5px 10px;
   border: none;
   cursor: pointer;
   font-size: 16px;
+  font-weight: bold;
 }
 
 
@@ -743,7 +745,7 @@ export default {
   display: flex;
   justify-content: space-between;
   gap: 20px;
-  color: rgb(248, 235, 54);
+  color: rgb(255, 255, 255);
 }
 
 /* v-if로 감싸진 div들의 높이 설정 */
@@ -799,6 +801,10 @@ export default {
 
 
 /* Report 관련 CSS */
+
+.pa-0 {
+  width: 95%;
+}
 
 .v-card-title {
   word-break: keep-all;
