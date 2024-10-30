@@ -4,7 +4,12 @@
       <div class="leftbox">
         <div class="leftbox_title">
           <span>Backlog Board</span>
-          <ReportSwitch v-model="isChecked" />
+          <div class="leftbox_title_btn">
+            <v-btn size="small">Backlog 생성</v-btn>
+          </div>
+          <!-- <div calss="ReportSwitch-area">
+            <ReportSwitch v-model="isChecked" />
+          </div> -->
         </div>
 
         <!-- 생성된 백로그 출력부 -->
@@ -328,14 +333,14 @@ const productManageModule = 'productManageModule'
 const authenticationModule = 'authenticationModule'
 const backlogModule = 'backlogModule'
 const resultReportModule = 'resultReportModule'
-import ReportSwitch from '@/project_manage/pages/ProjectManageComponents/ReportSwitch.vue'
+// import ReportSwitch from '@/project_manage/pages/ProjectManageComponents/ReportSwitch.vue'
 import DragSection from '@/project_manage/pages/ProjectManageComponents/DragSection.vue';
 
 
 export default {
   name: "App",
   components: {
-    ReportSwitch,
+    // ReportSwitch,
     // DragSection,
   },
 
@@ -591,12 +596,12 @@ export default {
   }
   },
   mounted() {
-   if (localStorage.getItem('userToken')) {
-      // 사용자 인증 과정 추가해야 함
-   } else {
-     alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.")
-     this.goToGithubLogin()
-   }
+  //  if (localStorage.getItem('userToken')) {
+  //     // 사용자 인증 과정 추가해야 함
+  //  } else {
+  //    alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.")
+  //    this.goToGithubLogin()
+  //  }
   }
 };
 </script>
@@ -644,10 +649,29 @@ export default {
   /* color: rgba(204, 159, 1); */
 }
 
+
+
 .leftbox_title span {
   color: rgb(255, 240, 30);
   font-family: "Playfair Display", serif;
   font-style: normal;
+  font-weight: bold;
+  width: 30%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+}
+
+.leftbox_title_btn {
+  width: 15%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 3%;
+}
+
+.leftbox_title_btn .v-btn {
   font-weight: bold;
 }
 
