@@ -7,9 +7,6 @@
           <div class="leftbox_title_btn">
             <v-btn size="small">Backlog 생성</v-btn>
           </div>
-          <!-- <div calss="ReportSwitch-area">
-            <ReportSwitch v-model="isChecked" />
-          </div> -->
         </div>
 
         <!-- 생성된 백로그 출력부 -->
@@ -45,12 +42,13 @@
 
 
   <!------------------------------ Switch가 Commit-List일 때 ---------------------->
-      <div class="rightbox" v-show="isChecked === 'Commit-List'">
+      <div class="rightbox" v-show="rightboxstate === 'Commit-List'">
         <div class="rightbox_title">
           <span>Commit List</span>
           <div class="rightbox_title_btn">
             <v-btn @click="example" class="example_btn">클릭해보세요!</v-btn>
             <v-btn @click="Refresh" class="Refresh">Refresh</v-btn>
+            <v-btn @click="rightboxstate = 'Report'" class="Report">Report</v-btn>
           </div>
         </div>
         
@@ -128,9 +126,14 @@
       </div>
 
 <!-------------------Switch가 Report로 변경됐을 때 (Report)-------------------------->
-      <div class="rightbox" v-show="isChecked === 'Report'">
+      <div class="rightbox" v-show="rightboxstate === 'Report'">
         <div class="rightbox_title">
           <span>Report</span>
+          <div class="rightbox_title_btn">
+            <v-btn @click="example" class="example_btn">클릭해보세요!</v-btn>
+            <v-btn @click="Refresh" class="Refresh">Refresh</v-btn>
+            <v-btn @click="rightboxstate = 'Commit-List'" class="Commit-List">Commit-List</v-btn>
+          </div>
         </div>
 
     <v-container class="pa-0">
@@ -333,14 +336,12 @@ const productManageModule = 'productManageModule'
 const authenticationModule = 'authenticationModule'
 const backlogModule = 'backlogModule'
 const resultReportModule = 'resultReportModule'
-// import ReportSwitch from '@/project_manage/pages/ProjectManageComponents/ReportSwitch.vue'
 import DragSection from '@/project_manage/pages/ProjectManageComponents/DragSection.vue';
 
 
 export default {
   name: "App",
   components: {
-    // ReportSwitch,
     // DragSection,
   },
 
@@ -365,7 +366,7 @@ export default {
   },
   data() {
     return {
-      isChecked: 'Commit-List', // 스위치의 초기 상태
+      rightboxstate: 'Commit-List',
       displayBacklogList: [], // 지연 렌더링 백로그 리스트
 
       // Report 관련 데이터
