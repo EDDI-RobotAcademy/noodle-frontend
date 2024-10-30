@@ -4,8 +4,8 @@
       <div class="leftbox">
         <div class="leftbox_title">
           <span>Backlog Board</span>
-          <div class="leftbox_title_btn">
-            <v-btn size="small">Backlog 생성</v-btn>
+          <div class="leftbox_title_btn-area">
+            <v-btn size="small" class="backlog-btn">Backlog 생성</v-btn>
           </div>
         </div>
 
@@ -44,11 +44,19 @@
   <!------------------------------ Switch가 Commit-List일 때 ---------------------->
       <div class="rightbox" v-show="rightboxstate === 'Commit-List'">
         <div class="rightbox_title">
-          <span>Commit List</span>
-          <div class="rightbox_title_btn">
-            <v-btn @click="example" class="example_btn">클릭해보세요!</v-btn>
-            <v-btn @click="Refresh" class="Refresh">Refresh</v-btn>
-            <v-btn @click="rightboxstate = 'Report'" class="Report">Report</v-btn>
+          <div class="rightbox_title_area">
+            <span>Commit List</span>
+            <v-btn @click="Refresh" icon class="Refresh"><v-icon>mdi-cloud-refresh</v-icon></v-btn>
+          </div>
+          <div class="rightbox_title_btn-area">
+            <v-btn @click="example" class="example_btn">
+              <v-icon left>mdi-cursor-default-click</v-icon>
+              클릭해보세요!
+            </v-btn>
+            <v-btn @click="rightboxstate = 'Report'" class="Report-btn">
+              <v-icon left>mdi-file-document-outline</v-icon>
+              Report
+            </v-btn>
           </div>
         </div>
         
@@ -128,11 +136,19 @@
 <!-------------------Switch가 Report로 변경됐을 때 (Report)-------------------------->
       <div class="rightbox" v-show="rightboxstate === 'Report'">
         <div class="rightbox_title">
-          <span>Report</span>
-          <div class="rightbox_title_btn">
-            <v-btn @click="example" class="example_btn">클릭해보세요!</v-btn>
-            <v-btn @click="Refresh" class="Refresh">Refresh</v-btn>
-            <v-btn @click="rightboxstate = 'Commit-List'" class="Commit-List">Commit-List</v-btn>
+          <div class="rightbox_title_area">
+            <span>Report</span>
+            <v-btn @click="Refresh" icon class="Refresh"><v-icon>mdi-cloud-refresh</v-icon></v-btn>
+          </div>
+          <div class="rightbox_title_btn-area">
+            <v-btn @click="example" class="example_btn">
+              <v-icon left>mdi-cursor-default-click</v-icon>
+              클릭해보세요!
+            </v-btn>
+            <v-btn @click="rightboxstate = 'Commit-List'" class="commitlist-btn">
+              <v-icon left>mdi-view-list</v-icon>
+              Commit-List
+            </v-btn>
           </div>
         </div>
 
@@ -597,12 +613,12 @@ export default {
   }
   },
   mounted() {
-  //  if (localStorage.getItem('userToken')) {
-  //     // 사용자 인증 과정 추가해야 함
-  //  } else {
-  //    alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.")
-  //    this.goToGithubLogin()
-  //  }
+   if (localStorage.getItem('userToken')) {
+      // 사용자 인증 과정 추가해야 함
+   } else {
+     alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.")
+     this.goToGithubLogin()
+   }
   }
 };
 </script>
@@ -650,7 +666,13 @@ export default {
   /* color: rgba(204, 159, 1); */
 }
 
-
+.leftbox_title_btn-area {
+  width: 15%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 3%;
+}
 
 .leftbox_title span {
   color: rgb(255, 240, 30);
@@ -662,18 +684,6 @@ export default {
   display: flex;
   align-items: center;
   /* justify-content: center; */
-}
-
-.leftbox_title_btn {
-  width: 15%;
-  height: 100%;
-  display: flex;
-  align-items: flex-end;
-  padding-bottom: 3%;
-}
-
-.leftbox_title_btn .v-btn {
-  font-weight: bold;
 }
 
 .backlog-list-container {
@@ -721,33 +731,20 @@ export default {
   font-size: 30px;
 }
 
-.rightbox_title span {
-  color: rgb(255, 240, 30);
-  font-family: "Playfair Display", serif;
-  font-style: normal;
-  font-weight: bold;
+.rightbox_title_area {
+  display: flex;
+  gap: 10px;
 }
 
-.rightbox_title_btn {
+.rightbox_title_btn-area {
   display: flex;
   gap: 20px;
 }
 
-.example_btn {
-  background-color: rgb(255, 255, 255);
-  padding: 5px 10px;
-  border: none;
-  cursor: pointer;
-  font-size: 15px;
-  font-weight: bold;
-}
-
-.Refresh {
-  background-color: rgb(255, 255, 255);
-  padding: 5px 10px;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
+.rightbox_title span {
+  color: rgb(255, 240, 30);
+  font-family: "Playfair Display", serif;
+  font-style: normal;
   font-weight: bold;
 }
 
@@ -863,5 +860,77 @@ export default {
 
 .table {
   table-layout: fixed;
+}
+
+
+
+
+
+/* btn */
+
+.backlog-btn {
+  font-weight: bold;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  color: white;
+  border: 1px solid white;
+  background-color: transparent;
+}
+
+.Refresh {
+  background-color: transparent;
+  color: white;  /* 아이콘 색상을 흰색으로 설정 */
+  font-size: 20px;
+}
+
+.example_btn {
+  background-color: rgb(255, 255, 255);
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 14 px;
+  font-weight: bold;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  color: white;
+  border: 1px solid white;
+  background-color: transparent;
+}
+
+.Report-btn{
+  font-weight: bold;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  color: white;
+  border: 1px solid white;
+  background-color: transparent;
+}
+
+.commitlist-btn{
+  font-weight: bold;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  color: white;
+  border: 1px solid white;
+  background-color: transparent;
+}
+
+
+
+
+/* btn-hover 관련 */
+.Report-btn:hover,
+.example_btn:hover,
+.commitlist-btn:hover,
+.backlog-btn:hover {
+  background-color: rgb(238, 222, 0) !important; /* 노란색 배경 */
+  color: rgb(255, 255, 255) !important; /* 흰색 글씨 */
+}
+
+.Report-btn:hover .v-icon,
+.example_btn:hover .v-icon,
+.commitlist-btn:hover .v-icon,
+.backlog-btn:hover .v-icon {
+  color: rgb(255, 255, 255) !important;
 }
 </style>
