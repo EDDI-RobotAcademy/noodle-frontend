@@ -117,6 +117,7 @@
 import { defineComponent, onMounted } from 'vue';
 import { useProjectManageStore } from '../stores/projectManageStore';
 import { useBacklogStore } from '../../backlog/store/backlogStore';
+import { useResultReportStore } from '../../resultReport/stores/resultReportStore';
 
 
 export default defineComponent({
@@ -172,6 +173,7 @@ export default defineComponent({
 
     setup() {
         const projectManageStore = useProjectManageStore();
+        const resultReportStore = useResultReportStore();
         const backlogStore = useBacklogStore();
 
         const isChecked = ref(true)
@@ -205,6 +207,7 @@ export default defineComponent({
         const exampleCommits = ref([])
         const isExample = ref(false)
         const backlogList = ref(null)
+        const resultReport = ref(null)
         const repos = computed(() => projectManageStore.repos)
         const branches = computed(() => projectManageStore.branches)
         const commits = computed(() => projectManageStore.commits)
@@ -212,7 +215,6 @@ export default defineComponent({
 
         async function setRepositorySelect(newVal) {
             if (newVal !== null) {
-                // const userToken = localStorage.getItem('userToken')
                 const payload = { "userToken": userToken.value, 'reponame': selectedRepository.value }
                 await projectManageStore.requestSaveBranchListToDjango(payload)
                 await projectManageStore.requestGetBranchListToDjango(payload)
@@ -220,15 +222,24 @@ export default defineComponent({
         }
         async function setBranchSelect(newVal) {
             if (newVal !== null) {
-                // const userToken = localStorage.getItem('userToken')
                 const payload = { 'userToken': userToken.value, 'reponame': selectedRepository.value, 'branchname': selectedBranches.value }
                 await projectManageStore.requestSaveCommitListToDjango(payload)
                 await projectManageStore.requestGetCommitListToDjango(payload)
+                const response = await resultReportStore.requestGenerateResultReportToFastAPI(payload)
+                console.log('FastAPI response:', response)
+                if (response == true) {
+                    backlogList.value = await backlogStore.requestBacklogListToDjango(userToken.value)
+                    console.log(backlogList.value)
+                    resultReport.value = await resultReportStore.requestGetResultReportResultToFastAPI(userToken.value)
+                    console.log(resultReport.value)
+                } else {
+                    alert("ai 생성 서버의 응답이 없습니다! 잠시 후 다시 시도해주세요")
+                }
+
             }
         }
         async function Refresh() {
             isExample.value = false
-            // const userToken = localStorage.getItem('userToken')
             const payload = { userToken: userToken.value }
             await projectManageStore.requestSaveReposListToDjango(payload)
             await projectManageStore.requestGetReposListToDjango(payload)
