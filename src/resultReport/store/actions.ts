@@ -87,9 +87,10 @@ const actions: ResultReportActions = {
             const delay = 5000
 
             for (let attempt = 0; attempt < maxAttempts; attempt++) {
-                response = await axiosInst.fastapiAxiosInst.get('/generate-result-report-result')
+                response = await axiosInst.djangoAxiosInst.post('/get-result-report/get', { "userToken": userToken })
+                console.log("requestGetResultReportResultToFastAPI:", response)
 
-                if (response.data && response.data.userToken === userToken && response.data.message) {
+                if (response.data) {
                     console.log("response.data:", response.data)
                     return response.data
                 }
