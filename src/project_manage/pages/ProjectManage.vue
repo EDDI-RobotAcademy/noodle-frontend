@@ -454,13 +454,14 @@ export default {
 
       // Report 관련 데이터
       projectTitle: '',
-      overviews: '',
+      overview: '',
       teamMembers: [],
       techStack: [],
       features: [],
       usagePlans: [],
       improvements: [],
       completionRates: [],
+      completionFeedback: [],
       size: 120,
       strokeWidth: 10,
       
@@ -500,7 +501,7 @@ export default {
     ...mapState(productManageModule, ["repos", "branches", "commits"]),
 
     // Report 관련
-    ...mapState(resultReportModule, ['resultReport']),
+    
     radius() {
       return (this.size / 2) - (this.strokeWidth / 2);
     },
@@ -534,7 +535,7 @@ export default {
   methods: {
     ...mapActions(productManageModule, ["requestSaveReposListToDjango", "requestGetReposListToDjango", "requestSaveBranchListToDjango", "requestGetBranchListToDjango", "requestSaveCommitListToDjango", "requestGetCommitListToDjango"]),
     ...mapActions(backlogModule, ["requestGenerateBacklogToFastAPI", "requestBacklogListToFastAPI"]),
-    ...mapActions(resultReportModule, ["requestGenerateResultReportToFastAPI", "requestGetResultReportResultToFastAPI", "requestResultReportToDjango", "requestDeleteResultReportToDjango"]),
+    ...mapActions(resultReportModule, ["requestGenerateResultReportToFastAPI", "requestGetResultReportResultToFastAPI", "requestCreateResultReportToDjango"]),
     async setRepositorySelect(event) {
       const selectedValue = event
       // this.selectedBranches = selectedValue
@@ -662,22 +663,58 @@ export default {
     dashOffset(rate) {
       return this.circumference - (rate / 100 * this.circumference);
     },
-    async onDelete() {
-      console.log('삭제를 누르셨습니다!')
-      await this.requestDeleteResultReportToDjango(this.resultReportId)
-      await this.$router.push({name: 'ResultReportListPage'})
+    addTeamMember() {
+      this.teamMembers.push({ department: '', name: '', role: '' });
     },
-    async created () {
-      this.resultReport = await this.requestResultReportToDjango(this.resultReportId)
-      this.projectTitle = this.resultReport.title
-      this.overviews = this.resultReport.overview
-      this.teamMembers = this.resultReport.teamMemberList
-      this.techStack = this.resultReport.skillList
-      this.features = this.resultReport.featureList
-      this.usagePlans = this.resultReport.usage
-      this.improvements = this.resultReport.improvementList
-      this.completionRates = this.resultReport.completionList
-  }
+    removeTeamMember(index) {
+      this.teamMembers.splice(index, 1);
+    },
+    addTechStack() {
+      this.techStack.push('');
+    },
+    removeTechStack(index) {
+      this.techStack.splice(index, 1);
+    },
+    addFeature() {
+      this.features.push('');
+    },
+    removeFeature(index) {
+      this.features.splice(index, 1);
+    },
+    addUsagePlan() {
+      this.usagePlans.push({ title: '', description: '' });
+    },
+    removeUsagePlan(index) {
+      this.usagePlans.splice(index, 1);
+    },
+    addImprovement() {
+      this.improvements.push('');
+    },
+    removeImprovement(index) {
+      this.improvements.splice(index, 1);
+    },
+    async onSubmit () {
+        console.log('작성 완료 버튼 눌렀지 ?')
+
+        const payload = {
+            title: this.title,
+            overview: this.overview,
+            teamMemberList: this.teamMemberList,
+            skillList: this.skillList,
+            featureList: this.featureList,
+            usage: this.usage,
+            imporvementList: this.imporvementList,
+            completionList: this.completionList,
+            userToken: localStorage.getItem("userToken")
+        }
+
+        const resultReport = await this.requestCreateResultReportToDjango(payload)
+      
+        await this.$router.push({
+            name: 'ResultReportReadPage',
+            params: {resultReportId: resultReport.resultReportId.toString()}
+        })
+    },
   },
   mounted() {
   //  if (localStorage.getItem('userToken')) {
