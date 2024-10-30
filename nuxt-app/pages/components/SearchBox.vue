@@ -14,15 +14,19 @@
 </template>
 
 <script>
+import { getCurrentInstance } from 'vue';
+
 export default {
   name: 'SearchBox',
   setup() {
+    const { emit } = getCurrentInstance()
+
     const searchQuery = ref('')
     const labelText = ref('찾으시는 보고서를 입력해주세요.')
 
     function handleSubmit() {
       if (searchQuery.value.trim() === '') return
-      $emit('search', searchQuery.value)
+      emit('search', searchQuery.value)
     }
 
     return {
@@ -50,13 +54,14 @@ export default {
 #search {
   max-width: 640px;
   text-align: center;
-  padding: 1em;
+  /*padding: 1em;*/
   width: 100%;
 }
 
 #search-form {
   position: relative;
   height: 3em;
+  margin-top: 2em;
   margin-bottom: 1em;
   width: 100%;
 }

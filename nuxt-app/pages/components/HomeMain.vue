@@ -18,18 +18,16 @@
       <SearchBox class="searchbox" :class="{ 'fade-in': showElements }" />
     </div>
     <RecentReport class="recentreport" :class="{ 'fade-in': showElements }" />
-    <ScrollAnimation class="scrollanimation" :class="{ 'fade-in': showElements }" />
+    <ScrollAnimation class="scrollanimation" :class="{ 'fade-in': showElements }" @click="goToHomeSecond" />
   </div>
 </template>
 
-
 <script>
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+import AOS from 'aos'
+import { defineComponent, getCurrentInstance, onMounted } from 'vue';
 import SearchBox from './SearchBox.vue';
 import RecentReport from './RecentReport.vue';
-import ScrollAnimation from './ScrollAnimation.vue'
-import { defineComponent, onMounted } from 'vue';
+import ScrollAnimation from './ScrollAnimation.vue';
 
 export default defineComponent({
   name: 'HomeMain',
@@ -39,6 +37,8 @@ export default defineComponent({
     ScrollAnimation,
   },
   setup() {
+    const { emit } = getCurrentInstance()
+
     const fullText = ref('Use Your Noodle!')
     const typedText = ref('')
     const typeIndex = ref(0)
@@ -52,14 +52,18 @@ export default defineComponent({
       } else {
         showElements.value = true
         nextTick(() => {
-          AOS.refresh();
+          AOS.refresh()
         })
       }
+    }
+    function goToHomeSecond() {
+      emit('scroll-to-home-second')
     }
 
     onMounted(() => {
       typeText()
     })
+
     return {
       fullText,
       typedText,
@@ -67,6 +71,7 @@ export default defineComponent({
       showElements,
 
       typeText,
+      goToHomeSecond
     }
   }
 })
@@ -82,8 +87,7 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: center;
-  
-  height: calc(100vh - 64px);
+  height: calc(100vh - var(--navigation-bar-height));
   width: 100vw;
   overflow: hidden;
   position: relative;
@@ -103,7 +107,8 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 50vh;
+  height: 72.5vh;
+  /* height: 100vh; */
   width: 40%;
   margin-left: 10%;
   margin-top: 20vh;
@@ -117,7 +122,7 @@ export default defineComponent({
 }
 
 .main-title {
-  color: #ffffff;
+  color: rgb(255, 240, 30);
   font-size: 140px;
   animation: fadeDown 0.8s ease-out;
   line-height: 0.8;
@@ -208,5 +213,23 @@ export default defineComponent({
   bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
+  animation: bounce 6s ease 0s infinite;
+  animation-delay: 5s;
+}
+
+@keyframes bounce {
+
+  0%,
+  10%,
+  20%,
+  95%,
+  100% {
+    transform: translateY(0);
+  }
+
+  5%,
+  15% {
+    transform: translateY(-10px);
+  }
 }
 </style>
