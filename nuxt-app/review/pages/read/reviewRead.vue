@@ -168,7 +168,7 @@ onMounted(async () => {
 .back-button {
     display: flex;
     padding: 12px 20px;
-    background-color: #007bff;
+    background-color: transparent;
     color: #fff;
     border: none;
     border-radius: 6px;
@@ -181,10 +181,13 @@ onMounted(async () => {
     max-width: 200px;
     margin-left: auto;
     margin-right: auto;
+    border: 3px solid #ffffff;
+    border-radius: 20px;
+    font-weight: bold;
 }
 
 .back-button:hover {
-    background-color: #0056b3;
+    background-color: rgb(255, 240, 30, 0.9);
 }
 
 .back-button:disabled {
