@@ -7,10 +7,10 @@
             </div>
             <v-card class="review-card">
                 <div class="review-scores">
-                    <p><strong>디자인:</strong> <span class="star-rating">★{{ designScore }}</span></p>
-                    <p><strong>사용성:</strong> <span class="star-rating">★{{ usabilityScore }}</span></p>
-                    <p><strong>응답성:</strong> <span class="star-rating">★{{ responsiveScore }}</span></p>
-                    <p><strong>AI 답변 퀄리티:</strong> <span class="star-rating">★{{ qualityScore }}</span></p>
+                    <p><strong>디자인:</strong> <span class="star-rating">{{ '★'.repeat(designScore) }}</span></p>
+                    <p><strong>사용성:</strong> <span class="star-rating">{{ '★'.repeat(usabilityScore) }}</span></p>
+                    <p><strong>응답성:</strong> <span class="star-rating">{{ '★'.repeat(responsiveScore) }}</span></p>
+                    <p><strong>AI 답변 퀄리티:</strong> <span class="star-rating">{{ '★'.repeat(qualityScore) }}</span></p>
                 </div>
             </v-card>
             <v-card v-if="reviewContent !== ''" class="review-card">
@@ -157,11 +157,13 @@ onMounted(async () => {
     color: #333;
 }
 
+
 .review-button-container {
     display: flex;
     justify-content: center;
     gap: 10px;
 }
+
 
 .back-button {
     display: flex;
