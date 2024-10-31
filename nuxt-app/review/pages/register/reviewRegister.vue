@@ -201,18 +201,37 @@ const check = (type, index) => {
 }
 
 
+.status-template form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 .status-template .review-text-field {
     margin-bottom: 5px;
     box-sizing: inherit;
     padding: 14px;
-    max-height: 150px;
+    height: 40%;
+    max-height: 45%;
+}
+
+
+.domain-template {
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+.domain-template form {
+    height: 100%;
 }
 
 .domain-template .review-text-field {
     margin-bottom: 5px;
     box-sizing: inherit;
     padding: 14px;
-    max-height: 400px;
+    height: 70%;
+    max-height: 80%;
 }
 
 .star-rating {
