@@ -226,6 +226,12 @@ onMounted(async () => {
     
 }
 
+
+.status-template .question-text {
+    font-size: 25px;
+    font-weight: bold;
+}
+
 .domain-template-question-text {
     font-size: 25px;
     font-weight: bold;
@@ -250,11 +256,6 @@ onMounted(async () => {
 
 .star:hover {
     color: gold;
-}
-
-.status-template h3,
-.domain-template h3 {
-    margin-bottom: 10px;
 }
 
 form label {
