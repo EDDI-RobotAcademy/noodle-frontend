@@ -49,17 +49,26 @@
 
 <script>
 import { defineComponent } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useAuthenticationStore } from './authentication/stores/authenticationStore';
 
 export default defineComponent({
   setup() {
+    const route = useRoute();
     const router = useRouter();
     const authenticationStore = useAuthenticationStore();
 
     const searchQuery = ref('')
-    const isScrolled = ref(false)
+    const isScrolled = computed(() => {
+      if (path.value !== '/') {
+        return true
+      } else {
+        return Yscrolled.value > 50
+      }
+    })
     const isAuthenticated = computed(() => authenticationStore.isAuthenticated)
+    const path = computed(() => route.path)
+    const Yscrolled = ref(0)
 
     const menuClass = computed(() => {
       return {
@@ -98,7 +107,7 @@ export default defineComponent({
       router.push('/')
     }
     function handleScroll() {
-      isScrolled.value = window.scrollY > 50
+      Yscrolled.value = window.scrollY
     }
 
     onMounted(async () => {
