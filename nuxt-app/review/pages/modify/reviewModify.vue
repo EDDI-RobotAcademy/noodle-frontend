@@ -197,7 +197,7 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-
+/* 최상위 컨테이너 */
 .review-modify-page {
     width: 100%;
     height: 100%;
@@ -209,8 +209,6 @@ onMounted(async () => {
 }
 
 .review-container {
-    /* max-width: 800px; */
-    /* margin: 0 auto; */
     padding: 20px;
     width: 70%;
     height: 80%;
@@ -219,24 +217,37 @@ onMounted(async () => {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* 리뷰 템플릿 공통 */
+.review-template {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* status-template 관련 */
+.status-template form {
+    height: 92%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-bottom: 60px;
+}
 
 .inner {
     padding: 14px;
     border-bottom: 1px solid #000000;
-    
 }
 
-.domain-template-question-text {
+.status-template .question-text {
     font-size: 25px;
     font-weight: bold;
-    width: 50%;
-    /* padding: 14px 0px 0px 14px;
-    margin: 0px 0px 14px 14px; */
 }
 
 .star-rating {
     align-items: center;
     display: flex;
+    color: #ffcc00;
+    font-size: 1.2rem;
 }
 
 .star {
@@ -252,11 +263,44 @@ onMounted(async () => {
     color: gold;
 }
 
-.status-template h3,
-.domain-template h3 {
-    margin-bottom: 10px;
+.star-rating .star:hover~.star {
+    color: lightgray;
 }
 
+.status-template .review-text-field {
+    margin-bottom: 5px;
+    box-sizing: border-box;
+    height: 25%;
+    max-height: 40%;
+}
+
+/* domain-template 관련 */
+.domain-template {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.domain-template form {
+    height: 100%;
+    position: relative;
+}
+
+.domain-template-question-text {
+    font-size: 25px;
+    font-weight: bold;
+    width: 50%;
+}
+
+.domain-template .review-text-field {
+    margin-bottom: 5px;
+    box-sizing: border-box;
+    height: 65%;
+    flex-grow: 1;
+    max-height: 75%;
+}
+
+/* 폼 요소 공통 */
 form label {
     display: block;
     margin-bottom: 5px;
@@ -271,110 +315,35 @@ form textarea {
     border-radius: 5px;
 }
 
-.star-rating .star:hover~.star {
-    color: lightgray;
-}
-
-.status-template .review-text-field {
-    margin-bottom: 5px;
-    box-sizing: inherit;
-    max-height: 350px;
-}
-
-
-.domain-template {
-    height: 100%;  /* 추가 */
-    display: flex; /* 추가 */
-    flex-direction: column; /* 추가 */
-}
-
-
-.domain-template form {
-    height: 100%;  /* 추가 */
-}
-
-.domain-template .review-text-field {
-    margin-bottom: 5px;
-    box-sizing: border-box;
-    height: 65%;
-    flex-grow: 1;
-    max-height: 75%;
-}
-
-
-.review-header {
-    margin-bottom: 15px;
-}
-
 .review-meta {
     color: #6c757d;
     font-size: 0.9rem;
     padding: 0px 14px 0px 14px;
 }
-.review-card {
-    padding: 20px;
-    margin-bottom: 15px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
 
-.review-scores p {
-    font-size: 1rem;
-    margin-bottom: 8px;
-}
-
-.star-rating {
-    color: #ffcc00;
-    font-size: 1.2rem;
-}
-
-.review-content {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: #333;
-}
-
+/* 버튼 관련 */
 .button-container {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
 }
-
-/* .back-button {
-    display: flex;
-    padding: 12px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-top: 20px;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    width: 100%;
-    max-width: 200px;
-    margin-left: auto;
-    margin-right: auto;
-} */
-
-/* .back-button:hover {
-    background-color: #0056b3;
-} */
 
 button {
     padding: 10px 15px;
     background-color: #1c1c1c;
     color: #fff;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
     border-radius: 20px;
+    cursor: pointer;
 }
 
 button:hover {
     background-color: rgb(255, 240, 30, 0.9);
     color: #686868;
 }
+
 </style>
