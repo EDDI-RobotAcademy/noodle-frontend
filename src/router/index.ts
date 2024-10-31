@@ -5,6 +5,7 @@ import project_manageRoutes from '@/project_manage/router/ProjectManageRouters'
 import AuthenticationRoutes from '@/authentication/router/AuthenticationRoutes'
 import ResultReportRoutes from '@/resultReport/router/ResultReportRoutes'
 import ReviewRoutes from '@/review/router/ReviewRoutes'
+import MeetingRoutes from '@/meeting/router/MeetingRoutes'
 
 const routes: Array<RouteRecordRaw> = [
   ...HomeRoutes,
@@ -12,7 +13,8 @@ const routes: Array<RouteRecordRaw> = [
   ...project_manageRoutes,
   ...AuthenticationRoutes,
   ...ResultReportRoutes,
-  ...ReviewRoutes
+  ...ReviewRoutes,
+  ...MeetingRoutes
 ]
 
 const router = createRouter({
