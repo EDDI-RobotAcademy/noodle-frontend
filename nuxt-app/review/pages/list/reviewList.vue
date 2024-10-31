@@ -23,7 +23,6 @@
       item-value="reviewId"
       :items-per-page-options="perPageOptions" 
       :pageText="prompt" 
-      hide-default-footer 
       :loading="isLoading" />
     </div>
 
