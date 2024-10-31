@@ -1,33 +1,37 @@
 <template>
-    <div class="review-container" v-if="isSelectionReview">
-        <div class="review-header">
-            <h2>{{ reviewTitle }}</h2>
-            <v-text class="review-meta">[{{ reviewWriter }}] {{ reviewRegDate }}</v-text>
-        </div>
-        <v-card class="review-card">
-            <div class="review-scores">
-                <p><strong>디자인:</strong> <span class="star-rating">★{{ designScore }}</span></p>
-                <p><strong>사용성:</strong> <span class="star-rating">★{{ usabilityScore }}</span></p>
-                <p><strong>응답성:</strong> <span class="star-rating">★{{ responsiveScore }}</span></p>
-                <p><strong>AI 답변 퀄리티:</strong> <span class="star-rating">★{{ qualityScore }}</span></p>
+    <div class="review-read-container">
+        <div class="review-container" v-if="isSelectionReview">
+            <div class="review-header">
+                <h2>{{ reviewTitle }}</h2>
+                <v-text class="review-meta">[{{ reviewWriter }}] {{ reviewRegDate }}</v-text>
             </div>
-        </v-card>
-        <v-card v-if="reviewContent !== ''" class="review-card">
-            <p class="review-content"> {{ reviewContent }}</p>
-        </v-card>
-    </div>
-    <div class="review-container" v-else>
-        <div class="review-header">
-            <h2>{{ reviewTitle }}</h2>
-            <v-text class="review-meta">[{{ reviewWriter }}] {{ reviewRegDate }}</v-text>
+            <v-card class="review-card">
+                <div class="review-scores">
+                    <p><strong>디자인:</strong> <span class="star-rating">★{{ designScore }}</span></p>
+                    <p><strong>사용성:</strong> <span class="star-rating">★{{ usabilityScore }}</span></p>
+                    <p><strong>응답성:</strong> <span class="star-rating">★{{ responsiveScore }}</span></p>
+                    <p><strong>AI 답변 퀄리티:</strong> <span class="star-rating">★{{ qualityScore }}</span></p>
+                </div>
+            </v-card>
+            <v-card v-if="reviewContent !== ''" class="review-card">
+                <p class="review-content"> {{ reviewContent }}</p>
+            </v-card>
         </div>
-        <div class="review-card">
-            <p class="review-content">{{ reviewContent }}</p>
+        <div class="review-container" v-else>
+            <div class="review-header">
+                <h2>{{ reviewTitle }}</h2>
+                <v-text class="review-meta">[{{ reviewWriter }}] {{ reviewRegDate }}</v-text>
+            </div>
+            <div class="review-card">
+                <p class="review-content">{{ reviewContent }}</p>
+            </div>
+        </div>
+        <div class="review-button-container">
+            <button class="back-button" @click="goToReivewModifyPage()" :disabled="modifyingAllowed == false">수정</button>
+            <button class="back-button" @click="deleteThisReview()" :disabled="modifyingAllowed == false">삭제</button>
+            <button class="back-button" @click="goToReviewListPage()">목록</button>
         </div>
     </div>
-    <button class="back-button" @click="goToReivewModifyPage()" :disabled="modifyingAllowed == false">수정</button>
-    <button class="back-button" @click="deleteThisReview()" :disabled="modifyingAllowed == false">삭제</button>
-    <button class="back-button" @click="goToReviewListPage()">목록으로 돌아가기</button>
 </template>
 
 <script setup>
@@ -96,13 +100,28 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+
+.review-read-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #1c1c1c;
+}
+
 .review-container {
     max-width: 800px;
-    margin: 0 auto;
+    min-height: 60%;
+    width: 100%;
+    height: auto;
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 8px;
+    border: 2px solid #ffffff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
 }
 
 .review-header {
@@ -136,6 +155,12 @@ onMounted(async () => {
     font-size: 1.1rem;
     line-height: 1.6;
     color: #333;
+}
+
+.review-button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
 }
 
 .back-button {
