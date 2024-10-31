@@ -7,10 +7,10 @@
             </div>
             <v-card class="review-card">
                 <div class="review-scores">
-                    <p><strong>디자인:</strong> <span class="star-rating">★{{ designScore }}</span></p>
-                    <p><strong>사용성:</strong> <span class="star-rating">★{{ usabilityScore }}</span></p>
-                    <p><strong>응답성:</strong> <span class="star-rating">★{{ responsiveScore }}</span></p>
-                    <p><strong>AI 답변 퀄리티:</strong> <span class="star-rating">★{{ qualityScore }}</span></p>
+                    <p><strong>디자인:</strong> <span class="star-rating">{{ '★'.repeat(designScore) }}</span></p>
+                    <p><strong>사용성:</strong> <span class="star-rating">{{ '★'.repeat(usabilityScore) }}</span></p>
+                    <p><strong>응답성:</strong> <span class="star-rating">{{ '★'.repeat(responsiveScore) }}</span></p>
+                    <p><strong>AI 답변 퀄리티:</strong> <span class="star-rating">{{ '★'.repeat(qualityScore) }}</span></p>
                 </div>
             </v-card>
             <v-card v-if="reviewContent !== ''" class="review-card">
@@ -157,16 +157,18 @@ onMounted(async () => {
     color: #333;
 }
 
+
 .review-button-container {
     display: flex;
     justify-content: center;
     gap: 10px;
 }
 
+
 .back-button {
     display: flex;
     padding: 12px 20px;
-    background-color: #007bff;
+    background-color: transparent;
     color: #fff;
     border: none;
     border-radius: 6px;
@@ -179,10 +181,13 @@ onMounted(async () => {
     max-width: 200px;
     margin-left: auto;
     margin-right: auto;
+    border: 3px solid #ffffff;
+    border-radius: 20px;
+    font-weight: bold;
 }
 
 .back-button:hover {
-    background-color: #0056b3;
+    background-color: rgb(255, 240, 30, 0.9);
 }
 
 .back-button:disabled {
