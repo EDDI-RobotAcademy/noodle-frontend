@@ -34,9 +34,9 @@
               </thead> -->
               <tbody>
                 <tr v-for="(member, index) in teamMembers" :key="index">
-                  <td class="equal-width">{{ member.department }}</td>
-                  <td class="equal-width">{{ member.name }}</td>
-                  <td class="equal-width">{{ member.role }}</td>
+                  <td class="equal-width">{{ member[2] }}</td>
+                  <td class="equal-width">{{ member[0] }}</td>
+                  <td class="equal-width">{{ member[1] }}</td>
                 </tr>
               </tbody>
             </template>
