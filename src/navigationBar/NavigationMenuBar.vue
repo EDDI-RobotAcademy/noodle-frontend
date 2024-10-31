@@ -111,7 +111,7 @@ export default {
             this.$router.push('/review/list')
         },
         goToResultReport() {
-            this.$router.push('/result-report/list2')
+            this.$router.push('/report/list3')
         },
         handleScroll() {
             this.isScrolled = window.scrollY > 50; // 스크롤이 50px 이상이면 true
