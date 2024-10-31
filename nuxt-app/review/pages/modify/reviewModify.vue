@@ -58,12 +58,12 @@
                 </div>
                 <div v-else class="review-template domain-template">
                     <form @submit.prevent="submitReview">
-                        <v-text class="question-text">리뷰 제목</v-text>
+                        <v-text class="domain-template-question-text">리뷰 제목</v-text>
                         <v-text class="review-meta">[{{ reviewWriter }}] {{ reviewRegDate }}</v-text>
                         <div></div>
                         <input type="text" id="domain-title" v-model="reviewTitle" required />
                         <div></div>
-                        <v-text class="question-text">리뷰 본문</v-text>
+                        <v-text class="domain-template-question-text">리뷰 본문</v-text>
                         <textarea v-model="reviewContent" id="domain-content" class="review-text-field" required></textarea>
                         <button @click="goToReivewReadPage()">취소</button>
                         <button type="submit">수정 완료</button>
@@ -210,9 +210,12 @@ onMounted(async () => {
     
 }
 
-.question-text {
-    font-size: 20px;
-    font-weight: 700;
+.domain-template-question-text {
+    font-size: 25px;
+    font-weight: bold;
+    width: 50%;
+    /* padding: 14px 0px 0px 14px;
+    margin: 0px 0px 14px 14px; */
 }
 
 .star-rating {
@@ -269,9 +272,30 @@ button:hover {
     color: lightgray;
 }
 
-.review-text-field {
+.status-template .review-text-field {
     margin-bottom: 5px;
     box-sizing: inherit;
+    max-height: 350px;
+}
+
+
+.domain-template {
+    height: 100%;  /* 추가 */
+    display: flex; /* 추가 */
+    flex-direction: column; /* 추가 */
+}
+
+
+.domain-template form {
+    height: 100%;  /* 추가 */
+}
+
+.domain-template .review-text-field {
+    margin-bottom: 5px;
+    box-sizing: border-box;
+    height: 65%;
+    flex-grow: 1;
+    max-height: 75%;
 }
 
 
@@ -284,7 +308,6 @@ button:hover {
     font-size: 0.9rem;
     padding: 0px 14px 0px 14px;
 }
-
 .review-card {
     padding: 20px;
     margin-bottom: 15px;
