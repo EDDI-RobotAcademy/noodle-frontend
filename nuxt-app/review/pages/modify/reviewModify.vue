@@ -11,8 +11,7 @@
                 <div v-if="isSelectionReview == true" class="review-template status-template">
                     <h2 style="padding: 14px 14px 0px 14px;">{{ reviewTitle }}</h2>
                     <v-text class="review-meta">[{{ reviewWriter }}] {{ reviewRegDate }}</v-text>
-                    <form @submit.prevent="submitReview"
-                        style="position: relative;">
+                    <form @submit.prevent="submitReview">
                         <div class="inner">
                             <v-text class="question-text">디자인</v-text>
                             <div class="star-rating">
@@ -66,8 +65,7 @@
                     </form>
                 </div>
                 <div v-else class="review-template domain-template">
-                    <form @submit.prevent="submitReview"
-                        style="position: relative;">
+                    <form @submit.prevent="submitReview">
                         <v-text class="domain-template-question-text">리뷰 제목</v-text>
                         <v-text class="review-meta">[{{ reviewWriter }}] {{ reviewRegDate }}</v-text>
                         <div></div>
@@ -228,10 +226,11 @@ onMounted(async () => {
 
 /* status-template 관련 */
 .status-template form {
-    height: 100%;
+    height: 92%;
     display: flex;
     flex-direction: column;
     position: relative;
+    padding-bottom: 60px;
 }
 
 .inner {
@@ -271,8 +270,8 @@ onMounted(async () => {
 .status-template .review-text-field {
     margin-bottom: 5px;
     box-sizing: border-box;
-    height: 30%;
-    max-height: 35%;
+    height: 25%;
+    max-height: 40%;
 }
 
 /* domain-template 관련 */
