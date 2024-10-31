@@ -276,10 +276,24 @@ form textarea {
     color: lightgray;
 }
 
+
+.status-template {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.status-template form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 .status-template .review-text-field {
     margin-bottom: 5px;
-    box-sizing: inherit;
-    max-height: 350px;
+    box-sizing: border-box;
+    height: 30%;
+    max-height: 35%;
 }
 
 
