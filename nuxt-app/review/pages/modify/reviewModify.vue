@@ -51,9 +51,17 @@
                         <v-text class="question-text">기타 리뷰</v-text>
                         <textarea v-model="reviewContent" class="review-text-field"></textarea>
 
-                        <button @click="goToReivewReadPage()">취소</button>
-                        <button type="submit">리뷰 제출</button>
-                        <button @click="goToReviewListPage()">목록으로 돌아가기</button>
+                        <div class="button-container">
+                            <button @click="goToReivewReadPage()">
+                                <v-icon>mdi-close</v-icon>
+                                취소</button>
+                            <button type="submit">
+                                <v-icon>mdi-check</v-icon>
+                                수정 완료</button>
+                            <button @click="goToReviewListPage()">
+                                <v-icon>mdi-format-list-bulleted</v-icon>
+                                목록</button>
+                        </div>
                     </form>
                 </div>
                 <div v-else class="review-template domain-template">
@@ -65,9 +73,17 @@
                         <div></div>
                         <v-text class="domain-template-question-text">리뷰 본문</v-text>
                         <textarea v-model="reviewContent" id="domain-content" class="review-text-field" required></textarea>
-                        <button @click="goToReivewReadPage()">취소</button>
-                        <button type="submit">수정 완료</button>
-                        <button @click="goToReviewListPage()">목록으로 돌아가기</button>
+                        <div class="button-container">
+                            <button @click="goToReivewReadPage()">
+                                <v-icon>mdi-close</v-icon>
+                                취소</button>
+                            <button type="submit">
+                                <v-icon>mdi-check</v-icon>
+                                수정 완료</button>
+                            <button @click="goToReviewListPage()">
+                                <v-icon>mdi-format-list-bulleted</v-icon>
+                                목록</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -255,19 +271,6 @@ form textarea {
     border-radius: 5px;
 }
 
-button {
-    padding: 10px 15px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
 .star-rating .star:hover~.star {
     color: lightgray;
 }
@@ -332,7 +335,13 @@ button:hover {
     color: #333;
 }
 
-.back-button {
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* .back-button {
     display: flex;
     padding: 12px 20px;
     background-color: #007bff;
@@ -348,9 +357,24 @@ button:hover {
     max-width: 200px;
     margin-left: auto;
     margin-right: auto;
+} */
+
+/* .back-button:hover {
+    background-color: #0056b3;
+} */
+
+button {
+    padding: 10px 15px;
+    background-color: #1c1c1c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border-radius: 20px;
 }
 
-.back-button:hover {
-    background-color: #0056b3;
+button:hover {
+    background-color: rgb(255, 240, 30, 0.9);
+    color: #686868;
 }
 </style>
