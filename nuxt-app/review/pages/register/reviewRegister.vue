@@ -166,8 +166,8 @@ const check = (type, index) => {
     display: flex;
     align-items: flex-end;
     padding-bottom: 20px;
-    position: relative; /* 추가 */
-    justify-content: space-between; /* 추가 */
+    position: relative;
+    justify-content: space-between;
 }
 
 .review-template{
@@ -182,6 +182,8 @@ const check = (type, index) => {
 .form {
     width: 100%;
     height: 100%;
+    position: relative;
+    padding-bottom: 60px;
 }
 
 
@@ -332,11 +334,6 @@ const check = (type, index) => {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.status-template h3,
-.domain-template h3 {
-    margin-bottom: 10px;
-}
-
 form label {
     display: block;
     margin-bottom: 5px;
@@ -356,8 +353,11 @@ button {
     background-color: #000000;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 20px;
     cursor: pointer;
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
 
 button:hover {
