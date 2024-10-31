@@ -46,9 +46,9 @@ export default defineComponent({
     const route = useRoute();
 
     const headerTitle = ref([
-      { text: '작성자', align: 'start', value: 'writer' },
-      { text: '제목', align: 'middle', value: 'title' },
-      { text: '작성일자', align: 'end', value: 'regDate' }
+      { text: '작성자', align: 'center', value: 'writer', title: '작성자' },
+      { text: '제목', align: 'center', value: 'title', title: '제목' },
+      { text: '작성일자', align: 'center', value: 'regDate', title: '작성일자' }
     ])
     const perPage = ref(10)
     const pagination = ref(Number(route.params.page))
