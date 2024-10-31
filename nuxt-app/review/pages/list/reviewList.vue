@@ -110,6 +110,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
 
 .review-body {
   width: 100%;
@@ -137,6 +138,7 @@ h2 {
   padding-bottom: 20px;
   font-size: 40px;
   color: rgb(255, 255, 255);
+  font-family: 'Noto Sans KR', sans-serif
 }
 
 .create-review-btn {
@@ -179,42 +181,52 @@ h2 {
 }
 
 
-
+/* ---------------th--------------- */
 :deep(.v-table thead th) {
-  font-size: 22px !important;
+  font-size: 28px !important;
   font-weight: bold !important;
   border-bottom: 3px solid #000000 !important;
+  height: 250% !important;  /* th 높이 설정 */
+  line-height: 250% !important;
+  font-family: 'Noto Sans KR', sans-serif !important;
 }
 
+/* 작성자 th */
+:deep(.v-table thead th:nth-child(1)) {
+  width: 20% !important;
+}
+
+/* 제목 th */
+:deep(.v-table thead th:nth-child(2)) {
+  width: 60% !important;
+}
+
+/* 작성일자 th */
+:deep(.v-table thead th:nth-child(3)) {
+  width: 20% !important;
+}
+
+/* ---------------td--------------- */
 :deep(.v-table tbody td) {
   height: 80px !important;
   font-size: 16px !important;
 }
 
-:deep(.v-data-table-header th:nth-child(1)) {
+/* 작성자 td */
+:deep(.v-table tbody td:nth-child(1)) {
   width: 20% !important;
 }
 
-:deep(.v-data-table-header th:nth-child(2)) {
+/* 제목 td */
+:deep(.v-table tbody td:nth-child(2)) {
   width: 60% !important;
 }
 
-:deep(.v-data-table-header th:nth-child(3)) {
+/* 작성일자 td */
+:deep(.v-table tbody td:nth-child(3)) {
   width: 20% !important;
 }
 
-
-:deep(.v-data-table-body td:nth-child(1)) {
-  width: 20% !important;
-}
-
-:deep(.v-data-table-body td:nth-child(2)) {
-  width: 60% !important;
-}
-
-:deep(.v-data-table-body td:nth-child(3)) {
-  width: 20% !important;
-}
 
 
 
