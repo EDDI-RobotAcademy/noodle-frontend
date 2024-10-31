@@ -1,24 +1,27 @@
 <template>
-  <v-container>
-    <h2>Review</h2>
+  <v-container class="review-body" fluid>
+    <div class="review-header">
+      <h2>REVIEW</h2>
+   <!-- 리뷰 작성 버튼 -->
+      <div class="create-review-btn">
+        <NuxtLink to="/review/register">
+          <NuxtButton type="button" class="gotoregister-btn">
+            게시물 등록
+          </NuxtButton>
+        </NuxtLink>
+      </div>
+    </div>
 
     <!-- 리뷰 목록 테이블 -->
-    <v-data-table v-model:items-per-page.sync="perPage" :headers="headerTitle" :items="pagedItems"
-      :pagination.sync="pagination" class="elevation-1 review-table" @click:row="readRow" item-value="reviewId"
-      :items-per-page-options="perPageOptions" :pageText="prompt" hide-default-footer :loading="isLoading" />
+    <div class="review-table-container">
+      <v-data-table v-model:items-per-page.sync="perPage" :headers="headerTitle" :items="pagedItems"
+        :pagination.sync="pagination" class="elevation-1 review-table" @click:row="readRow" item-value="reviewId"
+        :items-per-page-options="perPageOptions" :pageText="prompt" hide-default-footer :loading="isLoading" />
+    </div>
 
     <!-- 페이지네이션 -->
-    <v-pagination v-model="pagination" :length="totalPages" color="primary" @input="updateItems" :total-visible="5"
-      class="pagination-bar" />
-
-    <!-- 리뷰 작성 버튼 -->
-    <div class="create-review-btn">
-      <NuxtLink to="/review/register">
-        <v-btn color="primary" dark>
-          게시물 작성
-        </v-btn>
-      </NuxtLink>
-    </div>
+      <v-pagination v-model="pagination" :length="totalPages" color="primary" @input="updateItems" :total-visible="5"
+        class="pagination-bar" />
   </v-container>
 </template>
 
@@ -98,22 +101,75 @@ export default defineComponent({
 </script>
 
 <style scoped>
+
+.review-body {
+  width: 100%;
+  height: 120%;
+  background-color: #1c1c1c;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.review-header {
+  width: 70%;
+  height: 13%;
+  display: flex;
+  justify-content: space-between;
+}
+
 h2 {
-  margin-bottom: 20px;
+  width: 15%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 20px;
+  font-size: 40px;
+  color: rgb(255, 255, 255);
+}
+
+.create-review-btn {
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 20px;
+}
+
+.create-review-btn .gotoregister-btn {
+  background-color: #1c1c1c;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 2px solid #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.create-review-btn a {
+  text-decoration: none;  /* 밑줄 생기는 것 제거 */
+}
+
+.create-review-btn .gotoregister-btn:hover {
+  background-color: rgb(255, 240, 30);
+  /* border: 3px solid #ffffff; */
+  color: rgb(100, 100, 100);
+}
+
+.review-table-container {
+  width: 70%;
+  height: 90%;
+  border-radius: 10px;
 }
 
 .review-table {
+  width: 100%;
+  height: 100%;
   margin-bottom: 20px;
 }
+
 
 .pagination-bar {
   display: flex;
   justify-content: center;
   margin: 20px 0;
-}
-
-.create-review-btn {
-  text-align: right;
-  margin-top: 20px;
 }
 </style>
