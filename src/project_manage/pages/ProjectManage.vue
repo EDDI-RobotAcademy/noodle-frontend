@@ -717,12 +717,12 @@ export default {
     },
   },
   mounted() {
-  //  if (localStorage.getItem('userToken')) {
-  //     // 사용자 인증 과정 추가해야 함
-  //  } else {
-  //    alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.")
-  //    this.goToGithubLogin()
-  //  }
+   if (localStorage.getItem('userToken')) {
+      // 사용자 인증 과정 추가해야 함
+   } else {
+     alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.")
+     this.goToGithubLogin()
+   }
   }
 };
 </script>
