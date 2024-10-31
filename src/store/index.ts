@@ -5,7 +5,7 @@ import surveyModule from '@/survey/store/surveyModule'
 import resultReportModule from '@/resultReport/store/resultReportModule'
 import { createStore } from 'vuex'
 import reviewModule from '@/review/store/reviewModule'
-import meetingModule from '@/meeting/store/MeetingModules'
+import meetingModule from '@/meeting/store/meetingModules'
 
 export default createStore({
   state: {
