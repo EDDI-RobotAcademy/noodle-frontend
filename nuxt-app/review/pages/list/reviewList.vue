@@ -14,16 +14,25 @@
 
     <!-- 리뷰 목록 테이블 -->
     <div class="review-table-container">
-      <v-data-table v-model:items-per-page.sync="perPage" :headers="headerTitle" :items="pagedItems"
-        :pagination.sync="pagination" class="elevation-1 review-table" @click:row="readRow" item-value="reviewId"
-        :items-per-page-options="perPageOptions" :pageText="prompt" hide-default-footer :loading="isLoading" />
+      <v-data-table v-model:items-per-page.sync="perPage" 
+      :headers="headerTitle" 
+      :items="pagedItems"
+      :pagination.sync="pagination" 
+      class="elevation-1 review-table" 
+      @click:row="readRow" 
+      item-value="reviewId"
+      :items-per-page-options="perPageOptions" 
+      :pageText="prompt" 
+      hide-default-footer 
+      :loading="isLoading" />
     </div>
 
     <!-- 페이지네이션 -->
-      <v-pagination v-model="pagination" :length="totalPages" color="primary" @input="updateItems" :total-visible="5"
+      <v-pagination v-model="pagination" :length="totalPages" color="white" @input="updateItems" :total-visible="5"
         class="pagination-bar" />
   </v-container>
 </template>
+
 
 <script>
 import { defineComponent, onMounted } from 'vue';
@@ -104,7 +113,8 @@ export default defineComponent({
 
 .review-body {
   width: 100%;
-  height: 120%;
+  min-height: 120%;
+  height: auto;
   background-color: #1c1c1c;
   display: flex;
   flex-direction: column;
@@ -116,6 +126,7 @@ export default defineComponent({
   height: 13%;
   display: flex;
   justify-content: space-between;
+  padding-top: 3%;
 }
 
 h2 {
@@ -145,7 +156,7 @@ h2 {
 }
 
 .create-review-btn a {
-  text-decoration: none;  /* 밑줄 생기는 것 제거 */
+  text-decoration: none;  /* 버튼에 생기는 밑줄 제거 */
 }
 
 .create-review-btn .gotoregister-btn:hover {
@@ -156,7 +167,8 @@ h2 {
 
 .review-table-container {
   width: 70%;
-  height: 90%;
+  min-height: 70%;
+  height: auto;
   border-radius: 10px;
 }
 
@@ -165,6 +177,45 @@ h2 {
   height: 100%;
   margin-bottom: 20px;
 }
+
+
+
+:deep(.v-table thead th) {
+  font-size: 22px !important;
+  font-weight: bold !important;
+  border-bottom: 3px solid #000000 !important;
+}
+
+:deep(.v-table tbody td) {
+  height: 80px !important;
+  font-size: 16px !important;
+}
+
+:deep(.v-data-table-header th:nth-child(1)) {
+  width: 20% !important;
+}
+
+:deep(.v-data-table-header th:nth-child(2)) {
+  width: 60% !important;
+}
+
+:deep(.v-data-table-header th:nth-child(3)) {
+  width: 20% !important;
+}
+
+
+:deep(.v-data-table-body td:nth-child(1)) {
+  width: 20% !important;
+}
+
+:deep(.v-data-table-body td:nth-child(2)) {
+  width: 60% !important;
+}
+
+:deep(.v-data-table-body td:nth-child(3)) {
+  width: 20% !important;
+}
+
 
 
 .pagination-bar {
