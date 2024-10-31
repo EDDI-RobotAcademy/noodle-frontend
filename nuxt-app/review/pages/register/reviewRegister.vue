@@ -1,75 +1,80 @@
 <template>
-    <div class="review-page">
-        <!-- 토글 스위치 -->
-        <div class="title">
-            <div>
-                <h1>리뷰 작성 페이지</h1>
+    <div class="review-register-page">
+        <div style="width: 70%; 
+                    height: 100%; 
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center; 
+                    align-items: center;">
+            <!-- 토글 스위치 -->
+            <div class="title">
+                    <h1 style="color: #fff; font-size: 35px;">Review 작성</h1>
+                    <div class="switch white">
+                        <input type="radio" id="switch-off" v-model="isChecked" :value="false" />
+                        <input type="radio" id="switch-on" v-model="isChecked" :value="true" />
+                        <label for="switch-off">Selection Form</label>
+                        <label for="switch-on">Free Form</label>
+                        <span class="toggle" :class="{ 'checked': isChecked }"></span>
+                    </div>
             </div>
-            <div class="switch white">
-                <input type="radio" id="switch-off" v-model="isChecked" :value="false" />
-                <input type="radio" id="switch-on" v-model="isChecked" :value="true" />
-                <label for="switch-off">Selection Form</label>
-                <label for="switch-on">Free Form</label>
-                <span class="toggle" :class="{ 'checked': isChecked }"></span>
+
+            <!-- selection Review Template -->
+            <div v-if="!isChecked" class="review-template status-template">
+                <form class="form" @submit.prevent="submitReview" fluid>
+                    <div class="inner">
+                        <v-text class="question-text">디자인</v-text>
+                        <div class="star-rating">
+                            <div class="star" v-for="index in 5" :key="index" @click="check('design', index)">
+                                <span v-if="index - 1 < designScore">★</span>
+                                <span v-if="index - 1 >= designScore">☆</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="inner">
+                        <v-text class="question-text">사용성</v-text>
+                        <div class="star-rating">
+                            <div class="star" v-for="index in 5" :key="index" @click="check('usability', index)">
+                                <span v-if="index - 1 < usabilityScore">★</span>
+                                <span v-if="index - 1 >= usabilityScore">☆</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="inner">
+                        <v-text class="question-text">응답성</v-text>
+                        <div class="star-rating">
+                            <div class="star" v-for="index in 5" :key="index" @click="check('responsive', index)">
+                                <span v-if="index - 1 < responsiveScore">★</span>
+                                <span v-if="index - 1 >= responsiveScore">☆</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="inner">
+                        <v-text class="question-text">AI가 생성한 답변의 퀄리티</v-text>
+                        <div class="star-rating">
+                            <div class="star" v-for="index in 5" :key="index" @click="check('quality', index)">
+                                <span v-if="index - 1 < qualityScore">★</span>
+                                <span v-if="index - 1 >= qualityScore">☆</span>
+                            </div>
+                        </div>
+                    </div>
+                    <v-text class="question-text">기타 리뷰</v-text>
+                    <textarea v-model="statusContent" class="review-text-field"></textarea>
+
+                    <button type="submit">리뷰 제출</button>
+                </form>
             </div>
-        </div>
 
-        <!-- selection Review Template -->
-        <div v-if="!isChecked" class="review-template status-template">
-            <form @submit.prevent="submitReview">
-                <div class="inner">
-                    <v-text class="question-text">디자인</v-text>
-                    <div class="star-rating">
-                        <div class="star" v-for="index in 5" :key="index" @click="check('design', index)">
-                            <span v-if="index - 1 < designScore">★</span>
-                            <span v-if="index - 1 >= designScore">☆</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="inner">
-                    <v-text class="question-text">사용성</v-text>
-                    <div class="star-rating">
-                        <div class="star" v-for="index in 5" :key="index" @click="check('usability', index)">
-                            <span v-if="index - 1 < usabilityScore">★</span>
-                            <span v-if="index - 1 >= usabilityScore">☆</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="inner">
-                    <v-text class="question-text">응답성</v-text>
-                    <div class="star-rating">
-                        <div class="star" v-for="index in 5" :key="index" @click="check('responsive', index)">
-                            <span v-if="index - 1 < responsiveScore">★</span>
-                            <span v-if="index - 1 >= responsiveScore">☆</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="inner">
-                    <v-text class="question-text">AI가 생성한 답변의 퀄리티</v-text>
-                    <div class="star-rating">
-                        <div class="star" v-for="index in 5" :key="index" @click="check('quality', index)">
-                            <span v-if="index - 1 < qualityScore">★</span>
-                            <span v-if="index - 1 >= qualityScore">☆</span>
-                        </div>
-                    </div>
-                </div>
-                <v-text class="question-text">기타 리뷰</v-text>
-                <textarea v-model="statusContent" class="review-text-field"></textarea>
+            <!-- Free Form Review Template -->
+            <div v-else class="review-template domain-template">
+                <form class="form" @submit.prevent="submitReview">
+                    <v-text class="question-text">리뷰 제목</v-text>
+                    <input type="text" id="domain-title" v-model="domainTitle" required />
 
-                <button type="submit">리뷰 제출</button>
-            </form>
-        </div>
-
-        <!-- Free Form Review Template -->
-        <div v-else class="review-template domain-template">
-            <form @submit.prevent="submitReview">
-                <v-text class="question-text">리뷰 제목</v-text>
-                <input type="text" id="domain-title" v-model="domainTitle" required />
-
-                <v-text class="question-text">리뷰 본문</v-text>
-                <textarea v-model="domainContent" id="domain-content" class="review-text-field" required></textarea>
-                <button type="submit">리뷰 제출</button>
-            </form>
+                    <v-text class="question-text">리뷰 본문</v-text>
+                    <textarea v-model="domainContent" id="domain-content" class="review-text-field" required></textarea>
+                    <button type="submit">리뷰 제출</button>
+                </form>
+            </div>
         </div>
     </div>
 </template>
@@ -144,18 +149,68 @@ const check = (type, index) => {
 </script>
 
 <style scoped>
-.review-page {
-    padding: 20px;
-    background-color: #f9f9f9;
+
+.review-register-page {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #1c1c1c;
 }
 
+.title {
+    width: 70%;
+    height: 10%;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 20px;
+    position: relative; /* 추가 */
+    justify-content: space-between; /* 추가 */
+}
+
+.review-template{
+    width: 70%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    width: 100%;
+    height: 100%;
+}
+
+
 .inner {
-    margin: 5px;
+    padding: 14px;
+    border-bottom: 1px solid #000000;
+    
 }
 
 .question-text {
     font-size: 20px;
     font-weight: 700;
+    padding: 14px;
+    margin-top: 10px;
+}
+
+
+.status-template .review-text-field {
+    margin-bottom: 5px;
+    box-sizing: inherit;
+    padding: 14px;
+    max-height: 150px;
+}
+
+.domain-template .review-text-field {
+    margin-bottom: 5px;
+    box-sizing: inherit;
+    padding: 14px;
+    max-height: 400px;
 }
 
 .star-rating {
@@ -180,16 +235,6 @@ const check = (type, index) => {
     color: lightgray;
 }
 
-.review-text-field {
-    margin-bottom: 5px;
-    box-sizing: inherit;
-}
-
-.title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
 
 .switch {
     display: flex;
@@ -197,11 +242,11 @@ const check = (type, index) => {
     background: #dadada;
     border-radius: 32px;
     height: var(--switch-height, 20px);
-    position: absolute;
     width: var(--switch-width, 60px);
     padding: 0 10px;
     transform: translateX(100%);
-    right: 150px;
+    position: relative;
+    margin-right: 130px;
 }
 
 .switch label {
@@ -216,13 +261,13 @@ const check = (type, index) => {
 
 .switch label:nth-of-type(1) {
     position: absolute;
-    left: -125%;
+    left: -130%;
     text-align: right;
 }
 
 .switch label:nth-of-type(2) {
     position: absolute;
-    right: -125%;
+    right: -100%;
     text-align: left;
 }
 
@@ -237,19 +282,19 @@ const check = (type, index) => {
 }
 
 .switch input:checked~label:nth-of-type(1) {
-    color: #000;
+    color: rgb(255, 240, 30);
 }
 
 .switch input:checked~label:nth-of-type(2) {
-    color: #a0a0a0;
+    color: #8f8f8f;
 }
 
 .switch input~ :checked~label:nth-of-type(1) {
-    color: #a0a0a0;
+    color: #8f8f8f;
 }
 
 .switch input~ :checked~label:nth-of-type(2) {
-    color: #000;
+    color: rgb(255, 240, 30);
 }
 
 .switch input:checked~.toggle {
@@ -308,7 +353,7 @@ form textarea {
 
 button {
     padding: 10px 15px;
-    background-color: #007bff;
+    background-color: #000000;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -316,7 +361,7 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: rgb(255, 240, 30);
+    color: #6d6d6d;
 }
 </style>
-```
