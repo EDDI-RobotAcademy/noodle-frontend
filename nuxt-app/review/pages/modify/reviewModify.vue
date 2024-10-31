@@ -1,67 +1,75 @@
 <template>
-    <div v-if="isLoading == false">
-        <div class="review-container">
-            <div v-if="isSelectionReview == true" class="review-template status-template">
-                <h2>{{ reviewTitle }}</h2>
-                <v-text class="review-meta">[{{ reviewWriter }}] {{ reviewRegDate }}</v-text>
-                <form @submit.prevent="submitReview">
-                    <div class="inner">
-                        <v-text class="question-text">디자인</v-text>
-                        <div class="star-rating">
-                            <div class="star" v-for="index in 5" :key="index" @click="check('design', index)">
-                                <span v-if="index - 1 < designScore">★</span>
-                                <span v-if="index - 1 >= designScore">☆</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="inner">
-                        <v-text class="question-text">사용성</v-text>
-                        <div class="star-rating">
-                            <div class="star" v-for="index in 5" :key="index" @click="check('usability', index)">
-                                <span v-if="index - 1 < usabilityScore">★</span>
-                                <span v-if="index - 1 >= usabilityScore">☆</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="inner">
-                        <v-text class="question-text">응답성</v-text>
-                        <div class="star-rating">
-                            <div class="star" v-for="index in 5" :key="index" @click="check('responsive', index)">
-                                <span v-if="index - 1 < responsiveScore">★</span>
-                                <span v-if="index - 1 >= responsiveScore">☆</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="inner">
-                        <v-text class="question-text">AI가 생성한 답변의 퀄리티</v-text>
-                        <div class="star-rating">
-                            <div class="star" v-for="index in 5" :key="index" @click="check('quality', index)">
-                                <span v-if="index - 1 < qualityScore">★</span>
-                                <span v-if="index - 1 >= qualityScore">☆</span>
-                            </div>
-                        </div>
-                    </div>
-                    <v-text class="question-text">기타 리뷰</v-text>
-                    <textarea v-model="reviewContent" class="review-text-field"></textarea>
-
-                    <button @click="goToReivewReadPage()">취소</button>
-                    <button type="submit">리뷰 제출</button>
-                    <button @click="goToReviewListPage()">목록으로 돌아가기</button>
-                </form>
-            </div>
-            <div v-else class="review-template domain-template">
-                <form @submit.prevent="submitReview">
-                    <v-text class="question-text">리뷰 제목</v-text>
+    <div class="review-modify-page">
+        <div v-if="isLoading == false"
+            style="width: 70%; 
+                height: 100%; 
+                display: flex;
+                flex-direction: column;
+                justify-content: center; 
+                align-items: center;">
+            <div class="review-container">
+                <div v-if="isSelectionReview == true" class="review-template status-template">
+                    <h2 style="padding: 14px 14px 0px 14px;">{{ reviewTitle }}</h2>
                     <v-text class="review-meta">[{{ reviewWriter }}] {{ reviewRegDate }}</v-text>
-                    <div></div>
-                    <input type="text" id="domain-title" v-model="reviewTitle" required />
-                    <div></div>
-                    <v-text class="question-text">리뷰 본문</v-text>
-                    <textarea v-model="reviewContent" id="domain-content" class="review-text-field" required></textarea>
-                    <button @click="goToReivewReadPage()">취소</button>
-                    <button type="submit">수정 완료</button>
-                    <button @click="goToReviewListPage()">목록으로 돌아가기</button>
-                </form>
+                    <form @submit.prevent="submitReview">
+                        <div class="inner">
+                            <v-text class="question-text">디자인</v-text>
+                            <div class="star-rating">
+                                <div class="star" v-for="index in 5" :key="index" @click="check('design', index)">
+                                    <span v-if="index - 1 < designScore">★</span>
+                                    <span v-if="index - 1 >= designScore">☆</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="inner">
+                            <v-text class="question-text">사용성</v-text>
+                            <div class="star-rating">
+                                <div class="star" v-for="index in 5" :key="index" @click="check('usability', index)">
+                                    <span v-if="index - 1 < usabilityScore">★</span>
+                                    <span v-if="index - 1 >= usabilityScore">☆</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="inner">
+                            <v-text class="question-text">응답성</v-text>
+                            <div class="star-rating">
+                                <div class="star" v-for="index in 5" :key="index" @click="check('responsive', index)">
+                                    <span v-if="index - 1 < responsiveScore">★</span>
+                                    <span v-if="index - 1 >= responsiveScore">☆</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="inner">
+                            <v-text class="question-text">AI가 생성한 답변의 퀄리티</v-text>
+                            <div class="star-rating">
+                                <div class="star" v-for="index in 5" :key="index" @click="check('quality', index)">
+                                    <span v-if="index - 1 < qualityScore">★</span>
+                                    <span v-if="index - 1 >= qualityScore">☆</span>
+                                </div>
+                            </div>
+                        </div>
+                        <v-text class="question-text">기타 리뷰</v-text>
+                        <textarea v-model="reviewContent" class="review-text-field"></textarea>
+
+                        <button @click="goToReivewReadPage()">취소</button>
+                        <button type="submit">리뷰 제출</button>
+                        <button @click="goToReviewListPage()">목록으로 돌아가기</button>
+                    </form>
+                </div>
+                <div v-else class="review-template domain-template">
+                    <form @submit.prevent="submitReview">
+                        <v-text class="question-text">리뷰 제목</v-text>
+                        <v-text class="review-meta">[{{ reviewWriter }}] {{ reviewRegDate }}</v-text>
+                        <div></div>
+                        <input type="text" id="domain-title" v-model="reviewTitle" required />
+                        <div></div>
+                        <v-text class="question-text">리뷰 본문</v-text>
+                        <textarea v-model="reviewContent" id="domain-content" class="review-text-field" required></textarea>
+                        <button @click="goToReivewReadPage()">취소</button>
+                        <button type="submit">수정 완료</button>
+                        <button @click="goToReviewListPage()">목록으로 돌아가기</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -173,8 +181,33 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+
+.review-modify-page {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #1c1c1c;
+}
+
+.review-container {
+    /* max-width: 800px; */
+    /* margin: 0 auto; */
+    padding: 20px;
+    width: 70%;
+    height: 80%;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
 .inner {
-    margin: 5px;
+    padding: 14px;
+    border-bottom: 1px solid #000000;
+    
 }
 
 .question-text {
@@ -241,19 +274,6 @@ button:hover {
     box-sizing: inherit;
 }
 
-.review-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.review-text-field {
-    margin-bottom: 5px;
-    box-sizing: inherit;
-}
 
 .review-header {
     margin-bottom: 15px;
@@ -262,6 +282,7 @@ button:hover {
 .review-meta {
     color: #6c757d;
     font-size: 0.9rem;
+    padding: 0px 14px 0px 14px;
 }
 
 .review-card {
