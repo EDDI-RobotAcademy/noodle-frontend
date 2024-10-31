@@ -27,9 +27,18 @@
             </div>
         </div>
         <div class="review-button-container">
-            <button class="back-button" @click="goToReivewModifyPage()" :disabled="modifyingAllowed == false">수정</button>
-            <button class="back-button" @click="deleteThisReview()" :disabled="modifyingAllowed == false">삭제</button>
-            <button class="back-button" @click="goToReviewListPage()">목록</button>
+            <button class="back-button" @click="goToReivewModifyPage()" :disabled="modifyingAllowed == false">
+                <v-icon>mdi-pencil</v-icon>
+                수정
+            </button>
+            <button class="back-button" @click="deleteThisReview()" :disabled="modifyingAllowed == false">
+                <v-icon>mdi-delete</v-icon>
+                삭제
+            </button>
+            <button class="back-button" @click="goToReviewListPage()">
+                <v-icon>mdi-format-list-bulleted</v-icon>
+                목록
+            </button>
         </div>
     </div>
 </template>
@@ -184,6 +193,7 @@ onMounted(async () => {
     border: 3px solid #ffffff;
     border-radius: 20px;
     font-weight: bold;
+    gap: 5px;
 }
 
 .back-button:hover {
