@@ -895,6 +895,12 @@ export default defineComponent({
     color: rgb(255, 255, 255);
 }
 
+.select-container .v-select {
+    width: 450px;
+    max-width: 450px;
+    min-width: 450px;
+}
+
 /* v-if로 감싸진 div들의 높이 설정 */
 /* rightbox_title이 10%이므로 나머지 90% */
 /* .rightbox > div:nth-child(2) {
