@@ -87,23 +87,21 @@ export const resultReportActions = {
 		}
 	},
 	async requestGetResultReportResultToFastAPI(userToken): Promise<void> {
-		const { fastapiAxiosInst } = axiosUtility.createAxiosInstances();
+		const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
 
-		const maxAttempts = 50;
+		const maxAttempts = 100;
 		const dalay = 5000;
 
 		try {
 			for (let attempt = 0; attempt < maxAttempts; attempt++) {
-				const response = await fastapiAxiosInst.get(
-					"/generate-result-report-result"
+				const response = await djangoAxiosInst.post(
+					"/get-result-report/get",
+					{ userToken: userToken }
 				);
-				if (
-					response.data &&
-					response.data.userToken === userToken &&
-					response.data.message
-				) {
+				if (response.data) {
 					return response.data;
 				}
+				console.log(`Attempt ${attempt} failed.`);
 				await new Promise((resolve) => setTimeout(resolve, dalay));
 			}
 			throw new Error("결과를 가져오는 데 실패했습니다.");
