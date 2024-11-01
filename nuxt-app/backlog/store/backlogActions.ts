@@ -37,12 +37,11 @@ export const backlogActions = {
 		const delay = 5000;
 
 		try {
-			const response = await djangoAxiosInst.post(
-				"/backlog/get",
-				userToken
-			);
+			const response = await djangoAxiosInst.post("/backlog/get", {
+				userToken,
+			});
 
-			if (response.status === 102) {
+			if (response.data.response === "creation is not done yet!") {
 				if (attempt < maxAttempts) {
 					return new Promise((resolve) =>
 						setTimeout(
