@@ -22,7 +22,7 @@ import HomeMain from '@/Home/pages/HomeComponents/HomeMain.vue';
 import HomeSecond from '@/Home/pages/HomeComponents/HomeSecond.vue';
 import HomeThird from '@/Home/pages/HomeComponents/HomeThird.vue';
 import HomeFooter from '@/Home/pages/HomeComponents/HomeFifth.vue';
-import SearchBox from '@/Home/pages/HomeComponents/SearchBox.vue';
+// import SearchBox from '@/Home/pages/HomeComponents/SearchBox.vue';
 
 export default {
   name: 'ThirdHomeView',

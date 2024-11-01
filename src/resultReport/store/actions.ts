@@ -5,7 +5,7 @@ import axiosInst from "@/utility/axiosInstance"
 import { REQUEST_RESULTREPORT_LIST_TO_DJANGO } from "./mutation-types"
 
 export type ResultReportActions = {
-    requestResultReportListToDjango(context: ActionContext<ResultReportState, any>): Promise<any>
+    requestResultReportListToDjango(context: ActionContext<ResultReportState, any>, payload: { page: number | null, perPage: number | null, searchQuery: string | null }): Promise<any>
     requestResultReportToDjango(context: ActionContext<ResultReportState, any>, resultReportId: number): Promise<any>
     requestDeleteResultReportToDjango(context: ActionContext<ResultReportState, unknown>, resultReportId: number): Promise<void>
     requestCreateResultReportToDjango(context: ActionContext<ResultReportState, any>, payload: {
@@ -16,9 +16,11 @@ export type ResultReportActions = {
 }
 
 const actions: ResultReportActions = {
-    async requestResultReportListToDjango(context: ActionContext<ResultReportState, any>): Promise<any> {
+    async requestResultReportListToDjango(context: ActionContext<ResultReportState, any>, payload: { page: number | null, perPage: number | null, searchQuery: string | null }): Promise<any> {
+        const { page, perPage, searchQuery } = payload
+
         try {
-            const res: AxiosResponse<any, any> = await axiosInst.djangoAxiosInst.post('/report/list')
+            const res: AxiosResponse<any, any> = await axiosInst.djangoAxiosInst.post('/report/list', {query: searchQuery, page: page, perPage: perPage})
             // const data: ResultReport[] = res.data
             const data: any[] = res.data
             // context.commit(REQUEST_RESULTREPORT_LIST_TO_DJANGO, data)
