@@ -1,6 +1,7 @@
 <template>
   <div class="home-second">
     <div class="home-second-body">
+      <div class="margin-box"></div>
       <div class="title-container">
         <p class="title">AI를 활용하여 업무의 효율을 높이는 세상.</p>
         <p class="sub-title"><span class="NOODLE-span">NOODLE</span>이 고객에게 경험시켜드리고자 하는 것은 바로 이런 편리함입니다.</p>
@@ -95,7 +96,7 @@ export default defineComponent({
     onMounted(() => {
       AOS.init({
         duration: 1000,
-        once: true,
+        once: false,
       })
     })
   }
@@ -131,6 +132,10 @@ export default defineComponent({
 
 .title-container p {
   color: #ffffff;
+}
+
+.margin-box {
+  height: 10vh;
 }
 
 .title {
