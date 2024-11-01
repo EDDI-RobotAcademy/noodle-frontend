@@ -254,7 +254,7 @@ export default {
 /* 네비게이션 바 */
 .nevigationbar.scrolled {
   /* background-color: rgb(240, 240, 240); */
-  border-bottom: 2px solid rgb(255, 240, 30);;
+  border-bottom: 2px solid #FFF01E;
   height: var(--navigation-bar-scrolled-height) !important;
   min-height: var(--navigation-bar-scrolled-height) !important;
   max-height: var(--navigation-bar-scrolled-height) !important;
