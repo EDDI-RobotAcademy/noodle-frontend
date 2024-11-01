@@ -15,7 +15,7 @@
             </div>
           </transition>
         </div>
-        <SearchBox class="searchbox" :class="{ 'fade-in': showElements }" />
+        <!-- <SearchBox class="searchbox" :class="{ 'fade-in': showElements }" /> -->
       </div>
       <RecentReport class="recentreport" :class="{ 'fade-in': showElements }" />
       <ScrollAnimation class="scrollanimation" :class="{ 'fade-in': showElements }" @click="goToHomeSecond"/>
@@ -26,14 +26,14 @@
 <script>
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import SearchBox from './SearchBox.vue';
+// import SearchBox from './SearchBox.vue';
 import RecentReport from './RecentReport.vue';
 import ScrollAnimation from './ScrollAnimation.vue'
 
 export default {
   name: 'HomeMain',
   components: {
-    SearchBox,
+    // SearchBox,
     RecentReport,
     ScrollAnimation
   },

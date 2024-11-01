@@ -1,11 +1,18 @@
 <template>
   <v-container class="report-list-body" fluid>
+    <v-card class="mx-auto" max-width="500">
+      <v-text-field class="searchbox"
+        v-model="searchQuery"
+        label="검색어를 입력하세요"
+        v-on:keyup.enter="fetchResultReports"
+        clearable></v-text-field>
+    </v-card>
     <v-row justify="center">
       <v-col cols="12" class="report-list-area">
         <h1>Report List</h1>
         <!-- v-for를 pageItems로 변경 -->
-        <v-card 
-          v-for="report in pageItems" 
+        <v-card
+          v-for="report in resultReports" 
           :key="report.resultReportId" 
           class="custom-card-spacing"
           @click="readRow($event, { item: report })"
@@ -16,16 +23,16 @@
             </div>
             <div class="section1">
               <v-card-title class="department">
-                <p>개발3팀</p>
+                <p>{{ report.creatorDepartment }}</p>
               </v-card-title>
               <v-card-title class="report-title">
-                <p class="report-link">{{ report.title }}</p>
+                <p class="report-link">{{ report.resultReportTitle }}</p>
               </v-card-title>
             </div>
             <div class="section2">
             <v-card-text >
-              <p class="member">구성원: {{ report.writer }}</p>
-              <p class="function">주요 기능에 대한 내용</p>
+              <p class="member">담당자: {{ report.creator }}</p>
+              <p class="function">기능: {{ report.resultReportFeature }}</p>
             </v-card-text>
             </div>
             <div class="open-button">
@@ -37,9 +44,10 @@
         <!-- 페이지네이션 업데이트 -->
         <v-pagination
           v-model="pagination.page"
-          :length="Math.ceil(resultReports.length / perPage)"
+          :length="totalPages"
           color="primary"
           class="pagination"
+          @input="fetchResultReports"
         ></v-pagination>
       </v-col>
     </v-row>
@@ -47,29 +55,27 @@
 </template>
 
 <script>
+// import SearchBox from '@/resultReport/pages/list/listComponents/SearchBox.vue';
 import { toRaw } from 'vue';
 import {mapActions, mapState} from 'vuex'
 
 const resultReportModule = 'resultReportModule'
 
 export default{
+    name: 'ResultReportList',
+    // components: {
+    //   SearchBox,
+    // },
     computed:{
         // ...mapState(resultReportModule, ['resultReports']),
-        pageItems() {
-            const startIdx = (this.pagination.page - 1)*this.perPage
-            const endIdx = startIdx + this.perPage
-            return this.resultReports.slice(startIdx, endIdx)
-        }
+        // pageItems() {
+        //     const startIdx = (this.pagination.page - 1)*this.perPage
+        //     const endIdx = startIdx + this.perPage
+        //     return this.resultReports.slice(startIdx, endIdx)
+        // }
     },
     async mounted() {
-        this.resultReports = await this.requestResultReportListToDjango()
-        const reports = []
-        for (let i = 0; i < this.resultReports.length; i++) {
-            reports.push(this.resultReports[i])
-        }
-        console.log("resultReports:", reports)
-        this.resultReports = toRaw(reports)
-        console.log("resultReports:", this.resultReports)
+        await this.fetchResultReports()
     },
     methods: {
         ...mapActions(resultReportModule, ['requestResultReportListToDjango']),
@@ -78,17 +84,27 @@ export default{
                 name: 'ResultReportReadPage',
                 params: { resultReportId: item['resultReportId'].toString() }
             })
+        },
+        async fetchResultReports() {
+          const { page } = this.pagination
+          const searchQuery = this.searchQuery.trim()
+
+          const payload = { page, perPage: this.perPage, searchQuery }
+          console.log('payload:', payload)
+          try {
+            const res = await this.requestResultReportListToDjango(payload)
+            console.log('fetchResultReports() res:', res)
+            this.resultReports = toRaw(res.resultReports)
+            this.totalPages = Math.ceil(res.totalCount / this.perPage)
+          } catch (error) {
+            console.error('데이터 로드 중 오류 발생:', error)
+          }
         }
     },
     data() {
         return{
             resultReports: [],
-            headerTitle: [
-                {title: 'No', align: 'start', sortable: true, key: 'resultReportId'},
-                {title: '제목', align: 'end', key: 'title'},
-                {title: '작성자', align: 'end', key: 'writer'},
-                {title: '작성일자', align: 'end', key: 'regDate'},
-            ],
+            searchQuery: '',
             perPage: 5,
             pagination: {
                 page: 1
@@ -104,6 +120,11 @@ export default{
 .report-list-body{
   width: 100%;
   background-color: #080808;  
+}
+
+.searchbox {
+  width: 500px;
+  height: 50px;
 }
 
 .report-list-area {
