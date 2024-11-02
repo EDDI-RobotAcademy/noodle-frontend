@@ -72,27 +72,43 @@
                 <div class="rightbox-content" v-if="!isExample">
                     <div class="select-container-area">
                         <div class="select-container" v-if="repos">
-                            <v-select v-model="selectedRepository" :value="selectedRepository" :items="repos"
-                                class="repository" @change="setRepositorySelect($event)">
-                                <option v-for="(item, index) in repos" :key="index" :value="item.value">
-                                    {{ item.value }}
-                                </option>
-                            </v-select>
-                            <div v-if="branches">
-                                <v-select v-model="selectedBranches" :value="selectedBranch" :items="branches"
-                                    class="branch" @change="setBranchSelect($event)">
+                            <div class="half-width">
+                                <v-select 
+                                    v-model="selectedRepository" 
+                                    :value="selectedRepository" 
+                                    :items="repos"
+                                    class="repository" 
+                                    @change="setRepositorySelect($event)"
+                                    :menu-props="{ maxWidth: '100%', offsetY: true }">
+                                    <option v-for="(item, index) in repos" :key="index" :value="item.value">
+                                        {{ item.value }}
+                                    </option>
+                                </v-select>
+                            </div>
+                            <div class="half-width" v-if="branches">
+                                <v-select
+                                    v-model="selectedBranches" 
+                                    :value="selectedBranch" 
+                                    :items="branches"
+                                    class="branch" 
+                                    @change="setBranchSelect($event)"
+                                    :menu-props="{ maxWidth: '100%', offsetY: true }">
                                     <option v-for="(item, index) in branches" :key="index" :value="item.value">
                                         {{ item.value }}
                                     </option>
                                 </v-select>
                             </div>
-                            <div v-else>
+                            <div class="half-width" v-else>
                                 <v-select :value="selectedBranches" class="branches"></v-select>
                             </div>
                         </div>
                         <div class="select-container" v-else>
-                            <v-select :value="selectedRepository"></v-select>
-                            <v-select :value="selectedBranches"></v-select>
+                            <div class="half-width">
+                                <v-select :value="selectedRepository"></v-select>
+                            </div>
+                            <div class="half-width">
+                                <v-select :value="selectedBranches"></v-select>
+                            </div>
                         </div>
                     </div>
 
@@ -890,22 +906,17 @@ export default defineComponent({
     width: 96%;
     height: 100%;
     display: flex;
-    justify-content: space-between;
     gap: 20px;
     color: rgb(255, 255, 255);
 }
 
-.select-container .v-select {
-    width: 450px;
-    max-width: 450px;
-    min-width: 450px;
+.half-width {
+    flex: 1;
 }
 
-/* v-if로 감싸진 div들의 높이 설정 */
-/* rightbox_title이 10%이므로 나머지 90% */
-/* .rightbox > div:nth-child(2) {
-  height: 90%;
-} */
+.repository, .branch, .branches {
+    width: 100%;
+}
 
 
 /* 커밋리스트 나오는 v-card 설정 */
