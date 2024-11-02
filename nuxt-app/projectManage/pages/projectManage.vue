@@ -85,10 +85,11 @@
                                     </option>
                                 </v-select>
                             </div>
-                            <div class="half-width" v-if="branches">
+                            <div class="half-width">
                                 <v-select
+                                    v-if="branches"
                                     v-model="selectedBranches" 
-                                    :value="selectedBranch" 
+                                    :value="selectedBranches" 
                                     :items="branches"
                                     class="branch" 
                                     @change="setBranchSelect($event)"
@@ -97,9 +98,11 @@
                                         {{ item.value }}
                                     </option>
                                 </v-select>
-                            </div>
-                            <div class="half-width" v-else>
-                                <v-select :value="selectedBranches" class="branches"></v-select>
+                                <v-select
+                                    v-else
+                                    :value="selectedBranches" 
+                                    class="branches">
+                                </v-select>
                             </div>
                         </div>
                         <div class="select-container" v-else>
@@ -455,7 +458,7 @@ export default defineComponent({
             },
         ])
         const selectedRepository = ref("Select a repository")
-        const selectedBranches = ref("Select a branch")
+        const selectedBranches = ref("Select a branches")
         const selectedCommits = ref("")
         const exampleRepository = ref("noodle-frontend")
         const exampleBranch = ref("develop")
