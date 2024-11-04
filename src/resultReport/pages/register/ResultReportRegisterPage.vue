@@ -119,7 +119,7 @@
             <v-timeline dense>
               <v-timeline-item v-for="(feature, index) in features" :key="index" small>
                 <template v-slot:opposite></template>
-                <v-card outlined>
+                <v-card bg-color="#333333" outlined>
                   <v-card-text>
                     <v-textarea
                       v-model="features[index]"
@@ -147,7 +147,7 @@
         <v-card class="mx-auto mb-6" :style="cardStyle">
           <v-card-text>
             <h2 class="text-h5 mb-4">활용 방안</h2>
-            <v-expansion-panels>
+            <v-expansion-panels bg-color="#333333">
               <v-expansion-panel v-for="(usage, index) in usagePlans" :key="index">
                 <v-expansion-panel-header>
                   <v-text-field
