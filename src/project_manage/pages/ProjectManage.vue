@@ -682,7 +682,7 @@ export default {
       this.features.splice(index, 1);
     },
     addUsagePlan() {
-      this.usagePlans.push({ title: '', description: '' });
+      this.usagePlans.push('');
     },
     removeUsagePlan(index) {
       this.usagePlans.splice(index, 1);
@@ -708,11 +708,11 @@ export default {
             userToken: localStorage.getItem("userToken")
         }
 
-        const resultReport = await this.requestCreateResultReportToDjango(payload)
+        const resultReportId = await this.requestCreateResultReportToDjango(payload)
       
         await this.$router.push({
             name: 'ResultReportReadPage',
-            params: {resultReportId: resultReport.resultReportId.toString()}
+            params: {resultReportId: resultReportId.toString()}
         })
     },
   },
