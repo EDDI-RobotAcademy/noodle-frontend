@@ -10,8 +10,7 @@
         </div>
         <transition name="fade">
           <div class="sub-introduce" :class="{ 'visible': showElements }">
-            <p>개발자들의 원활한 협업과 효율적인 프로젝트 진행을 위해 GitHub와 연동을 통해</p>
-            <p>AI를 활용하여 Baklog와 Project Report를 생성해드리는 서비스입니다.</p>
+            <p>AI를 활용하여 업무의 효율을 높이는 세상</p>
           </div>
         </transition>
       </div>

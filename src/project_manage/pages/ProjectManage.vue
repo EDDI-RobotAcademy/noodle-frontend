@@ -152,8 +152,8 @@
           </div>
         </div>
 
-        <div class="report-area">
-          <body bgcolor="#2f2f2f">
+        <body bgcolor="#2f2f2f">
+          <div class="report-area">
             <v-container class="my-auto pa-0" max-width="100%" max-height="90%">
               <br/>
               <v-card class="mx-auto my-auto pa-6" outlined elevation="4" rounded :style="mainCardStyle" max-width="1000">
@@ -420,8 +420,8 @@
                     
               </v-row>
             </v-container>
-          </body>
-        </div>
+          </div>
+        </body>
       </div>
 
 
