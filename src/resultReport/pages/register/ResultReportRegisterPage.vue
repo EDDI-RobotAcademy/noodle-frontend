@@ -181,7 +181,7 @@
           <!-- 보완할 점 섹션 -->
           <v-card-text>
             <h2 class="text-h5 mb-4">보완할 점</h2>
-            <v-list>
+            <v-list bg-color="#333333">
               <v-list-item v-for="(improvement, index) in improvements" :key="index">
                 <v-list-item-content>
                   <v-text-field
@@ -246,7 +246,7 @@
             </v-row>
             <v-row class="mt-4">
               <v-col cols="12">
-                <v-list dense>
+                <v-list bg-color="#333333" dense>
                   <v-list-item v-for="(feedback, index) in completionFeedback" :key="index">
                     <v-list-item-content>
                       <v-list-item-title>{{ feedback }}</v-list-item-title>
