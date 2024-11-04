@@ -1,12 +1,16 @@
 <template>
   <v-container class="report-list-body" fluid>
-    <v-card class="mx-auto" max-width="500">
-      <v-text-field class="searchbox"
-        v-model="searchQuery"
-        label="검색어를 입력하세요"
-        v-on:keyup.enter="fetchResultReports"
-        clearable></v-text-field>
-    </v-card>
+    <div class="search-container">
+      <v-card class="search-card" max-width="500">
+        <v-text-field class="searchbox"
+          v-model="searchQuery"
+          label="검색어를 입력하세요"
+          v-on:keyup.enter="fetchResultReports"
+          append-icon="mdi-magnify"
+          @click:append="fetchResultReports"
+          clearable></v-text-field>
+      </v-card>
+    </div>
     <v-row justify="center">
       <v-col cols="12" class="report-list-area">
         <h1>Report List</h1>
@@ -128,7 +132,7 @@ export default{
 }
 
 .report-list-area {
-  padding-top: 4%;
+  padding-top: 2%;
   width: 70%;
   margin: 0 auto;
   flex: none !important;
@@ -237,6 +241,53 @@ h1 {
 
 .custom-card-spacing {
   margin-bottom: 25px;
+}
+
+.search-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 15%;
+  padding-top: 1%;
+}
+
+.search-card {
+  width: 500px;
+}
+
+/* .v-text-field >>> .v-input__append-inner {
+  cursor: pointer;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 80px;
+  min-width: 48px;
+} */
+
+.v-text-field >>> .v-input__append-inner:hover {
+  color: #000;
+}
+
+/* 추가: 아이콘 컨테이너 자체의 정렬 */
+.v-text-field >>> .v-input__append-inner .v-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  margin: auto;
+}
+
+/* 추가: append 영역 전체 높이 설정 */
+.v-text-field >>> .v-input__append {
+  height: 100%;
+  width: 50px;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 </style>
