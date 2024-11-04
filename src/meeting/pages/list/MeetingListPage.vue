@@ -90,6 +90,68 @@ export default{
             pagination: {
                 page: 1,
             },
+            meetings: [
+                {
+                    meetingId: 1,
+                    title: '2024년 1분기 프로젝트 킥오프 미팅',
+                    writer: '김철수',
+                    regDate: '2024-03-15'
+                },
+                {
+                    meetingId: 2,
+                    title: '신규 서비스 기획 회의',
+                    writer: '박영희',
+                    regDate: '2024-03-14'
+                },
+                {
+                    meetingId: 3,
+                    title: '주간 개발팀 스프린트 회의',
+                    writer: '이지훈',
+                    regDate: '2024-03-13'
+                },
+                {
+                    meetingId: 4,
+                    title: 'UI/UX 개선 프로젝트 미팅',
+                    writer: '정미영',
+                    regDate: '2024-03-12'
+                },
+                {
+                    meetingId: 5,
+                    title: '고객 피드백 검토 회의',
+                    writer: '강동원',
+                    regDate: '2024-03-11'
+                },
+                {
+                    meetingId: 6,
+                    title: '2024년 마케팅 전략 회의',
+                    writer: '송지은',
+                    regDate: '2024-03-10'
+                },
+                {
+                    meetingId: 7,
+                    title: '신입 개발자 온보딩 미팅',
+                    writer: '홍길동',
+                    regDate: '2024-03-09'
+                },
+                {
+                    meetingId: 8,
+                    title: '보안 시스템 업데이트 논의',
+                    writer: '임수진',
+                    regDate: '2024-03-08'
+                },
+                {
+                    meetingId: 9,
+                    title: '데이터베이스 구조 개선 회의',
+                    writer: '백승호',
+                    regDate: '2024-03-07'
+                },
+                {
+                    meetingId: 10,
+                    title: '연간 예산 계획 검토 미팅',
+                    writer: '최영준',
+                    regDate: '2024-03-06'
+                }
+            ]
         }
     }
 }
@@ -105,6 +167,13 @@ export default{
 .searchbox {
   width: 500px;
   height: 50px;
+}
+
+.searchbox :deep(.v-input__append) {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding-right: 8px;
 }
 
 .meeting-list-area {
