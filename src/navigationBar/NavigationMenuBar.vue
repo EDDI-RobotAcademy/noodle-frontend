@@ -23,10 +23,13 @@
           </template>
           <v-list :class="menuClass">
             <v-list-item @click="goToBacklogBoard">
-              <v-list-item-title :class="menuItemClass">Backlog Board</v-list-item-title>
+              <v-list-item-title :class="menuItemClass">BACKLOG BOARD</v-list-item-title>
             </v-list-item>
             <v-list-item @click="goToResultReport">
               <v-list-item-title :class="menuItemClass">RESULT REPORT</v-list-item-title>
+            </v-list-item>
+            <v-list-item @click="goToMeetingRecorder">
+              <v-list-item-title :class="menuItemClass">MEETING RECORDER</v-list-item-title>
             </v-list-item>
             <v-list-item @click="goToReview">
               <v-list-item-title :class="menuItemClass">REVIEW</v-list-item-title>
@@ -112,6 +115,9 @@ export default {
         },
         goToResultReport() {
             this.$router.push('/report/list3')
+        },
+        goToMeetingRecorder() {
+            this.$router.push('/meeting-recorder')
         },
         handleScroll() {
             this.isScrolled = window.scrollY > 50; // 스크롤이 50px 이상이면 true
