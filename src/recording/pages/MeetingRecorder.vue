@@ -2,7 +2,7 @@
   <v-container class="recoder-container" fluid>
     <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 70%; height: 100%;">
       <h1 style="font-size: 40px; width: 100%; min-width: 100%; text-align: center;">고객님의 회의 내용을 <span style="color: rgb(255, 240, 30); font-size: 40px;">NOODLE</span>이 정리해드릴게요.</h1>
-      <v-icon size="250">mdi-text-box-check-outline</v-icon> 
+      <v-icon class="recoder-icon" size="280">mdi-text-box-check-outline</v-icon> 
       <div class="recoder-button-container">
         <div style="width: 20%; height: 70%; position: relative;">
             <!-- 녹음 시간 표시 -->
@@ -194,6 +194,10 @@ export default {
   display: flex;
   justify-content: center;
   /* align-items: center; */
+}
+
+.recoder-icon {
+  padding-top: 8%;
 }
 
 .recoder-button-container {
