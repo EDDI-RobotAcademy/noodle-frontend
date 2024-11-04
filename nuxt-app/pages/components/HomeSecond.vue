@@ -24,8 +24,7 @@
                       <p>GitHub 연동</p>
                     </div>
                     <div class="image-card-text">
-                      <p>GitHub와 연동을 통해 별도의 회원가입 없이</p>
-                      <p>GitHub 아이디만으로 프로젝트를 관리할 수 있습니다.</p>
+                      <p>GitHub와 연동을 통해 별도의 회원가입 없이 GitHub 아이디만으로 프로젝트를 관리할 수 있습니다.</p>
                     </div>
                   </div>
                 </div>
@@ -55,8 +54,7 @@
                       <p>Backlog 생성</p>
                     </div>
                     <div class="image-card-text">
-                      <p>Github의 Repository와 Branches 별로 Backlog를</p>
-                      <p>자동 생성 및 관리할 수 있습니다.</p>
+                      <p>Github의 Repository와 Branches 별로 Backlog를 자동 생성 및 관리할 수 있습니다.</p>
                     </div>
                   </div>
                 </div>
@@ -71,8 +69,7 @@
                       <p>Project Report 생성</p>
                     </div>
                     <div class="image-card-text">
-                      <p>개발자들의 업무 생산성을 높이기 위해 Project Report의</p>
-                      <p>초안 작성 및 관리를 도와드립니다.</p>
+                      <p>개발자들의 업무 생산성을 높이기 위해 Project Report의 초안 작성 및 관리를 도와드립니다.</p>
                     </div>
                   </div>
                 </div>
@@ -234,7 +231,7 @@ export default defineComponent({
 
 .text-container {
   position: absolute;
-  bottom: 20px;
+  top: 130px;
   left: 20px;
   right: 0;
   padding: 15px;
