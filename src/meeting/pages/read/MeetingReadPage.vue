@@ -1,118 +1,139 @@
 <template>
-    <div class="meeting-report-body">
-        <v-container class="meeting-report-container" fluid>
-            <v-card v-if="meeting">
-                <v-card-text class="text-body">
-                    <v-container>
-                        <v-row>
-                            <v-col cols="12">
-                                <v-text-field 
-                                    v-model="meeting.title" 
-                                    readonly 
-                                    label="제목"
-                                    hide-details
-                                    class="custom-text-field"
-                                />
-                            </v-col>
-                        </v-row>
-                        <v-row>
-                            <v-col cols="12">
-                                <v-text-field 
-                                    v-model="meeting.writer" 
-                                    readonly 
-                                    label="생성자"
-                                    hide-details
-                                    class="custom-text-field"
-                                />
-                            </v-col>
-                        </v-row>
-                        <v-row>
-                            <v-col cols="12">
-                                <v-textarea v-model="meeting.content" readonly label="회의 내용" auto-grow/>
-                            </v-col>
-                        </v-row>
-                        <v-row justify="end">
-                            <v-col cols="auto">
-                                <v-btn class="btn" @click="onDelete">삭제</v-btn>
-                            </v-col>
-                            <v-col cols="auto">
-                                <router-link :to="{ name: 'MeetingListPage' }">
-                                    <v-btn class="btn">돌아가기</v-btn>
-                                </router-link>
-                            </v-col>
-                        </v-row>
-                    </v-container>
-                </v-card-text>
-            </v-card>
-        </v-container>
+    <div class="app-container">
+      <h1 class="header">🎄 <span class="gradient-text">{{ title }}</span> 🎄</h1>
+      <div class="meeting-detail">
+        <div class="meeting-info">
+          <p class="meeting-author">작성자: {{ writer }}</p>
+          <p class="meeting-date">등록일: {{ regDate }}</p>
+        </div>
+        <div class="meeting-content">
+          <div class="content-box">
+            {{ content }}
+          </div>
+        </div>
+        <router-link to="/meeting/list" class="back-button">목록으로 돌아가기</router-link>
+      </div>
     </div>
-</template>
-
+  </template>
+  
 <script>
 import { mapActions, mapState } from 'vuex'
 const meetingModule = 'meetingModule'
+
 export default {
     props: {
         meetingId: {
             type: String,
-            required: true,
+            required: true
         }
     },
+    data() {
+        return {
+        title: '',
+        writer: '',
+        regDate: '',
+        content: ''
+        };
+    },
     computed: {
-        ...mapState(meetingModule, ['meeting'])
+        ...mapState(meetingModule, ['meetingReport'])
     },
     methods: {
-        ...mapActions(meetingModule, ['requestMeetingToDjango','requestDeleteMeetingToDjango']),
-        async onDelete () {
-            console.log('삭제를 누르셨습니다!')
-            await this.requestDeleteMeetingToDjango(this.meetingId) 
-            await this.$router.push({name: 'MeetingListPage'})
-        },
+        ...mapActions(meetingModule, ['requestMeetingToDjango'])
     },
-    created () {
-        this.requestMeetingToDjango(this.meetingId)
+    mounted() {
+        console.log("received ID:", this.id)
+        this.loadData(this.id);
     },
-    
-}
+    async created () {
+        this.meeting = await this.requestMeetingToDjango(this.meetingId)
+        this.title = this.meeting.title
+        this.writer = this.meeting.writer
+        this.regDate = this.meeting.regDate
+        this.content = this.meeting.content
+    }
+};
 </script>
-
-<style scoped>
-.meeting-report-body{
-    background-color: #1c1c1c;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.meeting-report-container{
-    width: 70%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.btn{
-    background-color: #000000;
+  
+  <style scoped>
+  .app-container {
+    background-color: #323131;
     color: #ffffff;
+    min-height: 100vh;
+    padding: 20px;
+    position: relative;
+  }
+  
+  .header {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    color: #ffd700;
+  }
+  
+  .gradient-text {
+    background: linear-gradient(45deg, #ff0000, #00ff00, #0000ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  
+  .meeting-detail {
+    background-color: #146b3a;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px auto;
+    max-width: 800px;
+    color: #ffd700;
+  }
+
+  .meeting-info {
+    text-align: right;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+  }
+
+  .meeting-author {
+    margin: 0 0 5px 0;
+    color: #c41e3a;
     font-weight: bold;
-    border-radius: 10px;
-    border: 2px solid #000000;
-    font-size: 1.0rem;
-}
+  }
 
-.btn:hover{
-    background-color: #ffffff;
-    color: #000000;
-}
+  .meeting-date {
+    margin: 0;
+    color: #ffd700;
+  }
 
-.v-card{
-    margin-top: 3%;
-}
+  .meeting-content {
+    margin: 20px 0;
+  }
 
-.custom-text-field >>> input {
-    font-size: 1.3rem;
-}
+  .meeting-content h3 {
+    color: #ffd700;
+    margin-bottom: 10px;
+  }
 
-</style>
+  .content-box {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 4px;
+    min-height: 200px;
+    color: white;
+  }
+  
+  .back-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 8px 16px;
+    background-color: #c41e3a;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+  
+  .back-button:hover {
+    background-color: #a01830;
+  }
+  </style>
