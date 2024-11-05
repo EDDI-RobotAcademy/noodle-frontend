@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-cognito-identity": "^3.682.0",
-    "@aws-sdk/client-s3": "^3.682.0",
+    "@aws-sdk/client-s3": "^3.685.0",
     "@aws-sdk/credential-providers": "^3.682.0",
     "@mdi/font": "5.9.55",
     "aos": "^2.3.4",
