@@ -88,7 +88,7 @@ export default defineComponent({
       return resultReports.value.slice(startIdx, endIdx)
     }
     function readRow(event, { item }) {
-      router.push(`/resultReport/modify/${item.resultReportId}`)
+      router.push(`/resultReport/read/${item.resultReportId}`)
     }
 
     onMounted(async () => {
