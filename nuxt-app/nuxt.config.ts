@@ -10,7 +10,8 @@ export default defineNuxtConfig({
 		"./review/nuxt.config.ts",
 		"./survey/nuxt.config.ts",
 		"./backlog/nuxt.config.ts",
-		"./payments/nuxt.config.ts",
+		"./testPayments/nuxt.config.ts",
+		"./subscriptionPayments/nuxt.config.ts"
 	],
 
 	css: ["vuetify/styles", "@mdi/font/css/materialdesignicons.min.css"],
@@ -39,7 +40,8 @@ export default defineNuxtConfig({
 		"~/review/index.ts",
 		"~/survey/index.ts",
 		"~/backlog/index.ts",
-		"~/payments/index.ts",
+		"~/testPayments/index.ts",
+		"~/subscriptionPayments/index.ts"
 	],
 
 	imports: {

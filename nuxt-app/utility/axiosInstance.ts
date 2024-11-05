@@ -14,7 +14,7 @@ export function createAxiosInstances() {
 		const config = useRuntimeConfig();
 		djangoAxiosInst = axios.create({
 			baseURL: mainApiUrl,
-			timeout: 5000,
+			timeout: 10000,
 		});
 	}
 
