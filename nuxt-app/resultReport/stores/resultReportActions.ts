@@ -2,13 +2,39 @@ import * as axiosUtility from "../../utility/axiosInstance";
 import { useResultReportStore } from "./resultReportStore";
 
 export const resultReportActions = {
-	async requestResultReportListToDjango(): Promise<void> {
+	async requestUserValidationToDjango(id, userToken): Promise<void> {
 		const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
-		const resultReportStore = useResultReportStore();
 
 		try {
-			const response = await djangoAxiosInst.get("/report/list");
-			resultReportStore.resultReportList = response.data;
+			const response = await djangoAxiosInst.post("/report/validate", {
+				id,
+				userToken,
+			});
+			return response.data;
+		} catch (error) {
+			console.error("requestUserValidationToDjango() axios 오류!", error);
+		}
+	},
+	async requestModifyResultReportToDjango(
+		id,
+		payload,
+		userToken
+	): Promise<void> {
+		const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+
+		try {
+			await djangoAxiosInst.post("/report/modify", {
+				id: id,
+				modifiedReport: payload,
+				userToken: userToken,
+			});
+		} catch (error) {
+			console.error(
+				"requestModifyResultReportToDjango() axios 오류!",
+				error
+			);
+		}
+	},
 		} catch (error) {
 			console.error(
 				"requestResultReportListToDjango() axios 오류!",
