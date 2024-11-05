@@ -56,7 +56,7 @@
                 <div class="rightbox_title">
                     <div class="rightbox_title_area">
                         <span>Commit List</span>
-                        <v-btn @click="Refresh" icon class="Refresh"><v-icon>mdi-cloud-refresh</v-icon></v-btn>
+                        <v-btn @click="Refresh" class="Refresh"><v-icon class="refresh-icon">mdi-cloud-refresh</v-icon></v-btn>
                     </div>
                     <div class="rightbox_title_btn-area">
                         <v-btn @click="example" class="example_btn">
@@ -841,27 +841,23 @@ export default defineComponent({
 .app-container {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 100vw;
     height: calc(100vh - var(--navigation-bar-height));
 }
 
 .container {
     display: flex;
-    height: 100%;
-    width: 100%;
+    height: calc(100vh - var(--navigation-bar-height));
+    width: 100vw;
 }
 
 /* 왼쪽 box */
 .leftbox {
     position: relative;
-    width: 50%;
-    /* 왼쪽 박스의 너비를 75%로 설정 */
+    width: 50vw;
     height: 92.6vh;
-    /* 왼쪽 박스의 높이를 100%로 설정 (화면 전체 높이) */
     background-color: #1c1c1c;
-    /* 왼쪽 박스의 배경색을 파란색으로 설정 */
-    border-right: 3px solid #ffffff;
-    /* 오른쪽에 두께 3px의 노란색 테두리 추가 */
+    border-right: 0.5vh solid #ffffff;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -871,19 +867,17 @@ export default defineComponent({
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 95%;
-    height: 10%;
-    font-size: 30px;
-    /* 폰트 크기를 30px로 설정 */
-    /* color: rgba(204, 159, 1); */
+    width: 47vw;
+    height: 10vh;
+    font-size: 3.5vh;
 }
 
 .leftbox_title_btn-area {
-    width: 15%;
-    height: 100%;
+    width: 8vw;
+    height: 10vh;
     display: flex;
-    align-items: left;
-    padding-bottom: 3%;
+    align-items: center;
+    justify-content: center;
 }
 
 .leftbox_title span {
@@ -891,35 +885,34 @@ export default defineComponent({
     font-family: "Playfair Display", serif;
     font-style: normal;
     font-weight: bold;
-    width: 30%;
-    height: 100%;
+    width: 30vw;
+    height: 5vh;
     display: flex;
     align-items: center;
-    /* justify-content: center; */
 }
 
 .backlog-list-container {
     overflow: auto;
-    width: 99%;
-    height: 82.3vh;
+    width: 49vw;
+    height: 81.5vh;
     background-color: #2f2f2f;
 }
 
 .backlog-list-container::-webkit-scrollbar {
-    width: 10px;
+    width: 0.7vw;
 }
 
 .backlog-list-container::-webkit-scrollbar-thumb {
     background-color: black;
-    border-radius: 10px;
+    border-radius: 1vw;
     background-clip: padding-box;
-    border: 2px solid transparent;
+    border: 0.15vw solid transparent;
 }
 
 .backlog-list-container::-webkit-scrollbar-track {
     background-color: grey;
-    border-radius: 10px;
-    box-shadow: inset 0px 0px 5px white;
+    border-radius: 1vw;
+    box-shadow: inset 0px 0px 0.5vw white;
 }
 
 .mb-2 {
@@ -928,29 +921,34 @@ export default defineComponent({
 
 /* 오른쪽 box */
 .rightbox {
-    width: 50%;
+    width: 50vw;
     height: 92.6vh;
     background-color: #1c1c1c;
 }
 
 .rightbox_title {
-    width: 95%;
-    height: 10%;
+    width: 49vw;
+    height: 10vh;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-left: 20px;
-    font-size: 30px;
+    padding-left: 1.3vw;
+    padding-right: 1.3vw;
+    font-size: 3.5vh;
 }
 
 .rightbox_title_area {
     display: flex;
-    gap: 10px;
+    /* flex-direction: column; */
+    align-items: center;
+    gap: 0.5vw;
+    height: 5vh;
 }
 
 .rightbox_title_btn-area {
     display: flex;
-    gap: 20px;
+    height: 5vh;
+    gap: 0.8vw;
 }
 
 .left-aligned-timeline {
@@ -964,10 +962,10 @@ export default defineComponent({
     transform: translateX(0);
 }
 
-.left-aligned-timeline .v-timeline-item__body {
-    margin-left: 20px;
+/* .left-aligned-timeline .v-timeline-item__body { */
+    /* margin-left: 20px; */
     /* 구분선과 카드 내용 사이의 여백 설정 */
-}
+/* } */
 
 .rightbox_title span {
     color: rgb(255, 240, 30);
@@ -978,22 +976,26 @@ export default defineComponent({
 
 
 .rightbox-content {
-    width: 100%;
-    height: 90%;
+    width: 49vw;
+    height: 83vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .select-container-area {
     display: flex;
     justify-content: center;
-    width: 100%;
-    height: 10%;
+    width: 49vw;
+    height: 9vh;
 }
 
 .select-container {
-    width: 96%;
-    height: 100%;
+    width: 47vw;
+    height: 9vh;
     display: flex;
-    gap: 20px;
+    gap: 1vw;
     color: rgb(255, 255, 255);
 }
 
@@ -1001,11 +1003,11 @@ export default defineComponent({
     flex: 1;
 }
 
-.repository,
+/* .repository,
 .branch,
 .branches {
     width: 100%;
-}
+} */
 
 
 /* 커밋리스트 나오는 v-card 설정 */
@@ -1013,29 +1015,29 @@ export default defineComponent({
     background-color: #2F2F2F;
     color: #B4B4B4;
     overflow: auto;
-    width: 99%;
-    height: 73.6vh;
-    margin: 4px;
+    width: 48vw;
+    height: 71vh;
+    margin: 1vh;
 }
 
 .commit-list-container::-webkit-scrollbar,
 .report-container::-webkit-scrollbar {
-    width: 10px;
+    width: 0.7vw;
 }
 
 .commit-list-container::-webkit-scrollbar-thumb,
 .report-container::-webkit-scrollbar-thumb {
     background-color: black;
-    border-radius: 10px;
+    border-radius: 1vw;
     background-clip: padding-box;
-    border: 2px solid transparent;
+    border: 0.15vw solid transparent;
 }
 
 .commit-list-container::-webkit-scrollbar-track,
 .report-container::-webkit-scrollbar-track {
     background-color: grey;
-    border-radius: 10px;
-    box-shadow: inset 0px 0px 5px white;
+    border-radius: 1vw;
+    box-shadow: inset 0px 0px 0.5vw white;
 }
 
 .fade-in {
@@ -1110,12 +1112,14 @@ export default defineComponent({
 
 .backlog-btn {
     font-weight: bold;
-    border-radius: 50px;
+    font-size: 0.9vw;
+    border-radius: 2vw;
     transition: all 0.3s ease;
     color: white;
-    border: 1px solid white;
+    border: 0.15vw solid white;
     background-color: transparent;
-    margin-top: 20px;
+    width: 7vw;
+    height: 2vw;  
 }
 
 :disabled.backlog-btn {
@@ -1123,42 +1127,56 @@ export default defineComponent({
     cursor: not-allowed;
 }
 
-.Refresh {
+.v-btn.Refresh{
     background-color: transparent;
-    color: white;
-    /* 아이콘 색상을 흰색으로 설정 */
-    font-size: 20px;
+    width: 1.8vw;
+    height: 1.8vw;
+    padding: 0;
 }
+
+.refresh-icon {
+    font-size: 1.8vw;
+    color: white;
+}
+
 
 .example_btn {
     background-color: rgb(255, 255, 255);
-    padding: 5px 10px;
+    padding: 0 0.4vw 0 0.4vw;
     border: none;
     cursor: pointer;
-    font-size: 14 px;
+    font-size: 0.8vw;
     font-weight: bold;
     border-radius: 50px;
     transition: all 0.3s ease;
     color: white;
-    border: 1px solid white;
+    border: 0.15vw solid white;
     background-color: transparent;
+    width: 7vw;
+    height: 2vw;
 }
 
 .Report-btn {
+    padding: 0 0.5vw 0 0.5vw;
+    font-size: 0.8vw;
     font-weight: bold;
     border-radius: 50px;
     transition: all 0.3s ease;
     color: white;
-    border: 1px solid white;
+    border: 0.15vw solid white;
     background-color: transparent;
+    width: 7vw;
+    height: 2vw;    
 }
 
 .commitlist-btn {
+    padding: 0 0.4vw 0 0.4vw;
+    font-size: 0.8vw;
     font-weight: bold;
     border-radius: 50px;
     transition: all 0.3s ease;
     color: white;
-    border: 1px solid white;
+    border: 0.15vw solid white;
     background-color: transparent;
 }
 
