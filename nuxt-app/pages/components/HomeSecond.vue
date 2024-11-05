@@ -1,7 +1,6 @@
 <template>
   <div class="home-second">
     <div class="home-second-body">
-      <div class="margin-box"></div>
       <div class="title-container">
         <p class="title">AI를 활용하여 업무의 효율을 높이는 세상.</p>
         <p class="sub-title"><span class="NOODLE-span">NOODLE</span>이 고객에게 경험시켜드리고자 하는 것은 바로 이런 편리함입니다.</p>
@@ -131,17 +130,13 @@ export default defineComponent({
   color: #ffffff;
 }
 
-.margin-box {
-  height: 10vh;
-}
-
 .title {
-  font-size: 60px;
+  font-size: 6vh;
   font-weight: bold;
 }
 
 .sub-title {
-  font-size: 25px;
+  font-size: 2.5vh;
   font-weight: bold;
 }
 
@@ -179,7 +174,7 @@ export default defineComponent({
 
 .content-title p {
   color: #ffffff;
-  font-size: 25px;
+  font-size: 2.5vh;
   font-weight: bold;
 }
 
@@ -220,38 +215,43 @@ export default defineComponent({
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0.5) 50%,
-      rgb(0, 0, 0, 0.7) 60%,
-      rgb(0, 0, 0, 0.8) 70%,
-      rgb(0, 0, 0, 0.9) 80%,
-      rgb(0, 0, 0, 1) 90%,
-      rgb(0, 0, 0, 1) 100%);
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.5) 40%,
+    rgba(0, 0, 0, 0.7) 50%,
+    rgba(0, 0, 0, 0.8) 60%,
+    rgba(0, 0, 0, 0.9) 70%,
+    rgba(0, 0, 0, 1) 80%
+  );
 }
 
 .text-container {
   position: absolute;
-  top: 130px;
-  left: 20px;
-  right: 0;
-  padding: 15px;
+  top: 70%;
+  left: 5%;
+  right: 5%;
+  transform: translateY(-50%);
+  padding: 2vh;
   z-index: 2;
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 2vh;
 }
 
 .image-card-title {
   color: #fff;
-  font-size: 23px;
+  font-size: 2.3vh;
   font-weight: bold;
+  margin-bottom: 1vh;
 }
 
 .image-card-text p {
   color: #fff;
-  font-size: 16px;
+  font-size: 1.6vh;
   margin: 0;
-  line-height: 1.4;
+  line-height: 1.6;
+  opacity: 0.9;
 }
 
 .v-img {
