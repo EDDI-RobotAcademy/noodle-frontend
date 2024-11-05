@@ -23,6 +23,9 @@
                 <v-list-item @click="goToResultReport">
                   <v-list-item-title :class="menuItemClass">RESULT REPORT</v-list-item-title>
                 </v-list-item>
+                <v-list-item @click="goToMeetingRecorder">
+                  <v-list-item-title :class="menuItemClass">MEETING RECORDER</v-list-item-title>
+                </v-list-item>
                 <v-list-item @click="goToReview">
                   <v-list-item-title :class="menuItemClass">REVIEW</v-list-item-title>
                 </v-list-item>
@@ -99,6 +102,9 @@ export default defineComponent({
     }
     function goToResultReport() {
       router.push('/resultReport/list')
+    }
+    function goToMeetingRecorder() {
+      router.push('/meeting-recorder')
     }
     function goToReview() {
       router.push('/review/list/1')
