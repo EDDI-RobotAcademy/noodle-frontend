@@ -1,6 +1,6 @@
 <template>
 
-    <body bgcolor="black" style="height:95vh">
+    <body bgcolor="black" style="height:101%">
         <v-container class="my-auto pa-0" max-width="900">
             <br />
             <v-card class="main-card mx-auto my-auto pa-6" outlined elevation="4" rounded>
@@ -27,8 +27,8 @@
                     <v-btn color="#ffffff" large @click="goToList">목록</v-btn>
                 </v-col>
                 <v-col cols="auto">
-                    <v-btn color="red" large @click="deleteReport" :disabled="isActive == false">삭제</v-btn>
-                    <v-btn color="#FFF01E" large @click="editReport" :disabled="isActive == false">수정</v-btn>
+                    <v-btn color="red" large @click="deleteReport" :disabled="isActive != true">삭제</v-btn>
+                    <v-btn color="#FFF01E" large @click="editReport" :disabled="isActive != true">수정</v-btn>
                 </v-col>
             </v-row>
         </v-container>
@@ -84,7 +84,8 @@ export default defineComponent({
             router.push(`/resultReport/list`)
         }
         async function deleteReport() {
-            resultReportStore.requestDeleteResultReportToDjango(route.params.id, localStorage.getItem('userToken'))
+            await resultReportStore.requestDeleteResultReportToDjango(route.params.id, localStorage.getItem('userToken'))
+            router.push(`/resultReport/list`)
         }
         function editReport() {
             router.push(`/resultReport/modify/${route.params.id}`)
