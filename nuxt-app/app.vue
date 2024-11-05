@@ -160,8 +160,8 @@ export default defineComponent({
 
 /* 전역 변수 */
 :root {
-  --navigation-bar-height: 70px;
-  --navigation-bar-scrolled-height: 50px;
+  --navigation-bar-height: clamp(70px, 8vh, 90px);
+  --navigation-bar-scrolled-height: clamp(50px, 6vh, 70px);
 }
 
 /* 1. v-app-bar 기본 스타일 */
@@ -193,7 +193,7 @@ export default defineComponent({
   font-family: "Playfair Display", serif;
   font-style: normal;
   font-weight: bold;
-  font-size: 30px;
+  font-size: clamp(24px, 3.5vh, 32px);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   transform-origin: left center;
 }
@@ -220,7 +220,7 @@ export default defineComponent({
   font-family: "Playfair Display", serif;
   font-style: normal;
   font-weight: bold;
-  font-size: 25px;
+  font-size: clamp(18px, 2.8vh, 28px);
   position: relative;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -254,7 +254,7 @@ export default defineComponent({
   font-family: "Playfair Display", serif !important;
   font-style: normal;
   font-weight: bold;
-  font-size: 16px;
+  font-size: clamp(14px, 2vh, 20px);
 }
 
 :deep(.menu-default .v-list-item:hover) {
@@ -264,8 +264,8 @@ export default defineComponent({
 /* 7. 구분선 */
 .separator {
   color: #ffffff;
-  font-size: 20px;
-  margin: 0 10px;
+  font-size: clamp(16px, 2.5vh, 24px);
+  margin: 0 clamp(8px, 1vh, 12px);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -282,19 +282,19 @@ export default defineComponent({
 /* 홈 버튼 */
 .navigationbar.scrolled .goToHomeButton {
   color: rgb(255, 240, 30) !important;
-  font-size: 25px;
+  font-size: clamp(20px, 3vh, 28px);
 }
 
 /* 메뉴 버튼 */
 .navigationbar.scrolled .btn-text {
   /* color: rgba(0, 0, 0, 0.9) !important; */
-  font-size: 20px;
+  font-size: clamp(16px, 2.3vh, 24px);
 }
 
 /* 구분선 */
 .navigationbar.scrolled .separator {
   /* color: rgba(0, 0, 0, 0.9) !important; */
-  font-size: 16px;
+  font-size: clamp(14px, 2vh, 20px);
 }
 
 /* 스크롤 시 드롭다운 메뉴 */
@@ -308,7 +308,7 @@ export default defineComponent({
   font-family: "Playfair Display", serif !important;
   font-style: normal;
   font-weight: bold;
-  font-size: 16px;
+  font-size: clamp(14px, 2vh, 20px);
 }
 
 :deep(.menu-scrolled .v-list-item:hover) {
