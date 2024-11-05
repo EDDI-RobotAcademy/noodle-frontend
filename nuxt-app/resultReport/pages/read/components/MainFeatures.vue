@@ -1,7 +1,7 @@
 <template>
   <v-card-text>
     <h2 class="text-h5 mb-4">주요 기능</h2>
-    <v-list dense>
+    <v-list rounded outlined elevation="8" dense class="features-list">
       <v-list-item v-for="(feature, index) in features" :key="index">
         <v-list-item-content>
           <v-list-item-title>{{ feature }}</v-list-item-title>
@@ -24,3 +24,10 @@ export default defineComponent({
   }
 })
 </script>
+
+<style>
+.features-list {
+  background-color: #525252;
+  color: #ffffff;
+}
+</style>

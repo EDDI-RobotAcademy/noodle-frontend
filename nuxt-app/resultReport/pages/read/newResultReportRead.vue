@@ -1,30 +1,33 @@
 <template>
-    <v-container class="pa-0">
-        <v-card class="mx-auto" max-width="1000">
-            <ProjectTitle :projectTitle="projectTitle" />
-            <TeamMember :teamMembers="teamMembers" />
-            <v-divider></v-divider>
-            <TechStack :techStack="techStack" />
-            <v-divider></v-divider>
-            <MainFeatures :features="features" />
-            <v-divider></v-divider>
-            <UsagePlans :usagePlans="usagePlans" />
-            <v-divider></v-divider>
-            <ReportImprovements :reportImprovements="reportImprovements" />
-            <v-divider></v-divider>
-            <CompletionRates :completionRates="completionRates" :completionFeedback="completionFeedback" :size="size"
-                :strokeWidth="strokeWidth" />
-        </v-card>
+    <body bgcolor="black">
+        <v-container class="my-auto pa-0" max-width="900">
+            <br/>
+            <v-card class="main-card mx-auto my-auto pa-6" outlined elevation="4" rounded>
+                <ProjectTitle :projectTitle="projectTitle" />
+                <TeamMember :teamMembers="teamMembers" />
+                <v-divider></v-divider>
+                <TechStack :techStack="techStack" />
+                <v-divider></v-divider>
+                <MainFeatures :features="features" />
+                <v-divider></v-divider>
+                <UsagePlans :usagePlans="usagePlans" />
+                <v-divider></v-divider>
+                <ReportImprovements :reportImprovements="reportImprovements" />
+                <v-divider></v-divider>
+                <CompletionRates :completionRates="completionRates" :completionFeedback="completionFeedback" :size="size"
+                    :strokeWidth="strokeWidth" />
+            </v-card>
 
-        <v-row justify="space-between" class="mt-4 mx-0">
-            <v-col cols="auto">
-                <v-btn color="primary" large @click="goToList">목록</v-btn>
-            </v-col>
-            <v-col cols="auto">
-                <v-btn color="secondary" large disabled @click="editReport">수정</v-btn>
-            </v-col>
-        </v-row>
-    </v-container>
+            <v-row justify="space-between" class="mt-4 mx-0">
+                <v-col cols="auto">
+                    <v-btn color="#ffffff" large @click="goToList">목록</v-btn>
+                </v-col>
+                <v-col cols="auto">
+                    <v-btn color="#FFF01E" large disabled @click="editReport">수정</v-btn>
+                </v-col>
+            </v-row>
+        </v-container>
+    </body>
 </template>
 
 <script>
@@ -102,7 +105,6 @@ export default defineComponent({
             completionFeedback,
             size,
             strokeWidth,
-
             goToList,
             editReport,
         }
@@ -127,5 +129,11 @@ export default defineComponent({
 
 .table {
     table-layout: fixed;
+}
+
+.main-card {
+    background-color: #333333;
+    border-radius: 12px;
+    color: #ffffff;
 }
 </style>
