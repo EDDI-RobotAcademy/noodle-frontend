@@ -23,7 +23,7 @@
 <script>
 import AOS from 'aos'
 import 'aos/dist/aos.css';
-import { defineComponent, getCurrentInstance, onMounted } from 'vue';
+import { defineComponent, getCurrentInstance, onMounted, ref, nextTick } from 'vue';
 import RecentReport from './RecentReport.vue';
 import ScrollAnimation from './ScrollAnimation.vue';
 
@@ -77,9 +77,9 @@ export default defineComponent({
 <style scoped>
 .home-main-body {
   background-image: url('/fixed/main.png');
-  background-size: auto 100%;
-  background-position: 0% center;
-  background-repeat: repeat-x;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   animation: moveBackgroundX 30s linear infinite;
   display: flex;
   align-items: center;
@@ -105,7 +105,6 @@ export default defineComponent({
   flex-direction: column;
   justify-content: center;
   height: 72.5vh;
-  /* height: 100vh; */
   width: 40%;
   margin-left: 10%;
   margin-top: 20vh;
@@ -115,28 +114,27 @@ export default defineComponent({
   height: 30vh;
   width: 100%;
   text-align: left;
-  /* margin-bottom: 0; */
 }
 
 .main-title {
   color: rgb(255, 240, 30);
-  font-size: 140px;
+  font-size: 8vw;
   animation: fadeDown 0.8s ease-out;
-  line-height: 0.8;
+  line-height: 1;
   margin: 0;
   padding: 0;
 }
 
 .sub-title {
   color: #ffffff;
-  font-size: 60px;
+  font-size: 3.5vw;
   margin: 0;
   padding: 0;
 }
 
 .sub-introduce {
   color: #ffffff;
-  font-size: 16px;
+  font-size: 1.2rem;
   margin: 0;
   padding: 0;
 }
@@ -207,7 +205,7 @@ export default defineComponent({
 
 .scrollanimation {
   position: absolute;
-  bottom: 30px;
+  bottom: 5vh;
   left: 50%;
   transform: translateX(-50%);
   animation: bounce 6s ease 0s infinite;
@@ -227,6 +225,64 @@ export default defineComponent({
   5%,
   15% {
     transform: translateY(-10px);
+  }
+}
+
+@media (max-width: 1200px) {
+  .content-area {
+    width: 60%;
+    margin-left: 5%;
+  }
+
+  .main-title {
+    font-size: 10vw;
+  }
+
+  .sub-title {
+    font-size: 4vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .content-area {
+    width: 80%;
+    margin-left: 5%;
+  }
+
+  .main-title {
+    font-size: 12vw;
+  }
+
+  .sub-title {
+    font-size: 5vw;
+  }
+
+  .sub-introduce {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .content-area {
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 10vh;
+  }
+
+  .main-title {
+    font-size: 14vw;
+  }
+
+  .sub-title {
+    font-size: 6vw;
+  }
+
+  .sub-introduce {
+    font-size: 0.9rem;
+  }
+
+  .scrollanimation {
+    bottom: 3vh;
   }
 }
 </style>

@@ -3,7 +3,7 @@
     <div style="color: #ffffff" class="active-title">최근 보고서</div>
     <v-row>
       <v-col v-for="report in recentReports" :key="report.id" cols="12" sm="6">
-        <v-card style="border-radius: 15px 15px 15px 15px;" @click="goToReport(report.id)" color="#1f1f1f">
+        <v-card style="border-radius: 15px;" @click="goToReport(report.id)" color="#1f1f1f">
           <v-img 
               src="/public/fixed/python_logo.png"
               style="position: absolute; top: 50%; left: 0; transform: translateY(-50%);"
@@ -55,8 +55,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.title-area {
-  display: none;
+.half-width {
+  width: 40%;
+  height: auto;
+  overflow-y: visible;
 }
 
 .active-title {
@@ -69,7 +71,6 @@ export default defineComponent({
   border-radius: 15px 15px 0px 0px;
   margin-bottom: 16px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-
 }
 
 .inactive-title {
@@ -227,5 +228,49 @@ h2 {
 .section2 {
   width: 30%;
   overflow: hidden;
+}
+
+
+
+@media (max-width: 1200px) {
+  .half-width {
+    width: 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  .half-width {
+    width: 100%;
+  }
+
+  .report-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .v-col {
+    sm: 12;
+  }
+
+  .report-image {
+    position: static;
+    transform: none;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .active-title {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+
+  .report-title {
+    font-size: 16px;
+  }
+
+  .function {
+    font-size: 12px;
+  }
 }
 </style>
