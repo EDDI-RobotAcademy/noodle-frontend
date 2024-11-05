@@ -5,17 +5,20 @@ import { ActionContext } from "vuex"
 import { REQUEST_MEETING_LIST_TO_DJANGO } from "./mutation-types"
 
 export type MeetingActions = {
-    requestMeetingListToDjango(context: ActionContext<MeetingState, any>): Promise<void>
+    requestMeetingListToDjango(context: ActionContext<MeetingState, any>, payload: { userToken: string, page: number | null, perPage: number | null }): Promise<any>
     requestMeetingToDjango(context: ActionContext<MeetingState, any>, meetingId: number): Promise<void>
     requestDeleteMeetingToDjango(context: ActionContext<MeetingState, unknown>, meetingId: number): Promise<void>
 }
 
 const actions: MeetingActions = {
-    async requestMeetingListToDjango(context: ActionContext<MeetingState, any>): Promise<void> {
+    async requestMeetingListToDjango(context: ActionContext<MeetingState, any>, payload: { userToken: string, page: number | null, perPage: number | null }): Promise<any> {
+        const { userToken, page, perPage } = payload
+
         try {
-            const res: AxiosResponse<any, any> = await axiosInst.djangoAxiosInst.get('/meeting-recording-summary/list')
-            const data: Meeting[]= res.data
-            context.commit(REQUEST_MEETING_LIST_TO_DJANGO, data)
+            const res: AxiosResponse<any, any> = await axiosInst.djangoAxiosInst.post('/meeting-recording-summary/list', {userToken: userToken, page: page, perPage: perPage})
+            const data: any[]= res.data
+            // context.commit(REQUEST_MEETING_LIST_TO_DJANGO, data)
+            return data
         }catch(error){
             console.error('requestMeetingListToDjango(): '+ error)
             throw error
