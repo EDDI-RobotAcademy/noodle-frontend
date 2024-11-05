@@ -155,12 +155,12 @@ export default defineComponent({
 }
 
 .number-icon {
-  font-size: 40px;
+  font-size: 4vh;
   font-weight: bold;
   color: #080808;
   background-color: #ffffff;
-  width: 50px;
-  height: 50px;
+  width: 5vh;
+  height: 5vh;
   border-radius: 60px;
   display: flex;
   justify-content: center;
@@ -169,20 +169,19 @@ export default defineComponent({
 }
 
 .text-title {
-  font-size: 50px;
+  font-size: 5vh;
   font-weight: bold;
   color: #ffffff;
 }
 
 .text-subtitle {
-  font-size: 22px;
+  font-size: 2.3vh;
   font-weight: bold;
   color: #ffffff;
 }
 
 .text-content {
-  font-size: 20px;
-  /* font-weight: bold; */
+  font-size: 2.2vh;
   color: #ffffff;
 }
 

@@ -39,15 +39,15 @@ export default defineComponent({
 }
 
 .footer-logo-area {
-  width: 100px;
-  height: 100px;
+  width: 12vh;
+  height: 12vh;
   justify-content: center;
   align-items: center;
 }
 
 .footer-noodle-logo {
-  width: 100px;
-  height: 100px;
+  width: 12vh;
+  height: 12vh;
 }
 
 .footer-content {
@@ -56,7 +56,40 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   color: #ffffff;
-  font-size: 15px;
+  font-size: 1.8vh;
   font-weight: bold;
+  gap: 0.5vh;
+}
+
+@media screen and (max-width: 768px) {
+  .footer-content {
+    font-size: 1.5vh;
+  }
+  
+  .footer-logo-area {
+    width: 10vh;
+    height: 10vh;
+  }
+  
+  .footer-noodle-logo {
+    width: 10vh;
+    height: 10vh;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .footer-content {
+    font-size: 1.2vh;
+  }
+  
+  .footer-logo-area {
+    width: 8vh;
+    height: 8vh;
+  }
+  
+  .footer-noodle-logo {
+    width: 8vh;
+    height: 8vh;
+  }
 }
 </style>
