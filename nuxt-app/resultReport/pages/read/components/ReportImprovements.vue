@@ -4,7 +4,7 @@
     <v-list dense rounded outlined elevation="8" class="improvements-list">
       <v-list-item v-for="(improvement, index) in reportImprovements" :key="index">
         <v-list-item-content>
-          <v-list-item-title>{{ improvement }}</v-list-item-title>
+          <v-list-item>{{ improvement }}</v-list-item>
         </v-list-item-content>
       </v-list-item>
     </v-list>

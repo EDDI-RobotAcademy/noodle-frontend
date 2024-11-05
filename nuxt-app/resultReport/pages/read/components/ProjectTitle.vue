@@ -1,5 +1,5 @@
 <template>
-  <v-card-title class="text-h4 font-weight-bold text-center pa-4">
+  <v-card-title class="text-h5 font-weight-bold text-center pa-4 no-truncate">
     {{ projectTitle }}
   </v-card-title>
 </template>
@@ -17,3 +17,10 @@ export default defineComponent({
   }
 })
 </script>
+
+<style scoped>
+.no-truncate {
+  white-space: nowrap;
+  overflow: visible;
+}
+</style>

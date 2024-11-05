@@ -27,7 +27,8 @@
                     <v-btn color="#ffffff" large @click="goToList">목록</v-btn>
                 </v-col>
                 <v-col cols="auto">
-                    <v-btn color="#FFF01E" large @click="editReport">수정</v-btn>
+                    <v-btn color="red" large @click="deleteReport" :disabled="isActive == false">삭제</v-btn>
+                    <v-btn color="#FFF01E" large @click="editReport" :disabled="isActive == false">수정</v-btn>
                 </v-col>
             </v-row>
         </v-container>
@@ -47,6 +48,7 @@ import CompletionRates from './components/CompletionRates.vue'
 import OverView from './components/OverView.vue'
 import { useResultReportStore } from '../../stores/resultReportStore';
 import { useRoute, useRouter } from 'vue-router';
+import { marked } from 'marked'
 
 
 export default defineComponent({
@@ -76,9 +78,13 @@ export default defineComponent({
         const completionFeedback = ref([])
         const size = ref(120)
         const strokeWidth = ref(10)
+        const isActive = ref(false)
 
         function goToList() {
             router.push(`/resultReport/list`)
+        }
+        async function deleteReport() {
+            resultReportStore.requestDeleteResultReportToDjango(route.params.id, localStorage.getItem('userToken'))
         }
         function editReport() {
             router.push(`/resultReport/modify/${route.params.id}`)
@@ -87,7 +93,7 @@ export default defineComponent({
         onMounted(async () => {
             const response = await resultReportStore.requestResultReportToDjango(Number(route.params.id));
             projectTitle.value = response.title
-            // overview.value = response.overview
+            overview.value = response.overview
             for (let i = 0; i < response.teamMemberList.length; i++) {
                 teamMembers.value.push({ department: response.teamMemberList[i][2], name: response.teamMemberList[i][0], role: response.teamMemberList[i][1] })
             }
@@ -95,14 +101,16 @@ export default defineComponent({
             features.value = response.featureList
             usagePlans.value = JSON.parse(response.usage.replace(/'/g, '"'))
             reportImprovements.value = response.improvementList
+            console.log(response.completionList[0][0])
             completionRates.value = [
-                { label: response.completionList[0][0], rate: response.completionList[0][1], color: response.completionList[0][3] },
-                { label: response.completionList[1][0], rate: response.completionList[1][1], color: response.completionList[1][3] },
-                { label: response.completionList[2][0], rate: response.completionList[2][1], color: response.completionList[2][3] },
+                { label: response.completionList[0][0], rate: response.completionList[0][1], color: response.completionList[0][1] >= 80 ? 'green' : response.completionList[0][1] >= 60 ? 'yellow' : 'red' },
+                { label: response.completionList[1][0], rate: response.completionList[1][1], color: response.completionList[1][1] >= 80 ? 'green' : response.completionList[1][1] >= 60 ? 'yellow' : 'red' },
+                { label: response.completionList[2][0], rate: response.completionList[2][1], color: response.completionList[2][1] >= 80 ? 'green' : response.completionList[2][1] >= 60 ? 'yellow' : 'red' },
             ]
             for (let i = 0; i < response.completionList.length; i++) {
-                completionFeedback.value.push(response.completionList[i][2])
+                completionFeedback.value.push(marked(response.completionList[i][2]))
             }
+            isActive.value = await resultReportStore.requestUserValidationToDjango(Number(route.params.id), localStorage.getItem('userToken'))
         })
 
         return {
@@ -117,9 +125,11 @@ export default defineComponent({
             completionFeedback,
             size,
             strokeWidth,
+            isActive,
 
             goToList,
             editReport,
+            deleteReport,
         }
     }
 })

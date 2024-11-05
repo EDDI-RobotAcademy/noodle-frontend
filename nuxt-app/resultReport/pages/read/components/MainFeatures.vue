@@ -4,7 +4,7 @@
     <v-list rounded outlined elevation="8" dense class="features-list">
       <v-list-item v-for="(feature, index) in features" :key="index">
         <v-list-item-content>
-          <v-list-item-title>{{ feature }}</v-list-item-title>
+          <div v-html="feature" class="markdown-preview mt-4"></div>
         </v-list-item-content>
       </v-list-item>
     </v-list>
