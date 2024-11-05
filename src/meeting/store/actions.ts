@@ -6,7 +6,7 @@ import { REQUEST_MEETING_LIST_TO_DJANGO } from "./mutation-types"
 
 export type MeetingActions = {
     requestMeetingListToDjango(context: ActionContext<MeetingState, any>, payload: { userToken: string, page: number | null, perPage: number | null }): Promise<any>
-    requestMeetingToDjango(context: ActionContext<MeetingState, any>, meetingId: number): Promise<void>
+    requestMeetingToDjango(context: ActionContext<MeetingState, any>, meetingId: number): Promise<any>
     requestDeleteMeetingToDjango(context: ActionContext<MeetingState, unknown>, meetingId: number): Promise<void>
 }
 
@@ -24,11 +24,11 @@ const actions: MeetingActions = {
             throw error
         }
     },
-    async requestMeetingToDjango(context: ActionContext<MeetingState, any>, meetingId: number): Promise<void> {
+    async requestMeetingToDjango(context: ActionContext<MeetingState, any>, meetingId: number): Promise<any> {
         try {
             const res: AxiosResponse<Meeting> = await axiosInst.djangoAxiosInst.get(`/meeting-recording-summary/read/${meetingId}`);
-        console.log('data:', res.data)
-        context.commit('REQUEST_MEETING_TO_DJANGO', res.data)
+            console.log('data:', res.data)
+            return res.data
         } catch (error) {
             console.error('requestMeetingToDjango() 문제 발생:', error)
             throw error
