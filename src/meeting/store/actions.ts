@@ -13,7 +13,7 @@ export type MeetingActions = {
 const actions: MeetingActions = {
     async requestMeetingListToDjango(context: ActionContext<MeetingState, any>): Promise<void> {
         try {
-            const res: AxiosResponse<any, any> = await axiosInst.djangoAxiosInst.get('/meeting/list')
+            const res: AxiosResponse<any, any> = await axiosInst.djangoAxiosInst.get('/meeting-recording-summary/list')
             const data: Meeting[]= res.data
             context.commit(REQUEST_MEETING_LIST_TO_DJANGO, data)
         }catch(error){
@@ -23,7 +23,7 @@ const actions: MeetingActions = {
     },
     async requestMeetingToDjango(context: ActionContext<MeetingState, any>, meetingId: number): Promise<void> {
         try {
-            const res: AxiosResponse<Meeting> = await axiosInst.djangoAxiosInst.get(`/meeting/read/${meetingId}`);
+            const res: AxiosResponse<Meeting> = await axiosInst.djangoAxiosInst.get(`/meeting-recording-summary/read/${meetingId}`);
         console.log('data:', res.data)
         context.commit('REQUEST_MEETING_TO_DJANGO', res.data)
         } catch (error) {
@@ -34,7 +34,7 @@ const actions: MeetingActions = {
     async requestDeleteMeetingToDjango(context: ActionContext<MeetingState, unknown>, meetingId: number): Promise<void>{
         try {
             console.log('requestDeleteMeetingToDjango()')
-            await axiosInst.djangoAxiosInst.delete(`/meeting/delete/${meetingId}`)
+            await axiosInst.djangoAxiosInst.delete(`/meeting-recording-summary/delete/${meetingId}`)
         } catch (error) {
             console.log('requestDeleteMeetingToDjango() 과정에서 문제 발생')
             throw error

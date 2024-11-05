@@ -2,29 +2,64 @@
   <div class="app-container">
     <h1 class="header">🎄 <span class="gradient-text">회의록</span> 🎄</h1>
     <div class="meeting-minutes">
-      <div v-for="record in meetingRecords" :key="record.id" class="record">
+      <div v-for="record in meetingRecords" :key="record.id" class="record"
+        @click="readRow($event, { item: record})">
         <span class="id">{{ record.id }}</span>
         <span class="title">{{ record.title }}</span>
         <span class="userName">{{ record.userName }}</span>
         <span class="regDate">{{ record.regDate }}</span>
       </div>
     </div>
+
+    <v-pagination
+      v-model="pagination.page"
+      :length="totalPages"
+      color="primary"
+      class="pagination"
+      @input="fetchMeetings"></v-pagination>
   </div>
 </template>
 
 <script>
+import { toRaw } from 'vue'
+import { mapActions} from 'vuex'
+const meetingModule = 'meetingModule'
+
 export default {
+  async mounted() {
+    await this.fetchMeetings()
+  },
+  methods: {
+    ...mapActions(meetingModule, ['requestMeetingListToDjango']),
+    readRow (event, { item }) {
+      this.$router.push({
+        name: 'MeetingReadPage',
+        params: { meetingId: item['meetingId'].toString() }
+      })
+    },
+    async fetchMeetings() {
+      const { page } = this.pagination
+      // const searchQuery = this.searchQuery.trim()
+
+      const payload = { page, perPage: this.perPage }
+      console.log('payload:', payload)
+      try {
+        const res = await this.requestMeetingListToDjango(payload)
+        console.log('fetchMeetings() res:', res)
+        this.meetings = toRaw(res.meetings)
+        this.totalPages = Math.ceil(res.totalCount / this.perPage)
+      } catch (error) {
+        console.error('데이터 로드 중 오류 발생:', error)
+      }
+    }
+  },
   data() {
     return {
-      meetingRecords: [
-        { id: 1, title: '3주차 스크럼', userName: '한재혁', regDate: '2024-10-08' },
-        { id: 2, title: '3주차 스크럼', userName: '김지민', regDate: '2024-10-09' },
-        { id: 3, title: '3주차 스크럼', userName: '이민재', regDate: '2024-10-10' },
-        { id: 4, title: '3주차 스크럼', userName: '이현석', regDate: '2024-10-11' },
-        { id: 5, title: '집에 가고 싶다', userName: '박윤서', regDate: '2024-10-11' },
-        { id: 6, title: '4주차 스크럼', userName: '김지민', regDate: '2024-10-14' },
-        { id: 7, title: '4주차 스크럼', userName: '최인헌', regDate: '2024-10-15' },
-      ],
+      meetings: [],
+      perPage: 5,
+      pagination: {
+        page: 1
+      }
     };
   }
 };
@@ -93,5 +128,16 @@ export default {
 .regDate { 
   width: 25%;
   color: #ffd700;
+}
+
+.title {
+  width: 40%;
+  color: #ffd700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.title:hover {
+  text-decoration: underline;
 }
 </style>
