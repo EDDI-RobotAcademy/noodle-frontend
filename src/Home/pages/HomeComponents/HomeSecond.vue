@@ -23,8 +23,7 @@
                   <p>GitHub 연동</p>
                 </div>
                 <div class="image-card-text">
-                  <p>GitHub와 연동을 통해 별도의 회원가입 없이</p>
-                  <p>GitHub 아이디만으로 프로젝트를 관리할 수 있습니다.</p>
+                  <p>GitHub와 연동을 통해 별도의 회원가입 없이 GitHub 아이디만으로 프로젝트를 관리할 수 있습니다.</p>
                 </div>
               </div>
             </div>
