@@ -1,12 +1,12 @@
 <template>
 
-    <body bgcolor="black" style="height:92.6vh">
+    <body bgcolor="black" style="height:95vh">
         <v-container class="my-auto pa-0" max-width="900">
             <br />
             <v-card class="main-card mx-auto my-auto pa-6" outlined elevation="4" rounded>
                 <ProjectTitle :projectTitle="projectTitle" />
                 <v-divider></v-divider>
-                <v-card-text>{{ overview }}</v-card-text>
+                <OverView :overview="overview" />
                 <v-divider></v-divider>
                 <TeamMember :teamMembers="teamMembers" />
                 <v-divider></v-divider>
@@ -44,6 +44,7 @@ import MainFeatures from './components/MainFeatures.vue'
 import UsagePlans from './components/UsagePlans.vue'
 import ReportImprovements from './components/ReportImprovements.vue'
 import CompletionRates from './components/CompletionRates.vue'
+import OverView from './components/OverView.vue'
 import { useResultReportStore } from '../../stores/resultReportStore';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -56,7 +57,8 @@ export default defineComponent({
         MainFeatures,
         UsagePlans,
         ReportImprovements,
-        CompletionRates
+        CompletionRates,
+        OverView,
     },
     setup() {
         const router = useRouter();
@@ -85,7 +87,7 @@ export default defineComponent({
         onMounted(async () => {
             const response = await resultReportStore.requestResultReportToDjango(Number(route.params.id));
             projectTitle.value = response.title
-            overview.value = response.overview
+            // overview.value = response.overview
             for (let i = 0; i < response.teamMemberList.length; i++) {
                 teamMembers.value.push({ department: response.teamMemberList[i][2], name: response.teamMemberList[i][0], role: response.teamMemberList[i][1] })
             }
