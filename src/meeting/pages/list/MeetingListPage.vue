@@ -6,7 +6,7 @@
         @click="readRow($event, { item: record})">
         <span class="id">{{ record.id }}</span>
         <span class="title">{{ record.title }}</span>
-        <span class="userName">{{ record.userName }}</span>
+        <span class="userName">{{ record.writer }}</span>
         <span class="regDate">{{ record.regDate }}</span>
       </div>
     </div>
