@@ -18,7 +18,12 @@ export default {
     return {
       meetingRecords: [
         { id: 1, title: '3주차 스크럼', userName: '한재혁', regDate: '2024-10-08' },
-        { id: 2, title: '집에 가고 싶다', userName: '박윤서', regDate: '2024-11-01' },
+        { id: 2, title: '3주차 스크럼', userName: '김지민', regDate: '2024-10-09' },
+        { id: 3, title: '3주차 스크럼', userName: '이민재', regDate: '2024-10-10' },
+        { id: 4, title: '3주차 스크럼', userName: '이현석', regDate: '2024-10-11' },
+        { id: 5, title: '집에 가고 싶다', userName: '박윤서', regDate: '2024-10-11' },
+        { id: 6, title: '4주차 스크럼', userName: '김지민', regDate: '2024-10-14' },
+        { id: 7, title: '4주차 스크럼', userName: '최인헌', regDate: '2024-10-15' },
       ],
     };
   }
