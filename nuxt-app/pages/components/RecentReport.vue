@@ -57,29 +57,31 @@ export default defineComponent({
 <style scoped>
 .half-width {
   width: 40%;
-  height: auto;
-  overflow-y: visible;
+  height: 80vh;
+  overflow-y: auto;
+  max-width: 800px;
+  min-width: 300px;
 }
 
 .active-title {
   display: inline-block;
   background-color: #1f1f1f;
   color: #333;
-  font-size: 14px;
+  font-size: 2vh;
   font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 15px 15px 0px 0px;
-  margin-bottom: 16px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1vh 1.5vh;
+  border-radius: 2vh 2vh 0 0;
+  margin-bottom: 2vh;
+  box-shadow: 0 0.1vh 0.3vh rgba(0, 0, 0, 0.1);
 }
 
 .inactive-title {
-  width: 100px;
-  height: 30px;
+  width: 12vh;
+  height: 4vh;
   background-color: #f0d0d0;
-  margin-right: 10px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  margin-right: 1.5vh;
+  border-top-left-radius: 1.5vh;
+  border-top-right-radius: 1.5vh;
 }
 
 h2 {
@@ -93,18 +95,18 @@ h2 {
 }
 
 .image-container {
-  width: 80px;
+  width: 10vh;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 16px;
+  margin-right: 2vh;
   flex-shrink: 0;
 }
 
 .image {
-  width: 80px;
-  height: 80px;
+  width: 10vh;
+  height: 10vh;
   background-color: #f0f0f0;
 }
 
@@ -131,33 +133,37 @@ h2 {
 }
 
 .report-title {
-  font-size: 18px;
+  font-size: 2.5vh;
   font-weight: bold;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding-top: 0.4vh;
+  margin-top: 0.3vh;
 }
 
 .function {
-  font-size: 14px;
+  font-size: 1.8vh;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .v-card {
-  height: 100%;
+  height: 20vh;
   cursor: pointer;
   transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+  border-radius: 2vh;
 }
 
 .v-card:hover {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  transform: translateY(-5px);
+  transform: translateY(-0.7vh);
 }
 
 .open-btn {
   display: none;
+  border-radius: 6vh;
 }
 
 .section1,
@@ -189,6 +195,8 @@ h2 {
   width: 40%;
   height: auto;
   overflow-y: visible;
+  max-width: 800px;
+  min-width: 300px;
 }
 
 .report-title,
@@ -235,12 +243,16 @@ h2 {
 @media (max-width: 1200px) {
   .half-width {
     width: 50%;
+    max-width: 600px;
   }
 }
 
 @media (max-width: 768px) {
   .half-width {
     width: 100%;
+    height: 60vh;
+    max-width: 500px;
+    margin: 0 auto;
   }
 
   .report-content {
@@ -255,22 +267,42 @@ h2 {
   .report-image {
     position: static;
     transform: none;
-    margin-bottom: 10px;
+    margin-bottom: 1.5vh;
+  }
+
+  .v-card {
+    height: 15vh;
+  }
+
+  .report-title {
+    font-size: 2.2vh;
+  }
+
+  .function {
+    font-size: 1.6vh;
   }
 }
 
 @media (max-width: 480px) {
   .active-title {
-    font-size: 12px;
-    padding: 4px 8px;
+    font-size: 1.8vh;
+    padding: 0.6vh 1.2vh;
   }
 
   .report-title {
-    font-size: 16px;
+    font-size: 2vh;
   }
 
   .function {
-    font-size: 12px;
+    font-size: 1.4vh;
+  }
+
+  .half-width {
+    height: 50vh;
+  }
+
+  .v-card {
+    height: 12vh;
   }
 }
 </style>
