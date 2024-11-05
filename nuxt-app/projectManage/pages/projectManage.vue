@@ -56,7 +56,8 @@
                 <div class="rightbox_title">
                     <div class="rightbox_title_area">
                         <span>Commit List</span>
-                        <v-btn @click="Refresh" class="Refresh"><v-icon class="refresh-icon">mdi-cloud-refresh</v-icon></v-btn>
+                        <v-btn @click="Refresh" class="Refresh"><v-icon
+                                class="refresh-icon">mdi-cloud-refresh</v-icon></v-btn>
                     </div>
                     <div class="rightbox_title_btn-area">
                         <v-btn @click="example" class="example_btn">
@@ -595,11 +596,11 @@ export default defineComponent({
                 })
                 improvements.value = [resultReport.value.improvementList || '']
                 completionRates.value.push(
-                    { label: '보안', rate: resultReport.value.completionList[0][0], color: 'red' },
-                    { label: '유지보수', rate: resultReport.value.completionList[1][0], color: 'green' },
-                    { label: '전체', rate: resultReport.value.completionList[2][0], color: 'blue' } || null)
+                    { label: '보안', rate: resultReport.value.completionList[0][0], color: resultReport.value.completionList[0][0] >= 80 ? 'green' : resultReport.value.completionList[0][0] >= 60 ? 'yellow' : 'red' },
+                    { label: '유지보수', rate: resultReport.value.completionList[1][0], color: resultReport.value.completionList[1][0] >= 80 ? 'green' : resultReport.value.completionList[0][0] >= 60 ? 'yellow' : 'red' },
+                    { label: '전체', rate: resultReport.value.completionList[2][0], color: resultReport.value.completionList[2][0] >= 80 ? 'green' : resultReport.value.completionList[0][0] >= 60 ? 'yellow' : 'red' } || null)
                 for (let i = 0; i < resultReport.value.completionList.length; i++) {
-                    completionFeedback.value.push((marked(resultReport.value.completionList[i][1]) || []))
+                    completionFeedback.value.push(marked(resultReport.value.completionList[i][1]) || [])
                 }
             } else {
                 alert("ai 생성 서버의 응답이 없습니다! 잠시 후 다시 시도해주세요")
@@ -752,7 +753,6 @@ export default defineComponent({
                 completionList: resultReport.value.completionList,
                 userToken: localStorage.getItem('userToken')
             }
-            console.log(payload)
             const resultReportId = await resultReportStore.requestCreateResultReportToDjango(payload)
             router.push(`/resultReport/read/${resultReportId.id}`)
         }
@@ -963,8 +963,8 @@ export default defineComponent({
 }
 
 /* .left-aligned-timeline .v-timeline-item__body { */
-    /* margin-left: 20px; */
-    /* 구분선과 카드 내용 사이의 여백 설정 */
+/* margin-left: 20px; */
+/* 구분선과 카드 내용 사이의 여백 설정 */
 /* } */
 
 .rightbox_title span {
@@ -1119,7 +1119,7 @@ export default defineComponent({
     border: 0.15vw solid white;
     background-color: transparent;
     width: 7vw;
-    height: 2vw;  
+    height: 2vw;
 }
 
 :disabled.backlog-btn {
@@ -1127,7 +1127,7 @@ export default defineComponent({
     cursor: not-allowed;
 }
 
-.v-btn.Refresh{
+.v-btn.Refresh {
     background-color: transparent;
     width: 1.8vw;
     height: 1.8vw;
@@ -1166,7 +1166,7 @@ export default defineComponent({
     border: 0.15vw solid white;
     background-color: transparent;
     width: 7vw;
-    height: 2vw;    
+    height: 2vw;
 }
 
 .commitlist-btn {

@@ -1,14 +1,53 @@
 import * as axiosUtility from "../../utility/axiosInstance";
-import { useResultReportStore } from "./resultReportStore";
+// import { useResultReportStore } from "./resultReportStore";
 
 export const resultReportActions = {
-	async requestResultReportListToDjango(): Promise<void> {
+	async requestUserValidationToDjango(id, userToken): Promise<void> {
 		const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
-		const resultReportStore = useResultReportStore();
 
 		try {
-			const response = await djangoAxiosInst.get("/report/list");
-			resultReportStore.resultReportList = response.data;
+			const response = await djangoAxiosInst.post("/report/validate", {
+				id,
+				userToken,
+			});
+			return response.data;
+		} catch (error) {
+			console.error("requestUserValidationToDjango() axios 오류!", error);
+		}
+	},
+	async requestModifyResultReportToDjango(
+		id,
+		payload,
+		userToken
+	): Promise<void> {
+		const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+
+		try {
+			await djangoAxiosInst.post("/report/modify", {
+				id: id,
+				modifiedReport: payload,
+				userToken: userToken,
+			});
+		} catch (error) {
+			console.error(
+				"requestModifyResultReportToDjango() axios 오류!",
+				error
+			);
+		}
+	},
+	async requestResultReportListToDjango(payload): Promise<void> {
+		const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+		// const resultReportStore = useResultReportStore();
+
+		try {
+			const { page, perPage, SQ } = payload;
+			const response = await djangoAxiosInst.post("/report/list", {
+				query: SQ,
+				page: page,
+				perPage: perPage,
+			});
+			const data = response.data;
+			return data;
 		} catch (error) {
 			console.error(
 				"requestResultReportListToDjango() axios 오류!",
@@ -20,41 +59,46 @@ export const resultReportActions = {
 		const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
 
 		try {
-			const response = await djangoAxiosInst.get(
-				`/report/read/${resultReportId}`
-			);
-			return response.data;
+			const response = await djangoAxiosInst.post(`/report/read`, {
+				resultReportId: resultReportId,
+			});
+			return response.data.data;
 		} catch (error) {
 			console.error("requestResultReportToDjango() 문제 발생:", error);
 		}
 	},
-	async requestDeleteResultReportToDjango(resultReportId): Promise<void> {
+	async requestDeleteResultReportToDjango(
+		resultReportId,
+		userToken
+	): Promise<void> {
 		const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
 
 		try {
-			const response = await djangoAxiosInst.delete(
-				`/report/delete/${resultReportId}`
-			);
+			await djangoAxiosInst.post(`/report/delete`, {
+				resultReportId,
+				userToken,
+			});
 		} catch (error) {
 			console.error(
 				"requestDeleteResultReportToDjango() 과정에서 문제 발생"
 			);
 		}
 	},
-	async requestCreateResultReportToDjango(
-		title,
-		overview,
-		teamMemberList,
-		skillList,
-		featureList,
-		usage,
-		improvementList,
-		completionList,
-		userToken
-	): Promise<void> {
+	async requestCreateResultReportToDjango(payload): Promise<void> {
 		const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
 
 		try {
+			const {
+				title,
+				overview,
+				teamMemberList,
+				skillList,
+				featureList,
+				usage,
+				improvementList,
+				completionList,
+				userToken,
+			} = payload;
 			const response = await djangoAxiosInst.post("/report/create", {
 				title,
 				overview,
@@ -66,7 +110,7 @@ export const resultReportActions = {
 				completionList,
 				userToken,
 			});
-			return response.data;
+			return response.data.data;
 		} catch (error) {
 			alert("requestCreateResultReportToDjango() 문제 발생");
 		}

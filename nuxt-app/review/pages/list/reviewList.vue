@@ -2,7 +2,7 @@
   <v-container class="review-body" fluid>
     <div class="review-header">
       <h2>REVIEW</h2>
-   <!-- 리뷰 작성 버튼 -->
+      <!-- 리뷰 작성 버튼 -->
       <div class="create-review-btn">
         <NuxtLink to="/review/register">
           <NuxtButton type="button" class="gotoregister-btn">
@@ -14,21 +14,14 @@
 
     <!-- 리뷰 목록 테이블 -->
     <div class="review-table-container">
-      <v-data-table v-model:items-per-page.sync="perPage" 
-      :headers="headerTitle" 
-      :items="pagedItems"
-      :pagination.sync="pagination" 
-      class="elevation-1 review-table" 
-      @click:row="readRow" 
-      item-value="reviewId"
-      :items-per-page-options="perPageOptions" 
-      :pageText="prompt" 
-      :loading="isLoading" />
+      <v-data-table v-model:items-per-page.sync="perPage" :headers="headerTitle" :items="pagedItems"
+        :pagination.sync="pagination" class="elevation-1 review-table" @click:row="readRow" item-value="reviewId"
+        :items-per-page-options="perPageOptions" :pageText="prompt" :loading="isLoading" />
     </div>
 
     <!-- 페이지네이션 -->
-      <v-pagination v-model="pagination" :length="totalPages" color="white" @input="updateItems" :total-visible="5"
-        class="pagination-bar" />
+    <v-pagination v-model="pagination" :length="totalPages" color="white" @input="updateItems" :total-visible="5"
+      class="pagination-bar" />
   </v-container>
 </template>
 
@@ -87,7 +80,7 @@ export default defineComponent({
       reviewList.value = await reviewStore.requestEntireReviewListCount()
       const payload = { pagination: page, perPage: perPage.value }
       pagedItems.value = await reviewStore.requestReviewListToDjango(payload)
-      prompt.value = `${perPage.value * (page - 1) + 1}- ${perPage.value * (page - 1) + pagedItems.length} of ${reviewList.value}`
+      prompt.value = `${perPage.value * (page - 1) + 1}- ${perPage.value * (page - 1) + pagedItems.value.length} of ${reviewList.value}`
       isLoading.value = false
     })
 
@@ -157,7 +150,8 @@ h2 {
 }
 
 .create-review-btn a {
-  text-decoration: none;  /* 버튼에 생기는 밑줄 제거 */
+  text-decoration: none;
+  /* 버튼에 생기는 밑줄 제거 */
 }
 
 .create-review-btn .gotoregister-btn:hover {
@@ -185,7 +179,8 @@ h2 {
   font-size: 28px !important;
   font-weight: bold !important;
   border-bottom: 3px solid #000000 !important;
-  height: 250% !important;  /* th 높이 설정 */
+  height: 250% !important;
+  /* th 높이 설정 */
   line-height: 250% !important;
   font-family: 'Noto Sans KR', sans-serif !important;
 }
