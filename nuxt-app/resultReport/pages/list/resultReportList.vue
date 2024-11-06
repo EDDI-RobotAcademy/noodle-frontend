@@ -1,43 +1,43 @@
 <template>
   <v-container class="report-list-body" fluid>
-    <div class="search-container">
-      <v-card class="search-card" max-width="500">
-        <v-text-field class="searchbox" v-model="searchQuery" label="검색어를 입력하세요" v-on:keyup.enter="fetchResultReports"
-          append-icon="mdi-magnify" @click:append="fetchResultReports" clearable></v-text-field>
-      </v-card>
-    </div>
     <v-row justify="center">
       <v-col cols="12" class="report-list-area">
-        <h1>Report List</h1>
-        <!-- v-for를 pageItems로 변경 -->
-        <v-card v-for="report in resultReports" :key="report.resultReportId" class="custom-card-spacing"
-          @click="readRow($event, { item: report })">
-          <div class="report-content">
-            <div class="image">
-
-            </div>
-            <div class="section1">
-              <v-card-title class="department">
-                <p>{{ report.creatorDepartment }}</p>
-              </v-card-title>
-              <v-card-title class="report-title">
-                <p class="report-link">{{ report.resultReportTitle }}</p>
-              </v-card-title>
-            </div>
-            <div class="section2">
-              <v-card-text>
-                <p class="member">담당자: {{ report.creator }}</p>
-                <div v-html="report.resultReportFeature" class="function" style="color: black">
-                </div>
-              </v-card-text>
-            </div>
-            <div class="open-button">
-              <v-btn class="open-btn">Open</v-btn>
-            </div>
+        <div class="search-container">
+          <div>
+            <h1>Report List</h1>
           </div>
-        </v-card>
+          <div>
+            <v-card class="search-card" max-width="500">
+              <v-text-field class="searchbox" v-model="searchQuery" label="검색어를 입력하세요"
+                v-on:keyup.enter="fetchResultReports" append-icon="mdi-magnify" @click:append="fetchResultReports"
+                clearable></v-text-field>
+            </v-card>
+          </div>
+        </div>
+          <v-card v-for="report in resultReports" :key="report.resultReportId" class="custom-card-spacing"
+            @click="readRow($event, { item: report })">
+            <div class="report-content">
+              <div class="section1">
+                <div class="image"></div>
+              </div>
+              <div class="section2">
+                <!-- <v-card-title class="department">
+                  <p>{{ report.creatorDepartment }}</p>
+                </v-card-title> -->
+                <v-card-title class="report-title">
+                  <p class="report-link">{{ report.resultReportTitle }}</p>
+                  <p class="member">담당자: {{ report.creator }}</p>
+                  <div v-html="report.resultReportFeature" class="function scrollable-content"
+                    style="color: black; font-size:10px;">
+                  </div>
+                </v-card-title>
+              </div>
+              <div class="section3">
+                <v-btn class="open-btn">Open</v-btn>
+              </div>
+            </div>
+          </v-card>
 
-        <!-- 페이지네이션 업데이트 -->
         <v-pagination v-model="pagination.page" :length="totalPages" color="primary" class="pagination"
           @input="fetchResultReports"></v-pagination>
       </v-col>
@@ -55,61 +55,47 @@ export default defineComponent({
     const resultReportStore = useResultReportStore();
     const router = useRouter();
 
-    const resultReports = ref([])
-    const headerTitle = ref([
-      { title: 'No', align: 'start', sortable: true, key: 'resultReportId' },
-      { title: '제목', align: 'end', key: 'title' },
-      { title: '작성자', align: 'end', key: 'writer' },
-      { title: '작성일자', align: 'end', key: 'regDate' },
-    ])
-    const perPage = ref(5)
+    const resultReports = ref([]);
+    const perPage = ref(5);
     const pagination = ref({
       page: 1
-    })
-    const searchQuery = ref('')
-    const totalPages = ref(null)
+    });
+    const searchQuery = ref('');
+    const totalPages = ref(null);
 
     async function fetchResultReports() {
-      const page = pagination.value.page
-      searchQuery.value = searchQuery.value.trim()
-      const SQ = searchQuery.value
-      const payload = { page, perPage: perPage.value, SQ }
+      const page = pagination.value.page;
+      searchQuery.value = searchQuery.value.trim();
+      const SQ = searchQuery.value;
+      const payload = { page, perPage: perPage.value, SQ };
       try {
-        const response = await resultReportStore.requestResultReportListToDjango(payload)
-        resultReports.value = toRaw(response.resultReports)
-        totalPages.value = Math.ceil(response.totalCount / perPage.value)
+        const response = await resultReportStore.requestResultReportListToDjango(payload);
+        resultReports.value = toRaw(response.resultReports);
+        totalPages.value = Math.ceil(response.totalCount / perPage.value);
       } catch (error) {
-        console.error('데이터 로드 중 오류 발생:', error)
+        console.error('데이터 로드 중 오류 발생:', error);
       }
     }
-    function pageItems() {
-      const startIdx = (pagination.value - 1) * perPage.value
-      const endIdx = startIdx + perPage.value
-      return resultReports.value.slice(startIdx, endIdx)
-    }
+
     function readRow(event, { item }) {
-      router.push(`/resultReport/read/${item.resultReportId}`)
+      router.push(`/resultReport/read/${item.resultReportId}`);
     }
 
     onMounted(async () => {
-      await fetchResultReports()
-    })
+      await fetchResultReports();
+    });
 
     return {
       resultReports,
-      headerTitle,
       perPage,
       pagination,
       searchQuery,
       totalPages,
-
       readRow,
-      pageItems,
       fetchResultReports
-    }
-
+    };
   }
-})
+});
 </script>
 
 <style scoped>
@@ -124,7 +110,6 @@ export default defineComponent({
 }
 
 .report-list-area {
-  padding-top: 2%;
   width: 70%;
   margin: 0 auto;
   flex: none !important;
@@ -150,64 +135,97 @@ h1 {
   margin-left: 0;
 }
 
+.report-link {
+  margin: 0;
+  color: #000;
+  font-size: 18px;
+}
+
 .report-content {
   display: flex;
-  align-items: center;
+  flex-direction: row;
   justify-content: space-between;
+  align-items: stretch;
+  height: 150px;
+  /* v-card의 고정된 높이 */
 }
 
 .image {
-  width: 100px;
-  height: 90px;
+  width: 150px;
+  height: 150px;
   background-color: #f0f0f0;
+  flex-shrink: 0;
 }
 
 .department {
   font-size: 13px;
   color: #8f8f8f;
-  padding-bottom: 0;
+  margin: 0;
 }
 
 .report-title {
-  font-size: 25px;
+  font-size: 20px;
   font-weight: bold;
-  padding-top: 3px;
-  padding-bottom: 0px;
-  margin-top: 2px;
   color: #000000;
 }
 
 .member {
   font-size: 13px;
   color: #8f8f8f;
-  padding-bottom: 0;
-  margin-bottom: 5px;
+  margin: 0;
 }
 
 .function {
-  font-size: 20px;
+  white-space: normal;
+  /* 텍스트가 자동으로 줄 바꿈되게 함 */
+  word-wrap: break-word;
+  /* 긴 단어가 있을 경우 줄 바꿈 */
+  word-break: break-word;
+  /* 긴 단어를 강제로 잘라서 줄 바꿈 */
+  overflow-wrap: break-word;
+  /* 줄 바꿈을 강제함 */
+  font-size: 16px;
   color: #000000;
-  padding-top: 3px;
-  padding-bottom: 0;
-  margin-top: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex-grow: 1;
+  margin-top: 10px;
 }
 
-.open-button {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  margin-right: 40px;
+.scrollable-content {
+  max-height: 100px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.open-btn {
+  align-self: center;
+  border-radius: 50px;
 }
 
 .section1 {
-  width: 25%;
-  align-items: center;
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+  flex-shrink: 0;
+  justify-content: flex-start;
 }
 
 .section2 {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  flex-grow: 1;
+  justify-content: flex-start;
+  /* 남은 공간을 채우기 위해 flex-grow 사용 */
+}
+
+.section3 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  height: 100%;
 }
 
 .v-card {
@@ -232,14 +250,13 @@ h1 {
 }
 
 .custom-card-spacing {
-  margin-bottom: 25px;
+  margin-top: 10px;
 }
 
 .search-container {
   width: 100%;
   display: flex;
-  justify-content: flex-end;
-  padding-right: 15%;
+  justify-content: space-between;
   padding-top: 1%;
 }
 
@@ -247,22 +264,10 @@ h1 {
   width: 500px;
 }
 
-/* .v-text-field >>> .v-input__append-inner {
-  cursor: pointer;
-  color: #666;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 80px;
-  min-width: 48px;
-} */
-
 .v-text-field>>>.v-input__append-inner:hover {
   color: #000;
 }
 
-/* 추가: 아이콘 컨테이너 자체의 정렬 */
 .v-text-field>>>.v-input__append-inner .v-icon {
   display: flex;
   align-items: center;
@@ -271,7 +276,6 @@ h1 {
   margin: auto;
 }
 
-/* 추가: append 영역 전체 높이 설정 */
 .v-text-field>>>.v-input__append {
   height: 100%;
   width: 50px;
