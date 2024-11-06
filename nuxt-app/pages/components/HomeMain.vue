@@ -1,5 +1,6 @@
 <template>
   <div class="home-main-body">
+    <div class="background-image"></div>
     <div class="content-area">
       <div class="title-area">
         <transition name="fade-down">
@@ -19,11 +20,10 @@
     <ScrollAnimation class="scrollanimation" :class="{ 'fade-in': showElements }" @click="goToHomeSecond" />
   </div>
 </template>
-
 <script>
 import AOS from 'aos'
 import 'aos/dist/aos.css';
-import { defineComponent, getCurrentInstance, onMounted, ref, nextTick } from 'vue';
+import { defineComponent, getCurrentInstance, onMounted, ref, nextTick, onUnmounted } from 'vue';
 import RecentReport from './RecentReport.vue';
 import ScrollAnimation from './ScrollAnimation.vue';
 
@@ -40,6 +40,8 @@ export default defineComponent({
     const typedText = ref('')
     const typeIndex = ref(0)
     const showElements = ref(false)
+    const rotationAngle = ref(0)
+    let animationFrameId = null
 
     function typeText() {
       if (typeIndex.value < fullText.value.length) {
@@ -57,8 +59,24 @@ export default defineComponent({
       emit('scroll-to-home-second')
     }
 
+    function animate() {
+      rotationAngle.value = (rotationAngle.value + 0.02) % 360
+      const backgroundImage = document.querySelector('.background-image')
+      if (backgroundImage) {
+        backgroundImage.style.transform = `translateX(-50%) rotate(${rotationAngle.value}deg)`
+      }
+      animationFrameId = requestAnimationFrame(animate)
+    }
+
     onMounted(() => {
       typeText()
+      animate()
+    })
+
+    onUnmounted(() => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId)
+      }
     })
 
     return {
@@ -66,6 +84,7 @@ export default defineComponent({
       typedText,
       typeIndex,
       showElements,
+      rotationAngle,
 
       typeText,
       goToHomeSecond
@@ -76,11 +95,7 @@ export default defineComponent({
 
 <style scoped>
 .home-main-body {
-  background-image: url('/fixed/main.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  animation: moveBackgroundX 30s linear infinite;
+  background-color: black;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -90,17 +105,23 @@ export default defineComponent({
   position: relative;
 }
 
-@keyframes moveBackgroundX {
-  0% {
-    background-position: 0% center;
-  }
-
-  100% {
-    background-position: 100% center;
-  }
+.background-image {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) rotate(0deg);
+  width: 50vw;
+  height: 100vh;
+  background-image: url('/fixed/home-background-image.jpg');
+  background-size: 54vw 112vh;
+  background-position: center center;
+  background-repeat: no-repeat;
+  z-index: 0;
 }
 
 .content-area {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
