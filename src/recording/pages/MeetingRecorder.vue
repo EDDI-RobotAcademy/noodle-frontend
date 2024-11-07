@@ -27,7 +27,7 @@
 
           <div
             class="download-button" 
-            v-if="recordingComplete"  
+            v-if="recordingComplete == true"  
             role="button"
             tabindex="0"
             @click="downloadRecording">

@@ -1,186 +1,199 @@
 <template>
-    <v-container class="recoder-container" fluid>
-      <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 70%; height: 100%;">
-        <h1 style="font-size: 40px; width: 100%; min-width: 100%; text-align: center;">고객님의 회의 내용을 <span style="color: rgb(255, 240, 30); font-size: 40px;">NOODLE</span>이 정리해드릴게요.</h1>
-        <v-icon class="recoder-icon" size="280">mdi-text-box-check-outline</v-icon> 
-        <div class="recoder-button-container">
-          <div style="width: 20%; height: 70%; position: relative;">
-              <!-- 녹음 시간 표시 -->
-              <div v-if="isRecording" class="recording-time" style="color: red;">
-                녹음 시간: {{ formatTime(recordingTime) }}
-                <v-progress-circular v-if="isRecording" indeterminate color="red" size="40" class="my-3"></v-progress-circular>
-              </div>
-            <div 
-              :class="['recording-button', isRecording ? 'red' : 'primary']" 
-              @click="toggleRecording"
-              role="button"
-              tabindex="0">
-              <div class="recording-button-icon">
-                <v-icon size="150" :color="isRecording ? 'white' : 'red'">
-                  {{ isRecording ? 'mdi-stop' : 'mdi-microphone-outline' }}
-                </v-icon> 
-              </div>
-              <p class="recording-button-text">{{ isRecording ? '녹음 중지' : '녹음 시작' }}</p>
-            </div>
+  <v-container class="recoder-container" fluid>
+    <div
+      style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 70%; height: 100%;">
+      <h1 style="font-size: 2.8vw; width: 100%; min-width: 100%; text-align: center;">고객님의 회의 내용을 <span
+          style="color: rgb(255, 240, 30); font-size: 3.8vw;">NOODLE</span>이 정리해드릴게요.</h1>
+      <v-icon class="recoder-icon" size="15vw">mdi-text-box-check-outline</v-icon>
+      <div class="recoder-button-container">
+        <div style="width: 20%; height: 70%; position: relative;">
+          <!-- 녹음 시간 표시 -->
+          <div v-if="isRecording == true" class="recording-time" style="color: red;">
+            녹음 시간: {{ formatTime(recordingTime) }}
+            <v-progress-circular v-if="isRecording == true" indeterminate color="red" size="40"
+              class="my-3"></v-progress-circular>
           </div>
-          
-  
-            <div
-              class="download-button" 
-              v-if="recordingComplete"  
-              role="button"
-              tabindex="0"
-              @click="downloadRecording">
-              <div class="download-button-icon">
-                <v-icon size="150">
-                  mdi-download
-                </v-icon> 
-              </div>
-              <p class="download-button-text">녹음 파일 다운로드</p>
+          <div :class="['recording-button', isRecording ? 'red' : 'primary']" @click="toggleRecording" role="button"
+            tabindex="0">
+            <div class="recording-button-icon">
+              <v-icon size="9vw" :color="isRecording ? 'white' : 'red'">
+                {{ isRecording ? 'mdi-stop' : 'mdi-microphone-outline' }}
+              </v-icon>
             </div>
-  
-            <div 
-              class="analysis-button" 
-              v-if="recordingComplete"  
-              role="button"
-              tabindex="0"
-              @click="analyzeRecording">
-              <div class="analysis-button-icon">
-                <v-icon size="150">
-                  mdi-robot
-                </v-icon> 
-              </div>
-              <p class="analysis-button-text">녹음 파일 분석</p>
-            </div>
-  
-            <v-alert v-if="uploadSuccess" type="success" class="mt-3">
-              파일이 S3에 업로드되었습니다!
-            </v-alert>
-            <v-alert v-if="uploadError" type="error" class="mt-3">
-              파일 업로드 중 오류가 발생했습니다.
-            </v-alert>
+            <p class="recording-button-text">{{ isRecording ? '녹음 중지' : '녹음 시작' }}</p>
           </div>
         </div>
-    </v-container>
-  </template>
+
+
+        <div class="download-button" v-if="recordingComplete == true" role="button" tabindex="0"
+          @click="downloadRecording">
+          <div class="download-button-icon">
+            <v-icon size="9vw">
+              mdi-download
+            </v-icon>
+          </div>
+          <p class="download-button-text">녹음 파일 다운로드</p>
+        </div>
+
+        <div class="analysis-button" v-if="recordingComplete == true" role="button" tabindex="0"
+          @click="analyzeRecording">
+          <div class="analysis-button-icon">
+            <v-icon size="9vw">
+              mdi-robot
+            </v-icon>
+          </div>
+          <p class="analysis-button-text">녹음 파일 분석</p>
+        </div>
+
+        <v-alert v-if="uploadSuccess == true" type="success" class="mt-3">
+          파일이 S3에 업로드되었습니다!
+        </v-alert>
+        <v-alert v-if="uploadError == true" type="error" class="mt-3">
+          파일 업로드 중 오류가 발생했습니다.
+        </v-alert>
+      </div>
+    </div>
+  </v-container>
+</template>
 
 <script>
-import { ref } from 'vue';
-import { useRouter } from '#app'
-import { useMeetingRecorderStore } from '../stores/meetingRecorderStore';
-import { s3Client, env } from '../../utility/awsConfig';
+import { createS3Client } from '@/utility/awsConfig.ts'
 import { PutObjectCommand } from '@aws-sdk/client-s3';
+import { useRuntimeConfig } from 'nuxt/app';
+import { defineComponent } from 'vue';
+import { useMeetingRecorderStore } from '../stores/meetingRecorderStore';
 
-const router = useRouter();
-const store = useMeetingRecorderStore();
+export default defineComponent({
+  setup() {
+    const config = useRuntimeConfig();
+    const meetingRecordeStore = useMeetingRecorderStore();
+    const s3Client = createS3Client();
 
-const isRecording = ref(false);
-const recordingComplete = ref(false);
-const recordingTime = ref(0);
-const mediaRecorder = ref(null);
-const audioChunks = ref([]);
-const uploadSuccess = ref(false);
-const uploadError = ref(fales);
-const audioBlob = ref(null);
-const recordingInterval = ref(null);
-const MAX_RECORDING_TIME = 300;
+    const isRecording = ref(false)
+    const recordingComplete = ref(false)
+    const recordingTime = ref(0)
+    const mediaRecorder = ref(null)
+    const audioChunks = ref([])
+    const uploadSuccess = ref(false)
+    const uploadError = ref(false)
+    const audioBlob = ref(null)
+    const recordingInterval = ref(null)
+    const MAX_RECORDING_TIME = ref(300)
+    const meetingRecordingSummary = ref(null)
+    const s3Name = ref(config.public.AWS_S3_BUCKET_NAME)
 
-const startRecording = async () => {
-    try{
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        mediaRecorder.value = new MediaRecorder(stream);
+    async function startRecording() {
+      try {
+        recordingComplete.value = false
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+        mediaRecorder.value = new MediaRecorder(stream)
 
         mediaRecorder.value.ondataavailable = (event) => {
-            audioChunks.value.push(event.data);
-        };
+          audioChunks.value.push(event.data)
+        }
 
         mediaRecorder.value.onstop = () => {
-            audioBlob.value = new Blob(audioChunks.value, { type: 'audio/webm' });
-            recordingComplete.value = true;
-            clearInterval(recordingInterval.value);
-            recordingTime.value = 0;
-        };
+          audioBlob.value = new Blob(audioChunks.value, { type: 'audio/webm' })
+          recordingComplete.value = true
+          clearInterval(recordingInterval.value)
+          recordingTime.value = 0
+        }
 
-        audioChunks.value = [];
-        mediaRecorder.value.start();
-        isRecording.value = true;
+        audioChunks.value = []
+        mediaRecorder.value.start()
+        isRecording.value = true
 
-        // 녹음 시간 업데이트 시작
         recordingInterval.value = setInterval(() => {
-            recordingTime.value += 1;
+          recordingTime.value += 1
 
-            // 최대 시간 도달 시 자동 녹음 중지
-            if (recordingTime.value >= MAX_RECORDING_TIME) {
-                stopRecording();
-            }
-        }, 1000);
-    } catch (error) {
-        console.error('녹음 시작 오류:', error);
+          if (recordingTime.value >= MAX_RECORDING_TIME.value) {
+            stopRecording()
+          }
+        }, 1000)
+      } catch (error) {
+        console.error('녹음 시작 오류! : ', error)
+      }
     }
-};
-
-const stopRecording = () => {
-    if (mediaRecorder.value) {
-        mediaRecorder.value.stop();
+    function stopRecording() {
+      if (mediaRecorder.value != null) {
+        mediaRecorder.value.stop()
+      }
+      isRecording.value = false
+      recordingComplete.value = true
     }
-    isRecording.value = false;
-};
-
-const toggleRecording = () => {
-    if (isRecording.value) {
-        stopRecording();
-    } else {
-        startRecording();
+    function toggleRecording() {
+      if (isRecording.value == true) {
+        stopRecording()
+      } else {
+        startRecording()
+      }
     }
-};
+    function formatTime(time) {
+      const minutes = Math.floor(time / 60).toString().padStart(2, '0')
+      const seconds = (time % 60).toString().padStart(2, '0')
+      return `${minutes}:${seconds}`
+    }
+    function downloadRecording() {
+      if (audioBlob.value == null) {
+        return
+      }
 
-const formatTime = (time) => {
-    const minutes = Math.floor(time / 60).toString().padStart(2, '0');
-    const seconds = (time % 60).toString().padStart(2, '0');
-    return `${minutes}:${seconds}`;
-};
+      const url = URL.createObjectURL(audioBlob.value)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = `meeting_recording_${Date.now()}.webm`
+      link.click()
+      URL.revokeObjectURL(url)
+    }
+    async function analyzeRecording() {
+      if (audioBlob.value == null) return
 
-const downloadRecording = () => {
-    if (!audioBlob.value) return;
+      const fileName = `meeting_recording_${Date.now()}.webm`
+      console.log(s3Name)
 
-    const url = URL.createObjectURL(audioBlob.value);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `meeting_recording_${Date.now()}.webm`;
-    link.click();
-    URL.revokeObjectURL(url);
-};
-
-const analyzeRecording = async () => {
-    console.log('analyzeRecording()');
-    if (!audioBlob.value) return;
-
-    const filename = `meeting_recording_${Date.now()}.webm`;
-
-    const params = {
-        Bucket: env.s3.VUE_APP_AWS_S3_BUCKET_NAME,
+      const params = {
+        Bucket: s3Name.value,
         Key: fileName,
         Body: audioBlob.value,
-        ContentType: 'audio/webm',
-    };
+        ContentType: 'audio/webm'
+      }
+      console.log(params)
 
-    try {
-        console.log('Upload file with params:', params);
-        await s3Client.send(new PutObjectCommand(params));
-        console.log(`Upload ${fileName} to S3 successfully.`);
-        uploadSuccess.value = true;
-    } catch (error) {
-        console.error('Error uploading file:', error);
-        uploadError.value = true;
+      try {
+        await s3Client.send(new PutObjectCommand(params))
+      } catch (error) {
+        console.error('Error uploading file:', error)
+      }
+
+      const userToken = localStorage.getItem('userToken')
+      const payload = { userToken: userToken, fileName: fileName }
+      const response = await meetingRecordeStore.requestGenerateMeetingRecordingSummary(payload)
+      console.log(response)
+      meetingRecordingSummary.value = await meetingRecordeStore.requestGetMeetingRecordingSummary({ userToken: userToken })
     }
 
-    const userToken = localStorage.getItem('userToken');
-    const payload = { userToken: userToken, fileName: fileName };
-    const res = await store.requestGenerateMeetingRecordingSummary(payload);
-    console.log('requestGenerateMeetingRecordingSummary status:', res);
-    const meetingRecordingSummary = await store.requestGetMeetingRecordingSummary(userToken);
-    console.log("meetingRecordingSummary:", meetingRecordingSummary);
-};
+    return {
+      isRecording,
+      recordingComplete,
+      recordingTime,
+      mediaRecorder,
+      audioChunks,
+      uploadSuccess,
+      uploadError,
+      audioBlob,
+      recordingInterval,
+      MAX_RECORDING_TIME,
+      meetingRecordingSummary,
+
+      startRecording,
+      stopRecording,
+      toggleRecording,
+      formatTime,
+      downloadRecording,
+      analyzeRecording,
+    }
+  }
+})
 </script>
 
 <style scoped>
@@ -189,8 +202,8 @@ const analyzeRecording = async () => {
 .recoder-container {
   background-color: #1c1c1c;
   color: white;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 92.6vh;
   display: flex;
   justify-content: center;
   /* align-items: center; */
@@ -209,6 +222,7 @@ const analyzeRecording = async () => {
   justify-content: center;
   gap: 20px;
 }
+
 
 /* recording button 관련*/
 .recording-time {
@@ -262,7 +276,16 @@ const analyzeRecording = async () => {
   color: white !important;
 }
 
-.recording-button-text {
+.recording-button-text,
+.download-button-text,
+.analysis-button-text {
+  font-size: 1.4vw;
+  font-weight: bold;
+  color: black;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+/* .recording-button-text {
   width: 100%;
   height: 30%;
   display: flex;
@@ -272,7 +295,7 @@ const analyzeRecording = async () => {
   font-weight: bold;
   color: black;
   font-family: 'Noto Sans KR', sans-serif
-}
+} */
 
 /* download-button 관련 */
 .download-button {
@@ -304,17 +327,7 @@ const analyzeRecording = async () => {
   color: white !important;
 }
 
-.download-button-text {
-  width: 100%;
-  height: 30%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
-  font-weight: bold;
-  color: black;
-  font-family: 'Noto Sans KR', sans-serif
-}
+
 
 /* analysis-button 관련 */
 .analysis-button {
@@ -344,17 +357,5 @@ const analyzeRecording = async () => {
 
 .analysis-button-icon .v-icon {
   color: white !important;
-}
-
-.analysis-button-text {
-  width: 100%;
-  height: 30%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
-  font-weight: bold;
-  color: black;
-  font-family: 'Noto Sans KR', sans-serif
 }
 </style>
