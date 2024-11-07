@@ -11,7 +11,8 @@ export default defineNuxtConfig({
 		"./survey/nuxt.config.ts",
 		"./backlog/nuxt.config.ts",
 		"./testPayments/nuxt.config.ts",
-		"./subscriptionPayments/nuxt.config.ts"
+		"./subscriptionPayments/nuxt.config.ts",
+		"./recording/nuxt.config.ts"
 	],
 
 	css: ["vuetify/styles", "@mdi/font/css/materialdesignicons.min.css"],
@@ -41,7 +42,8 @@ export default defineNuxtConfig({
 		"~/survey/index.ts",
 		"~/backlog/index.ts",
 		"~/testPayments/index.ts",
-		"~/subscriptionPayments/index.ts"
+		"~/subscriptionPayments/index.ts",
+		"~/recording/index.ts",
 	],
 
 	imports: {
@@ -54,6 +56,11 @@ export default defineNuxtConfig({
 			AI_BASE_URL: process.env.VUE_APP_AI_BASE_URL,
 			TOSS_CLIENT_KEY : process.env.TOSS_CLIENT_KEY,
 			TOSS_SECRET_KEY : process.env.TOSS_SECRET_KEY,
+			AWS_S3_REGION : process.env.VUE_APP_AWS_S3_REGION,
+			AWS_S3_ACCESS_KEY_ID : process.env.VUE_APP_AWS_S3_ACCESS_KEY_ID,
+			AWS_S3_SECRET_ACCESS_KEY : process.env.VUE_APP_AWS_S3_SECRET_ACCESS_KEY,
+			AWS_S3_BUCKET_NAME : process.env.VUE_APP_AWS_S3_BUCKET_NAME,
+			AWS_S3_IDENTITY_POOL_ID : process.env.VUE_APP_AWS_S3_IDENTITY_POOL_ID,
 			// AWS_REGION: process.env.VUE_APP_AWS_REGION,
 			// AWS_S3_IDENTITY_POOL: process.env.VUE_APP_AWS_S3_IDENTITY_POOL_ID,
 		},

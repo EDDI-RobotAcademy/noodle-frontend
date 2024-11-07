@@ -7,8 +7,8 @@ let s3Client: S3Client | null = null;
 export function createS3Client() {
     const config = useRuntimeConfig().public;
 
-    const REGION: string = config.VUE_APP_AWS_S3_REGION as string;
-    const IDENTITY_POOL_ID: string = config.VUE_APP_AWS_S3_IDENTITY_POOL_ID as string;
+    const REGION: string = config.AWS_S3_REGION as string;
+    const IDENTITY_POOL_ID: string = config.AWS_S3_IDENTITY_POOL_ID as string;
 
     if (!REGION || !IDENTITY_POOL_ID) {
         console.log("AWS 환경 변수를 확인하세요.")
