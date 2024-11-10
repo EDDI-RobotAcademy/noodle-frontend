@@ -8,7 +8,8 @@
             style="position: absolute; top: 50%; left: 0; transform: translateY(-50%);" />
           <v-card-text class="report-content">
             <div class="report-info">
-              <v-card-subtitle class="department" style="color: rgb(255, 240, 30)">개발3팀</v-card-subtitle>
+              <v-card-subtitle class="department"
+                style="color: rgb(255, 240, 30)">{{ report.creatorDepartment }}</v-card-subtitle>
               <v-card-title class="report-title" style="color: #ffffff">{{ report.resultReportTitle }}</v-card-title>
               <v-card-subtitle class="member" style="color: rgb(255, 240, 30)">구성원: {{ report.creator
                 }}</v-card-subtitle>
