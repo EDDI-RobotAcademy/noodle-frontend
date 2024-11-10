@@ -14,29 +14,29 @@
             </v-card>
           </div>
         </div>
-          <v-card v-for="report in resultReports" :key="report.resultReportId" class="custom-card-spacing"
-            @click="readRow($event, { item: report })">
-            <div class="report-content">
-              <div class="section1">
-                <div class="image"></div>
-              </div>
-              <div class="section2">
-                <!-- <v-card-title class="department">
+        <v-card v-for="report in resultReports" :key="report.resultReportId" class="custom-card-spacing"
+          @click="readRow($event, { item: report })">
+          <div class="report-content">
+            <div class="section1">
+              <v-img class="image" src="/public/fixed/NOODLE_logo.png"></v-img>
+            </div>
+            <div class="section2">
+              <!-- <v-card-title class="department">
                   <p>{{ report.creatorDepartment }}</p>
                 </v-card-title> -->
-                <v-card-title class="report-title">
-                  <p class="report-link">{{ report.resultReportTitle }}</p>
-                  <p class="member">담당자: {{ report.creator }}</p>
-                  <div v-html="report.resultReportFeature" class="function scrollable-content"
-                    style="color: black; font-size:10px;">
-                  </div>
-                </v-card-title>
-              </div>
-              <div class="section3">
-                <v-btn class="open-btn">Open</v-btn>
-              </div>
+              <v-card-title class="report-title">
+                <p class="report-link">{{ report.resultReportTitle }}</p>
+                <p class="member">담당자: {{ report.creator }}</p>
+                <div v-html="report.resultReportFeature" class="function scrollable-content"
+                  style="color: black; font-size:10px;">
+                </div>
+              </v-card-title>
             </div>
-          </v-card>
+            <div class="section3">
+              <v-btn class="open-btn">Open</v-btn>
+            </div>
+          </div>
+        </v-card>
 
         <v-pagination v-model="pagination.page" :length="totalPages" color="primary" class="pagination"
           @input="fetchResultReports"></v-pagination>
@@ -70,7 +70,7 @@ export default defineComponent({
       const payload = { page, perPage: perPage.value, SQ };
       try {
         const response = await resultReportStore.requestResultReportListToDjango(payload);
-        resultReports.value = toRaw(response.resultReports);
+        resultReports.value = toRaw(response.resultReports.reverse());
         totalPages.value = Math.ceil(response.totalCount / perPage.value);
       } catch (error) {
         console.error('데이터 로드 중 오류 발생:', error);
@@ -153,8 +153,10 @@ h1 {
 .image {
   width: 150px;
   height: 150px;
-  background-color: #f0f0f0;
   flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.5vw;
 }
 
 .department {
@@ -167,12 +169,30 @@ h1 {
   font-size: 20px;
   font-weight: bold;
   color: #000000;
+  width: 100%;
 }
 
 .member {
   font-size: 13px;
   color: #8f8f8f;
   margin: 0;
+}
+
+.function::-webkit-scrollbar {
+  width: 0.4vw;
+}
+
+.function::-webkit-scrollbar-thumb {
+  background-color: black;
+  border-radius: 1vw;
+  background-clip: padding-box;
+  border: 0.15vw solid transparent;
+}
+
+.function::-webkit-scrollbar-track {
+  background-color: grey;
+  border-radius: 1vw;
+  box-shadow: inset 0px 0px 0.5vw white;
 }
 
 .function {

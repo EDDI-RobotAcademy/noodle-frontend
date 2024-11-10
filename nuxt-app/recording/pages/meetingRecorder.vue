@@ -5,6 +5,20 @@
       <h1 style="font-size: 2.8vw; width: 100%; min-width: 100%; text-align: center;">고객님의 회의 내용을 <span
           style="color: rgb(255, 240, 30); font-size: 3.8vw;">NOODLE</span>이 정리해드릴게요.</h1>
       <v-icon class="recoder-icon" size="15vw">mdi-text-box-check-outline</v-icon>
+      <v-container>
+        <v-dialog v-model="showDialog" max-width="500">
+          <v-card>
+            <v-card-title>저장하기 위해 제목을 입력하세요</v-card-title>
+            <v-text-field v-model="title"></v-text-field>
+            <v-card-text>{{ meetingRecordingSummary }}</v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="red" text @click="cancel">취소</v-btn>
+              <v-btn color="green" text @click="saveAction">확인</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-container>
       <div class="recoder-button-container">
         <div style="width: 20%; height: 70%; position: relative;">
           <!-- 녹음 시간 표시 -->
@@ -13,6 +27,10 @@
             <v-progress-circular v-if="isRecording == true" indeterminate color="red" size="40"
               class="my-3"></v-progress-circular>
           </div>
+          <v-progress-circular v-if="isInferencing == true" indeterminate color="yellow" size="40"
+            style="left:42%; top:-10%"></v-progress-circular>
+
+
           <div :class="['recording-button', isRecording ? 'red' : 'primary']" @click="toggleRecording" role="button"
             tabindex="0">
             <div class="recording-button-icon">
@@ -35,14 +53,14 @@
           <p class="download-button-text">녹음 파일 다운로드</p>
         </div>
 
-        <div class="analysis-button" v-if="recordingComplete == true" role="button" tabindex="0"
+        <div class="analysis-button" v-if="recordingComplete == true && userToken != null" role="button" tabindex="0"
           @click="analyzeRecording">
           <div class="analysis-button-icon">
             <v-icon size="9vw">
               mdi-robot
             </v-icon>
           </div>
-          <p class="analysis-button-text">녹음 파일 분석</p>
+          <p class="analysis-button-text">녹음 파일 요약</p>
         </div>
 
         <v-alert v-if="uploadSuccess == true" type="success" class="mt-3">
@@ -60,15 +78,20 @@
 import { createS3Client } from '@/utility/awsConfig.ts'
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { useRuntimeConfig } from 'nuxt/app';
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted } from 'vue';
 import { useMeetingRecorderStore } from '../stores/meetingRecorderStore';
+import { useMeetingStore } from '../../meeting/stores/meetingStore';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
   setup() {
     const config = useRuntimeConfig();
+    const router = useRouter();
     const meetingRecordeStore = useMeetingRecorderStore();
+    const meetingStore = useMeetingStore();
     const s3Client = createS3Client();
 
+    const userToken = ref(null)
     const isRecording = ref(false)
     const recordingComplete = ref(false)
     const recordingTime = ref(0)
@@ -81,6 +104,9 @@ export default defineComponent({
     const MAX_RECORDING_TIME = ref(300)
     const meetingRecordingSummary = ref(null)
     const s3Name = ref(config.public.AWS_S3_BUCKET_NAME)
+    const showDialog = ref(false)
+    const title = ref("")
+    const isInferencing = ref(false)
 
     async function startRecording() {
       try {
@@ -146,10 +172,10 @@ export default defineComponent({
       URL.revokeObjectURL(url)
     }
     async function analyzeRecording() {
+      isInferencing.value = true
       if (audioBlob.value == null) return
 
       const fileName = `meeting_recording_${Date.now()}.webm`
-      console.log(s3Name)
 
       const params = {
         Bucket: s3Name.value,
@@ -167,10 +193,37 @@ export default defineComponent({
 
       const userToken = localStorage.getItem('userToken')
       const payload = { userToken: userToken, fileName: fileName }
-      const response = await meetingRecordeStore.requestGenerateMeetingRecordingSummary(payload)
-      console.log(response)
+      await meetingRecordeStore.requestGenerateMeetingRecordingSummary(payload)
       meetingRecordingSummary.value = await meetingRecordeStore.requestGetMeetingRecordingSummary({ userToken: userToken })
+      isInferencing.value = false
+      showDialog.value = true
     }
+    function cancel() {
+      showDialog.value = false
+    }
+    async function saveAction() {
+      showDialog.value = false
+      const summaryTitle = title.value
+      console.log(summaryTitle)
+      if (summaryTitle != "") {
+        const payload = {
+          userToken: localStorage.getItem('userToken'),
+          title: summaryTitle,
+          content: meetingRecordingSummary.value
+        }
+        const response = await meetingStore.requestRegisterMeetingToDjango(payload)
+        router.push(`/meeting/read/${response.meetingRecordingSummaryId}`)
+
+      } else {
+        alert('제목을 입력하세요!')
+        showDialog.value = true
+      }
+
+    }
+
+    onMounted(() => {
+      userToken.value = localStorage.getItem('userToken')
+    })
 
     return {
       isRecording,
@@ -184,7 +237,13 @@ export default defineComponent({
       recordingInterval,
       MAX_RECORDING_TIME,
       meetingRecordingSummary,
+      showDialog,
+      title,
+      userToken,
+      isInferencing,
 
+      cancel,
+      saveAction,
       startRecording,
       stopRecording,
       toggleRecording,
@@ -246,7 +305,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   cursor: pointer;
   border-radius: 10px;
   transition: all 0.3s;
@@ -279,7 +338,7 @@ export default defineComponent({
 .recording-button-text,
 .download-button-text,
 .analysis-button-text {
-  font-size: 1.4vw;
+  font-size: 1.2vw;
   font-weight: bold;
   color: black;
   font-family: 'Noto Sans KR', sans-serif;
@@ -307,7 +366,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   cursor: pointer;
   border-radius: 10px;
   transition: all 0.3s;
@@ -339,7 +398,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   cursor: pointer;
   border-radius: 10px;
   transition: all 0.3s;

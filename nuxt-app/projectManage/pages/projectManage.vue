@@ -6,7 +6,7 @@
                     <span>Backlog Board</span>
                     <div class="leftbox_title_btn-area">
                         <v-btn v-if="subscribeType != 1 && subscribeType != 2 && subscribeType != 3" size="small"
-                            class="backlog-btn" @click="goToSubscribe">이용권 구매</v-btn>
+                            class="backlog-btn" @click="goToSubscribe" :disabled="userToken == null">이용권 구매</v-btn>
                         <v-btn v-else size="small" class="backlog-btn" @click="createBacklog"
                             :disabled="isAllSelected == false">Backlog 생성</v-btn>
                     </div>
@@ -766,6 +766,7 @@ export default defineComponent({
 
         onMounted(async () => {
             userToken.value = localStorage.getItem('userToken')
+            console.log(userToken.value)
             isCommitListLoading.value = false
             await checkSubsciption()
         })
