@@ -67,7 +67,7 @@ export default defineComponent({
     const searchQuery = ref('')
     const isScrolled = computed(() => {
       if (path.value !== '/') {
-        return true
+        return false
       } else {
         return Yscrolled.value > 50
       }
@@ -147,6 +147,8 @@ export default defineComponent({
       goToGithubLogout,
       goToBacklogBoard,
       goToResultReport,
+      goToMeetingRecorder,
+      goToMeetingReport,
       goToReview,
       goToHome,
       handleScroll,

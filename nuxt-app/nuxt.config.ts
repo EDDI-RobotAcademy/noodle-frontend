@@ -2,7 +2,7 @@ import { defineNuxtConfig } from "nuxt/config";
 
 export default defineNuxtConfig({
 	compatibilityDate: "2024-04-03",
-	devtools: { enabled: true },
+	devtools: { enabled: false },
 	extends: [
 		"./authentication/nuxt.config.ts",
 		"./projectManage/nuxt.config.ts",
@@ -12,7 +12,8 @@ export default defineNuxtConfig({
 		"./backlog/nuxt.config.ts",
 		"./testPayments/nuxt.config.ts",
 		"./subscriptionPayments/nuxt.config.ts",
-		"./recording/nuxt.config.ts"
+		"./recording/nuxt.config.ts",
+		"./meeting/nuxt.config.ts",
 	],
 
 	css: ["vuetify/styles", "@mdi/font/css/materialdesignicons.min.css"],
@@ -22,9 +23,9 @@ export default defineNuxtConfig({
 	},
 
 	vite: {
-    server: {
-			// ws: false,
-			hmr: true,
+		server: {
+			ws: false,
+			hmr: false,
 		},
 		ssr: {
 			noExternal: ["vuetify"], // SSR에서도 Vuetify를 외부 패키지로 처리하지 않도록 설정
@@ -44,6 +45,7 @@ export default defineNuxtConfig({
 		"~/testPayments/index.ts",
 		"~/subscriptionPayments/index.ts",
 		"~/recording/index.ts",
+		"~/meeting/index.ts",
 	],
 
 	imports: {
@@ -54,13 +56,15 @@ export default defineNuxtConfig({
 		public: {
 			MAIN_API_URL: process.env.VUE_APP_BASE_URL,
 			AI_BASE_URL: process.env.VUE_APP_AI_BASE_URL,
-			TOSS_CLIENT_KEY : process.env.TOSS_CLIENT_KEY,
-			TOSS_SECRET_KEY : process.env.TOSS_SECRET_KEY,
-			AWS_S3_REGION : process.env.VUE_APP_AWS_S3_REGION,
-			AWS_S3_ACCESS_KEY_ID : process.env.VUE_APP_AWS_S3_ACCESS_KEY_ID,
-			AWS_S3_SECRET_ACCESS_KEY : process.env.VUE_APP_AWS_S3_SECRET_ACCESS_KEY,
-			AWS_S3_BUCKET_NAME : process.env.VUE_APP_AWS_S3_BUCKET_NAME,
-			AWS_S3_IDENTITY_POOL_ID : process.env.VUE_APP_AWS_S3_IDENTITY_POOL_ID,
+			TOSS_CLIENT_KEY: process.env.TOSS_CLIENT_KEY,
+			TOSS_SECRET_KEY: process.env.TOSS_SECRET_KEY,
+			AWS_S3_REGION: process.env.VUE_APP_AWS_S3_REGION,
+			AWS_S3_ACCESS_KEY_ID: process.env.VUE_APP_AWS_S3_ACCESS_KEY_ID,
+			AWS_S3_SECRET_ACCESS_KEY:
+				process.env.VUE_APP_AWS_S3_SECRET_ACCESS_KEY,
+			AWS_S3_BUCKET_NAME: process.env.VUE_APP_AWS_S3_BUCKET_NAME,
+			AWS_S3_IDENTITY_POOL_ID:
+				process.env.VUE_APP_AWS_S3_IDENTITY_POOL_ID,
 			// AWS_REGION: process.env.VUE_APP_AWS_REGION,
 			// AWS_S3_IDENTITY_POOL: process.env.VUE_APP_AWS_S3_IDENTITY_POOL_ID,
 		},
@@ -76,52 +80,56 @@ export default defineNuxtConfig({
 					content: "width=device-width, initial-scale=1",
 				},
 				{
-					hid: 'description',
-					name: 'description',
-					content: '프로젝트를 효과적으로 관리하기 위해 NOODLE 서비스를 탐색하고 활용하세요. 백로그 관리, 프로젝트 보고서 작성 등의 기능을 사용해보세요.'
+					hid: "description",
+					name: "description",
+					content:
+						"프로젝트를 효과적으로 관리하기 위해 NOODLE 서비스를 탐색하고 활용하세요. 백로그 관리, 프로젝트 보고서 작성 등의 기능을 사용해보세요.",
 				},
 				{
-					hid: 'keywords',
-					name: 'keywords',
-					content: 'Noodle, NOODLE, 프로젝트 관리, 백로그, 프로젝트 보고서, 협업, AI 보고서, 보고서 생성'
+					hid: "keywords",
+					name: "keywords",
+					content:
+						"Noodle, NOODLE, 프로젝트 관리, 백로그, 프로젝트 보고서, 협업, AI 보고서, 보고서 생성",
 				},
 				{
-					property: 'og:title',
-					content: 'NOODLE | Use Your Noodle!'
+					property: "og:title",
+					content: "NOODLE | Use Your Noodle!",
 				},
 				{
-					property: 'og:description',
-					content: '프로젝트를 효과적으로 관리하기 위해 NOODLE 서비스를 탐색하고 활용하세요.'
+					property: "og:description",
+					content:
+						"프로젝트를 효과적으로 관리하기 위해 NOODLE 서비스를 탐색하고 활용하세요.",
 				},
 				{
-					property: 'og:image',
-					content: './public/fixed/NOODLE_logo.png'
+					property: "og:image",
+					content: "./public/fixed/NOODLE_logo.png",
 				},
 				{
-					property: 'og:type',
-					content: 'website'
+					property: "og:type",
+					content: "website",
 				},
 				{
-					name: 'twitter:card',
-					content: '/public/fixed/NOODLE_logo.png'
+					name: "twitter:card",
+					content: "/public/fixed/NOODLE_logo.png",
 				},
 				{
-					name: 'twitter:title',
-					content: 'NOODLE | Use Your Noodle!'
+					name: "twitter:title",
+					content: "NOODLE | Use Your Noodle!",
 				},
 				{
-					name: 'twitter:description',
-					content: '프로젝트를 효과적으로 관리하기 위해 NOODLE 서비스를 탐색하고 활용하세요'
+					name: "twitter:description",
+					content:
+						"프로젝트를 효과적으로 관리하기 위해 NOODLE 서비스를 탐색하고 활용하세요",
 				},
 				{
-					name: 'twitter:image',
-					content: '/public/fixed/NOODLE_logo.png'
+					name: "twitter:image",
+					content: "/public/fixed/NOODLE_logo.png",
 				},
 				{
-					hid: 'robots',
-					name: 'robots',
-					content: 'index, follow'
-				}
+					hid: "robots",
+					name: "robots",
+					content: "index, follow",
+				},
 			],
 			link: [
 				{
@@ -130,9 +138,9 @@ export default defineNuxtConfig({
 					href: "noodle.ico",
 				},
 				{
-					rel: 'canonical',
-					href: 'https://noo-dle.com/'
-				}
+					rel: "canonical",
+					href: "https://noo-dle.com/",
+				},
 			],
 		},
 	},

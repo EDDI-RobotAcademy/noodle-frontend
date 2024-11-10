@@ -9,6 +9,12 @@ services:
         environment:
             - VUE_APP_BASE_URL=${VUE_APP_BASE_URL}
             - VUE_APP_AI_BASE_URL=${VUE_APP_AI_BASE_URL}
+            - TOSS_CLIENT_KEY=${TOSS_CLIENT_KEY}
+            - TOSS_SECRET_KEY=${TOSS_SECRET_KEY}
+            - VUE_APP_AWS_S3_REGION=${VUE_APP_AWS_S3_REGION}
+            - VUE_APP_AWS_S3_SECRET_ACCESS_KEY=${VUE_APP_AWS_S3_SECRET_ACCESS_KEY}
+            - VUE_APP_AWS_S3_BUCKET_NAME=${VUE_APP_AWS_S3_BUCKET_NAME}
+            - VUE_APP_AWS_S3_IDENTITY_POOL_ID=${VUE_APP_AWS_S3_IDENTITY_POOL_ID}
         restart: always
         networks:
             - app
