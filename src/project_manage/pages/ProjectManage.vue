@@ -4,27 +4,26 @@
       <div class="leftbox">
         <div class="leftbox_title">
           <span>Backlog Board</span>
-          <div class="switch white">
-            <input type="radio" id="switch-off" v-model="isChecked" :value="false" />
-            <input type="radio" id="switch-on" v-model="isChecked" :value="true" />
-            <label for="switch-off">status</label>
-            <label for="switch-on">Domain</label>
-            <span class="toggle" :class="{ 'checked': isChecked }"></span>
+          <div class="leftbox_title_btn-area">
+            <v-btn size="small" class="backlog-btn">Backlog 생성</v-btn>
           </div>
         </div>
+
         <!-- 생성된 백로그 출력부 -->
-        <v-card v-if="backlogList" class="backlog-list-container">
+        <v-card class="backlog-list-container">
           <v-list style="background-color: #2f2f2f;">
-            <v-list-item v-for="(backlog, index) in backlogList" :key="index">
+            <v-list-item v-for="(backlog, index) in displayBacklogList" :key="index" class="fade-in">
               <v-card style="background-color: #3c3c3c;">
                 <v-list-item v-for="(key, item, index) in backlog" :key="index">
                   <v-card-item>
-                    <v-card-text style="color: white; font-weight:bold; margin-top:-10px; margin-bottom: -10px;">{{ item
-                      }}</v-card-text>
+                    <v-card-text style="color: white; font-weight:bold; margin-top:-10px; margin-bottom: -10px;">
+                      {{ item }}
+                    </v-card-text>
                     <div v-if="item === `Task List`">
                       <v-list-item v-for="(item, index) in key" :key="index">
-                        <v-card-text style="color: white; margin-top: -10px; margin-bottom: -10px;">{{ item
-                          }}</v-card-text>
+                        <v-card-text style="color: white; margin-top: -10px; margin-bottom: -10px;">
+                          {{ item }}
+                        </v-card-text>
                       </v-list-item>
                     </div>
                     <div v-else>
@@ -38,63 +37,64 @@
             </v-list-item>
           </v-list>
         </v-card>
-        <!-- <img class="example_backlog" :src="require('@/assets/images/fixed/example_backlog.png')" alt="example_backlog"> -->
-        <!-- <v-container>
-            <v-divider></v-divider>
-            <v-row>
-              <v-col cols="12" sm="4" v-for="(column, columnIndex) in columns" :key="columnIndex">
-                <v-card>
-                  <v-card-title class="KanbanBoardTitle" >{{ column.name }}</v-card-title>
-                  <v-diver></v-diver>
-                  <v-card-text class="KanbanBoardCard">
-                    <v-card
-                      eslint-disable-next-line
-                      v-for="task in column.tasks"
-                      :key="task.id"
-                      class="mb-2"
-                    >
-                      <v-card-text>{{ task.name }}</v-card-text>
-                    </v-card>
-                  </v-card-text>
-                </v-card>
-              </v-col>
-            </v-row>
-          </v-container> -->
-        <!-- <div class="chat-bar">
-            <input type="email" placeholder="생성을 원하시는 Backlog를 입력해주세요!" v-model="email" />
-            <a href="/" @click.prevent="handleSubmit">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                <path
-                  d="M15.6 15.47A4.99 4.99 0 0 1 7 12a5 5 0 0 1 10 0v1.5a1.5 1.5 0 1 0 3 0V12a8 8 0 1 0-4.94 7.4 1 1 0 1 1 .77 1.84A10 10 0 1 1 22 12v1.5a3.5 3.5 0 0 1-6.4 1.97zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-              </svg>
-            </a>
-          </div> -->
       </div>
-      <div class="rightbox">
+
+
+
+  <!------------------------------ Switch가 Commit-List일 때 ---------------------->
+      <div class="rightbox" v-show="rightboxstate === 'Commit-List'">
         <div class="rightbox_title">
-          <span>Commit List</span>
-          <v-btn @click="example" class="example_btn">클릭해보세요!</v-btn>
-          <v-btn @click="Refresh" class="Refresh">Refresh</v-btn>
-        </div>
-        <div v-if="!isExample">
-          <div class="select-container" v-if="repos">
-            <v-select v-model="selectedRepository" :value="selectedRepository" :items="repos" class="repository"
-              @change="setRepositorySelect($event)">
-              <option v-for="(item, index) in repos" :key="index" :value="item.value">{{ item.value }}</option>
-            </v-select>
-            <div v-if="branches">
-              <v-select v-model="selectedBranches" :value="selectedBranch" :items="branches" class="branch"
-                @change="setBranchSelect($event)">
-                <option v-for="(item, index) in branches" :key="index" :value="item.value">{{ item.value }}</option>
-              </v-select>
-            </div>
-            <div v-else>
-              <v-select :value="selectedBranches" class="branches"></v-select>
-            </div>
+          <div class="rightbox_title_area">
+            <span>Commit List</span>
+            <v-btn @click="Refresh" icon class="Refresh"><v-icon>mdi-cloud-refresh</v-icon></v-btn>
           </div>
-          <div class="select-container" v-else>
-            <v-select :value="selectedRepository"></v-select>
-            <v-select :value="selectedBranches"></v-select>
+          <div class="rightbox_title_btn-area">
+            <v-btn @click="example" class="example_btn">
+              <v-icon left>mdi-cursor-default-click</v-icon>
+              클릭해보세요!
+            </v-btn>
+            <v-btn @click="rightboxstate = 'Report'" class="Report-btn">
+              <v-icon left>mdi-file-document-outline</v-icon>
+              Report
+            </v-btn>
+          </div>
+        </div>
+        
+        <div class="rightbox-content" v-if="!isExample">
+          <div class="select-container-area">
+            <div class="select-container" v-if="repos">
+              <v-select 
+                v-model="selectedRepository" 
+                :value="selectedRepository" 
+                :items="repos" 
+                class="repository"
+                @change="setRepositorySelect($event)"
+              >
+                <option v-for="(item, index) in repos" :key="index" :value="item.value">
+                  {{ item.value }}
+                </option>
+              </v-select>
+              <div v-if="branches">
+                <v-select 
+                  v-model="selectedBranches" 
+                  :value="selectedBranch" 
+                  :items="branches" 
+                  class="branch"
+                  @change="setBranchSelect($event)"
+                >
+                  <option v-for="(item, index) in branches" :key="index" :value="item.value">
+                    {{ item.value }}
+                  </option>
+                </v-select>
+              </div>
+              <div v-else>
+                <v-select :value="selectedBranches" class="branches"></v-select>
+              </div>
+            </div>
+            <div class="select-container" v-else>
+              <v-select :value="selectedRepository"></v-select>
+              <v-select :value="selectedBranches"></v-select>
+            </div>
           </div>
 
           <v-card v-if="commits" class="commit-list-container">
@@ -108,20 +108,20 @@
               </v-list-item>
             </v-list>
           </v-card>
-          <v-card v-else class="commit-list-container">
-          </v-card>
+          <v-card v-else class="commit-list-container"></v-card>
         </div>
-        <div v-else>
-          <div class="select-container">
-            <v-select :value="exampleRepository"></v-select>
-            <v-select :value="exampleBranch"></v-select>
+        
+        <div class="rightbox-content" v-else>
+          <div class="select-container-area">
+            <div class="select-container">
+              <v-select :value="exampleRepository"></v-select>
+              <v-select :value="exampleBranch"></v-select>
+            </div>
           </div>
           <v-card v-if="exampleCommits" class="commit-list-container">
             <v-list style="background-color: #2f2f2f;">
-              <!-- 카드 색상 -->
               <v-list-item v-for="(item, index) in exampleCommits" :key="index">
                 <v-card style="background-color: #444444;">
-                  <!-- 위는 카드 아래는 글씨 -->
                   <v-card-item>
                     <v-card-text style="color: white;">{{ item }}</v-card-text>
                   </v-card-item>
@@ -129,34 +129,303 @@
               </v-list-item>
             </v-list>
           </v-card>
-          <v-card v-else class="commit-list-container">
-          </v-card>
+          <v-card v-else class="commit-list-container"></v-card>
         </div>
       </div>
 
+<!-------------------Switch가 Report로 변경됐을 때 (Report)-------------------------->
+      <div class="rightbox" v-show="rightboxstate === 'Report'">
+        <div class="rightbox_title">
+          <div class="rightbox_title_area">
+            <span>Report</span>
+            <v-btn @click="Refresh" icon class="Refresh"><v-icon>mdi-cloud-refresh</v-icon></v-btn>
+          </div>
+          <div class="rightbox_title_btn-area">
+            <v-btn @click="example" class="example_btn">
+              <v-icon left>mdi-cursor-default-click</v-icon>
+              클릭해보세요!
+            </v-btn>
+            <v-btn @click="rightboxstate = 'Commit-List'" class="commitlist-btn">
+              <v-icon left>mdi-view-list</v-icon>
+              Commit-List
+            </v-btn>
+          </div>
+        </div>
 
-<!------------------------------------결과 보고서 출력 영역 -------------------------------------------->
-      <DragSection>
-        <h3>추후에 결과 보고서가 출력되도록 추가하면 될 듯</h3>
-      </DragSection>
-      
-      <!-- <div class="select-container" v-else>
-        <v-select :value="selectedRepository"></v-select>
-        <v-select :value="selectedBranches"></v-select>
-      </div> -->
-      <!-- <v-card v-if="commits" class="commit-list-container">
-        <v-list>
-          <v-list-item v-for="(item, index) in commits" :key="index">
-            <v-card>
-              <v-card-item>
-                <v-card-text>{{ item }}</v-card-text>
-              </v-card-item>
-            </v-card>
-          </v-list-item>
-        </v-list>
-      </v-card>
-      <v-card v-else class="commit-list-container">
-      </v-card> -->
+        <body bgcolor="#2f2f2f">
+          <div class="report-area">
+            <v-container class="my-auto pa-0" max-width="100%" max-height="90%">
+              <br/>
+              <v-card class="mx-auto my-auto pa-6" outlined elevation="4" rounded :style="mainCardStyle" max-width="1000">
+                <v-card class="mx-auto mb-6" :style="cardStyle">
+                  <!-- 프로젝트 제목 섹션 -->
+                  <v-card-title class="text-h4 font-weight-bold pa-4">
+                    <h2 class="text-h5 mb-4">프로젝트 제목</h2>
+                    <v-text-field
+                      v-model="projectTitle"
+                      label="프로젝트 제목을 입력해주세요."
+                      outlined
+                      dense
+                    ></v-text-field>
+                  </v-card-title>
+                </v-card>
+
+                <br/>
+
+                <v-card class="mx-auto mb-6" :style="cardStyle">
+                <!-- 개요 섹션 -->
+                  <v-card-title class="text-h4 font-weight-bold pa-4">
+                    <h2 class="text-h5 mb-4">개요</h2>
+                    <v-text-field
+                      v-model="overview"
+                      label="프로젝트 개요를 입력해주세요."
+                      outlined
+                      dense
+                    ></v-text-field>
+                  </v-card-title>
+                </v-card>
+
+                <br/>
+                
+                <v-card class="mx-auto mb-6" :style="cardStyle">
+                <!-- 팀 구성 섹션 -->
+                  <v-card-text>
+                    <h2 class="text-h5 mb-4">팀 구성</h2>
+                    <v-row v-for="(member, index) in teamMembers" :key="index" align="center">
+                      <v-col cols="4">
+                        <v-text-field
+                          v-model="member.department"
+                          label="부서"
+                          outlined
+                          dense
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="3">
+                        <v-text-field
+                          v-model="member.name"
+                          label="이름"
+                          outlined
+                          dense
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="3">
+                        <v-text-field
+                          v-model="member.role"
+                          label="역할"
+                          outlined
+                          dense
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="2">
+                        <v-btn color="error" icon @click="removeTeamMember(index)">
+                          <v-icon>mdi-delete</v-icon>
+                        </v-btn>
+                      </v-col>
+                    </v-row>
+                    <v-btn color="#FFF01E" class="mt-4 mx-auto d-block" @click="addTeamMember">
+                      <v-icon>mdi-plus</v-icon>팀원 추가
+                    </v-btn>
+                  </v-card-text>
+                </v-card>
+
+                <br/>
+
+                <v-card class="mx-auto mb-6" :style="cardStyle">
+                <!-- 기술 스택 섹션 -->
+                  <v-card-text>
+                    <h2 class="text-h5 mb-4">기술 스택</h2>
+                    <v-row>
+                      <v-col v-for="(tech, index) in techStack" :key="index" cols="4">
+                        <v-card color="#333333" outlined>
+                          <v-card-text>
+                            <v-text-field
+                              v-model="techStack[index]"
+                              label="기술명"
+                              outlined
+                              dense
+                            ></v-text-field>
+                          </v-card-text>
+                          <v-card-actions>
+                            <v-btn color="error" icon @click="removeTechStack(index)">
+                              <v-icon>mdi-delete</v-icon>
+                            </v-btn>
+                          </v-card-actions>
+                        </v-card>
+                      </v-col>
+                      <v-col cols="4">
+                        <v-card color="#333333" outlined class="d-flex justify-center align-center" height="174">
+                          <v-btn color="#FFF01E" @click="addTechStack">
+                            <v-icon>mdi-plus</v-icon> 기술 추가
+                          </v-btn>
+                        </v-card>
+                      </v-col>
+                    </v-row>
+                  </v-card-text>
+                </v-card>
+
+                <br/>
+
+                <v-card class="mx-auto mb-6" :style="cardStyle">
+                  <!-- 주요 기능 섹션 -->
+                  <v-card-text>
+                    <h2 class="text-h5 mb-4">주요 기능</h2>
+                    <v-timeline dense>
+                      <v-timeline-item v-for="(feature, index) in features" :key="index" small>
+                        <template v-slot:opposite></template>
+                        <v-card color="#333333" outlined>
+                          <v-card-text>
+                            <v-textarea
+                              v-model="features[index]"
+                              label="기능 설명"
+                              outlined
+                              auto-grow
+                              dense
+                              class="auto-expand-textarea"
+                            ></v-textarea>
+                          </v-card-text>
+                          <v-card-actions>
+                            <v-btn color="error" icon @click="removeFeature(index)">
+                              <v-icon>mdi-delete</v-icon>
+                            </v-btn>
+                          </v-card-actions>
+                        </v-card>
+                      </v-timeline-item>
+                    </v-timeline>
+                    <v-btn color="#FFF01E" class="mt-4 mx-auto d-block" @click="addFeature">기능 추가</v-btn>
+                  </v-card-text>
+                </v-card>
+                
+                <br/>
+                <v-card class="mx-auto mb-6" :style="cardStyle">
+                  <!-- 활용 방안 섹션 -->
+                  <v-card-text>
+                    <h2 class="text-h5 mb-4">활용 방안</h2>
+                    <v-expansion-panels bg-color="#333333">
+                      <v-expansion-panel v-for="(usage, index) in usagePlans" :key="index">
+                        <v-expansion-panel-header color="#333333" outlined>
+                          <v-text-field
+                            v-model="usage.title"
+                            label="활용 방안 제목"
+                            outlined
+                            dense
+                          ></v-text-field>
+                        </v-expansion-panel-header>
+                        <v-expansion-panel-content>
+                          <v-textarea
+                            v-model="usage.description"
+                            label="상세 설명"
+                            outlined
+                            auto-grow
+                            rows="3"
+                            hide-details
+                            class="auto-expand-textarea"
+                          ></v-textarea>
+                          <v-btn color="error" @click="removeUsagePlan(index)">삭제</v-btn>
+                        </v-expansion-panel-content>
+                      </v-expansion-panel>
+                    </v-expansion-panels>
+                    <v-btn color="#FFF01E" class="mt-4 mx-auto d-block" @click="addUsagePlan">활용 방안 추가</v-btn>
+                  </v-card-text>
+                </v-card>
+                
+                <br/>
+          
+                <v-card class="mx-auto mb-6" :style="cardStyle">
+                  <!-- 보완할 점 섹션 -->
+                  <v-card-text>
+                    <h2 class="text-h5 mb-4">보완할 점</h2>
+                    <v-list bg-color="#333333">
+                      <v-list-item v-for="(improvement, index) in improvements" :key="index">
+                        <v-list-item-content>
+                          <v-text-field
+                            v-model="improvements[index]"
+                            label="보완 사항"
+                            outlined
+                            dense
+                          ></v-text-field>
+                        </v-list-item-content>
+                        <v-list-item-action>
+                          <v-btn color="error" icon @click="removeImprovement(index)">
+                            <v-icon>mdi-delete</v-icon>
+                          </v-btn>
+                        </v-list-item-action>
+                      </v-list-item>
+                    </v-list>
+                    <v-btn color="#FFF01E" class="mt-4 mx-auto d-block" @click="addImprovement">보완 사항 추가</v-btn>
+                  </v-card-text>
+                </v-card>
+
+                <br/>
+
+                <v-card bg-color="#333333" class="mx-auto mb-6" :style="cardStyle">
+                  <!-- 완성도 섹션 -->
+                  <v-card-text>
+                    <h2 class="text-h5 mb-4">완성도</h2>
+                    <v-row justify="space-around">
+                      <v-col v-for="(item, index) in completionRates" :key="index" cols="auto" class="text-center">
+                        <h3>{{ item.label }}</h3>
+                        <svg :width="size" :height="size" class="progress-ring">
+                          <circle
+                            :stroke="'#e0e0e0'"
+                            :stroke-width="strokeWidth"
+                            fill="transparent"
+                            :r="radius"
+                            :cx="center"
+                            :cy="center"
+                          />
+                          <circle
+                            :stroke="item.color"
+                            :stroke-width="strokeWidth"
+                            fill="transparent"
+                            :r="radius"
+                            :cx="center"
+                            :cy="center"
+                            :stroke-dasharray="circumference"
+                            :stroke-dashoffset="dashOffset(item.rate)"
+                          />
+                          <text
+                            :x="center"
+                            :y="center"
+                            text-anchor="middle"
+                            :fill="item.color"
+                            font-size="20"
+                            font-weight="bold"
+                            dy=".3em"
+                          >
+                          {{ item.rate }}%
+                          </text>
+                        </svg>
+                      </v-col>
+                    </v-row>
+                    <v-row class="mt-4">
+                      <v-col cols="12">
+                        <v-list dense>
+                          <v-list-item v-for="(feedback, index) in completionFeedback" :key="index">
+                            <v-list-item-content>
+                              <v-list-item-title>{{ feedback }}</v-list-item-title>
+                            </v-list-item-content>
+                          </v-list-item>
+                        </v-list>
+                      </v-col>
+                    </v-row>
+                  </v-card-text>
+                </v-card>
+              </v-card>
+
+              <!-- 등록 버튼 -->
+              <v-row justify="end" class="mt-6 mx-0">
+                <v-col cols="auto">
+                  <v-btn color="#ffffff" large @click="onSubmit">등록</v-btn>
+                </v-col>
+                    
+              </v-row>
+            </v-container>
+          </div>
+        </body>
+      </div>
+
+
+
     </div>
   </div>
 </template>
@@ -169,13 +438,24 @@ import { toRaw } from 'vue';
 const productManageModule = 'productManageModule'
 const authenticationModule = 'authenticationModule'
 const backlogModule = 'backlogModule'
+const resultReportModule = 'resultReportModule'
 import DragSection from '@/project_manage/pages/ProjectManageComponents/DragSection.vue';
+
 
 export default {
   name: "App",
   components: {
-    DragSection,
+    // DragSection,
   },
+
+  // Report 관련
+  props: {
+    resultReportId: {
+      type: String,
+      required: true,
+    }
+  },
+
   setup() {
     const store = useStore()
 
@@ -189,7 +469,42 @@ export default {
   },
   data() {
     return {
-      isChecked: true, // 스위치의 초기 상태
+      rightboxstate: 'Commit-List',
+      displayBacklogList: [], // 지연 렌더링 백로그 리스트
+
+      // Report 관련 데이터
+      projectTitle: '',
+      overview: '',
+      teamMembers: [],
+      techStack: [],
+      features: [],
+      usagePlans: [],
+      improvements: [],
+      completionRates: [],
+      completionFeedback: [],
+      size: 120,
+      strokeWidth: 10,
+      mainCardStyle: {
+        backgroundColor: '#333333',
+        borderRadius: '12px',
+        color: '#ffffff'
+      },
+      cardStyle: {
+        backgroundColor: '#444444',
+        borderColor: '#555555',
+        borderWidth: '1px',
+        borderStyle: 'solid',
+        borderRadius: '8px',
+        color: '#ffffff'
+      },
+      innerCardStyle: {
+        backgroundColor: '#555555',
+        borderColor: '#666666',
+        borderWidth: '1px',
+        borderStyle: 'solid',
+        borderRadius: '8px',
+        color: '#ffffff'
+      },
       columns: [
         {
           name: 'To Do',
@@ -224,7 +539,20 @@ export default {
   },
   computed: {
     ...mapState(productManageModule, ["repos", "branches", "commits"]),
+
+    // Report 관련
+    
+    radius() {
+      return (this.size / 2) - (this.strokeWidth / 2);
+    },
+    center() {
+      return this.size / 2;
+    },
+    circumference() {
+      return 2 * Math.PI * this.radius;
+    }
   },
+
   watch: {
     async selectedRepository(newVal) {
       console.log('selectedRepository:', newVal)
@@ -239,11 +567,15 @@ export default {
       if (newVal !== null) {
         await this.setBranchSelect()
       }
-    }
+    },
+    isChecked(newVal) {
+    console.log('스위치 상태:', newVal)
+  }
   },
   methods: {
     ...mapActions(productManageModule, ["requestSaveReposListToDjango", "requestGetReposListToDjango", "requestSaveBranchListToDjango", "requestGetBranchListToDjango", "requestSaveCommitListToDjango", "requestGetCommitListToDjango"]),
     ...mapActions(backlogModule, ["requestGenerateBacklogToFastAPI", "requestBacklogListToFastAPI"]),
+    ...mapActions(resultReportModule, ["requestGenerateResultReportToFastAPI", "requestGetResultReportResultToFastAPI", "requestCreateResultReportToDjango"]),
     async setRepositorySelect(event) {
       const selectedValue = event
       // this.selectedBranches = selectedValue
@@ -262,6 +594,10 @@ export default {
       const res = await this.requestGetCommitListToDjango(payload)
       console.log("commits response:", res)
       console.log("commits:", this.commits)
+      const response = await this.requestGenerateResultReportToFastAPI(payload)
+      console.log("FastAPI response:", response)
+      const getResultReportData = await this.requestGetResultReportResultToFastAPI(userToken)
+      console.log("getResultReportData:", getResultReportData)
     },
     async Refresh() {
       this.isExample = false
@@ -356,15 +692,77 @@ export default {
       } catch (error) {
         console.error("Error fetching commits:", error)
       }
-    }
+      this.displayBacklogList = [];
+      for (let i = 0; i < this.backlogList.length; i++) {
+        await new Promise(resolve => setTimeout(resolve, 2000)); // 딜레이 조정
+        this.displayBacklogList.push(this.backlogList[i]);
+      }
+    },
+
+    // Report 관련
+    dashOffset(rate) {
+      return this.circumference - (rate / 100 * this.circumference);
+    },
+    addTeamMember() {
+      this.teamMembers.push({ department: '', name: '', role: '' });
+    },
+    removeTeamMember(index) {
+      this.teamMembers.splice(index, 1);
+    },
+    addTechStack() {
+      this.techStack.push('');
+    },
+    removeTechStack(index) {
+      this.techStack.splice(index, 1);
+    },
+    addFeature() {
+      this.features.push('');
+    },
+    removeFeature(index) {
+      this.features.splice(index, 1);
+    },
+    addUsagePlan() {
+      this.usagePlans.push('');
+    },
+    removeUsagePlan(index) {
+      this.usagePlans.splice(index, 1);
+    },
+    addImprovement() {
+      this.improvements.push('');
+    },
+    removeImprovement(index) {
+      this.improvements.splice(index, 1);
+    },
+    async onSubmit () {
+        console.log('작성 완료 버튼 눌렀지 ?')
+
+        const payload = {
+            title: this.title,
+            overview: this.overview,
+            teamMemberList: this.teamMemberList,
+            skillList: this.skillList,
+            featureList: this.featureList,
+            usage: this.usage,
+            imporvementList: this.imporvementList,
+            completionList: this.completionList,
+            userToken: localStorage.getItem("userToken")
+        }
+
+        const resultReportId = await this.requestCreateResultReportToDjango(payload)
+      
+        await this.$router.push({
+            name: 'ResultReportReadPage',
+            params: {resultReportId: resultReportId.toString()}
+        })
+    },
   },
   mounted() {
-    if (localStorage.getItem('userToken')) {
+   if (localStorage.getItem('userToken')) {
       // 사용자 인증 과정 추가해야 함
-    } else {
-      alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.")
-      this.goToGithubLogin()
-    }
+   } else {
+     alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.")
+     this.goToGithubLogin()
+   }
   }
 };
 </script>
@@ -372,75 +770,89 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Gothic+Coding:wght@400;700&family=Nanum+Myeongjo:wght@400;700;800&family=Orbit&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
-
-html,
-body {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-}
-
 .app-container {
   display: flex;
   flex-direction: column;
-  /* height: 100vh; */
-  height: 100%
+  width: 100%;
+  height: calc(100vh - var(--navigation-bar-height));
 }
 
 .container {
   display: flex;
-  /* Flexbox로 레이아웃 설정 */
   height: 100%;
-  /* Viewport height를 100%로 설정 (화면 전체 높이) */
-  /* align-items: stretch; */
+  width: 100%;
 }
 
 /* 왼쪽 box */
 .leftbox {
   position: relative;
-  width: 75%;
+  width: 50%;
   /* 왼쪽 박스의 너비를 75%로 설정 */
   height: 100%;
   /* 왼쪽 박스의 높이를 100%로 설정 (화면 전체 높이) */
   background-color: #1c1c1c;
   /* 왼쪽 박스의 배경색을 파란색으로 설정 */
-  border-right: 3px solid rgba(204, 159, 1);
+  border-right: 3px solid rgb(255, 255, 255);
   /* 오른쪽에 두께 3px의 노란색 테두리 추가 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .leftbox_title {
   display: flex;
-  /* Flexbox로 레이아웃 설정 */
   justify-content: space-between;
-  /* 좌우 요소 사이에 공간을 균등 분배 */
   align-items: center;
-  /* 요소들을 수직 가운데 정렬 */
-  margin-top: 20px;
-  /* 위쪽 여백을 20px 추가 */
-  margin-left: 20px;
-  /* 왼쪽 여백을 20px 추가 */
-  margin-right: 20px;
-  /* 오른쪽 여백을 20px 추가 */
+  width: 95%;
+  height: 10%;
   font-size: 30px;
   /* 폰트 크기를 30px로 설정 */
-  color: rgba(204, 159, 1);
+  /* color: rgba(204, 159, 1); */
+}
+
+.leftbox_title_btn-area {
+  width: 15%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 3%;
 }
 
 .leftbox_title span {
-  color: rgba(204, 159, 1);
+  color: rgb(255, 240, 30);
   font-family: "Playfair Display", serif;
   font-style: normal;
   font-weight: bold;
+  width: 30%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
 }
 
-.KanbanBoardTitle {
-  background-color: rgba(204, 159, 1);
+.backlog-list-container {
+  overflow: auto;
+  width: 99%;
+  height: 88.5%;
+  background-color: #2f2f2f;
 }
 
-.KanbanBoardCard {
-  background-color: #444444;
+.backlog-list-container::-webkit-scrollbar {
+  width: 10px;
 }
 
+.backlog-list-container::-webkit-scrollbar-thumb {
+  background-color: black;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+.backlog-list-container::-webkit-scrollbar-track {
+  background-color: grey;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
+}
 
 .mb-2 {
   background-color: #c5c5c5;
@@ -448,268 +860,230 @@ body {
 
 /* 오른쪽 box */
 .rightbox {
-  /* align-items: stretch; */
-  width: 25%;
-  /* 오른쪽 박스의 너비를 25%로 설정 */
+  width: 50%;
   height: 100%;
-  /* 오른쪽 박스의 높이를 100%로 설정 (화면 전체 높이) */
   background-color: #1c1c1c;
-  /* 오른쪽 박스의 배경색을 초록색으로 설정 */
+}
+
+.rightbox_title {
+  width: 95%;
+  height: 10%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 20px;
+  font-size: 30px;
+}
+
+.rightbox_title_area {
+  display: flex;
+  gap: 10px;
+}
+
+.rightbox_title_btn-area {
+  display: flex;
+  gap: 20px;
 }
 
 .rightbox_title span {
-  color: rgba(204, 159, 1);
+  color: rgb(255, 240, 30);
   font-family: "Playfair Display", serif;
   font-style: normal;
   font-weight: bold;
 }
 
-.rightbox_title {
+
+.rightbox-content{
+  width: 100%;
+  height: 90%;
+}
+
+.select-container-area{
   display: flex;
-  /* Flexbox로 레이아웃 설정 */
+  justify-content: center;
+  width: 100%;
+  height: 10%;
+}
+
+.select-container {
+  width: 96%;
+  height: 100%;
+  display: flex;
   justify-content: space-between;
-  /* 좌우 요소 사이에 공간을 균등 분배 */
-  align-items: center;
-  /* 요소들을 수직 가운데 정렬 */
-  margin-top: 20px;
-  /* 위쪽 여백을 20px 추가 */
-  margin-left: 10px;
-  /* 왼쪽 여백을 10px 추가 */
-  margin-right: 10px;
-  /* 오른쪽 여백을 10px 추가 */
-  font-size: 30px;
-  /* 폰트 크기를 30px로 설정 */
+  gap: 20px;
+  color: rgb(255, 255, 255);
 }
 
-.example_btn {
-  background-color: rgba(204, 159, 1);
-  padding: 5px 10px;
-  border: none;
-  cursor: pointer;
-  font-size: 15px;
-}
+/* v-if로 감싸진 div들의 높이 설정 */
+/* rightbox_title이 10%이므로 나머지 90% */
+/* .rightbox > div:nth-child(2) {
+  height: 90%;
+} */
 
-.Refresh {
-  background-color: rgba(204, 159, 1);
-  padding: 5px 10px;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-}
 
 /* 커밋리스트 나오는 v-card 설정 */
 .commit-list-container {
   background-color: #2F2F2F;
   color: #B4B4B4;
   overflow: auto;
-  width: calc(100% - 10px);
-  height: 650px;
-  margin-left: 5px;
-  margin-top: 15px;
+  width: 99%;
+  height: 87.5%;
+  margin: 4px;
 }
 
-.backlog-list-container {
+.commit-list-container::-webkit-scrollbar,
+.report-area::-webkit-scrollbar {
+  width: 10px;
+}
+
+.commit-list-container::-webkit-scrollbar-thumb,
+.report-area::-webkit-scrollbar-thumb {
+  background-color: black;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+.commit-list-container::-webkit-scrollbar-track,
+.report-area::-webkit-scrollbar-track {
+  background-color: grey;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
+}
+
+.fade-in {
+  animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.report-area{
+  width: 100%;
+  height: 90%;
   overflow: auto;
-  height: 800px;
-}
-
-/* ---------- SWITCH ---------- */
-
-/* 스위치에 관한 설정 */
-.switch {
-  display: flex;
-  align-items: center;
-  background: #fff;
-  /* 스위치의 배경색을 흰색으로 설정 */
-  border-radius: 32px;
-  /* 스위치의 테두리를 둥글게 설정 (32px의 반경) */
-  height: var(--switch-height, 20px);
-  /* 스위치의 높이 설정 (변경 가능하도록 변수 사용) */
-  position: relative;
-  /* 자식 요소의 위치를 기준으로 상대적으로 위치 설정 */
-  width: var(--switch-width, 60px);
-  /* 스위치의 너비 설정 (변경 가능하도록 변수 사용) */
-  padding: 0 10px;
-  /* 라벨을 위한 패딩 추가 */
-  /* 위치 조정 */
-  transform: translateX(-80px);
-  /* 왼쪽으로 20px 이동 (값을 조정하여 위치 변경 가능) */
-}
-
-/* 스위치 글자 관련 설정 */
-.switch label {
-  color: #fff;
-  /* 라벨의 텍스트 색상을 흰색으로 설정 */
-  font-size: 12px;
-  /* 라벨의 폰트 크기를 12px로 설정 */
-  font-weight: 500;
-  /* 라벨의 폰트 두께를 500으로 설정 */
-  line-height: var(--switch-height, 20px);
-  /* 글의 세로 정렬을 위해 line-height를 스위치 높이에 맞춤 */
-  text-transform: uppercase;
-  /* 라벨 텍스트를 대문자로 변환 */
-  transition: color 0.2s ease;
-  /* 라벨의 색상 변화에 0.2초의 전환 효과 적용 */
-  width: 35px;
-  /* 라벨의 너비 설정 */
-}
-
-.switch label:nth-of-type(1) {
-  position: absolute;
-  /* 라벨의 위치를 절대 위치로 설정 */
-  left: -85%;
-  /* 첫 번째 라벨을 스위치 왼쪽에 위치시키기 위해 왼쪽으로 85% 이동 */
-  text-align: right;
-  /* 첫 번째 라벨의 텍스트를 오른쪽 정렬 */
-}
-
-.switch label:nth-of-type(2) {
-  position: absolute;
-  /* 라벨의 위치를 절대 위치로 설정 */
-  right: -70%;
-  /* 두 번째 라벨을 스위치 오른쪽에 위치시키기 위해 오른쪽으로 70% 이동 */
-  text-align: left;
-  /* 두 번째 라벨의 텍스트를 왼쪽 정렬 */
-}
-
-.switch input {
-  height: var(--switch-height, 20px);
-  /* 스위치 입력의 높이 설정 */
-  left: 0;
-  /* 입력 요소를 왼쪽에 위치 */
-  opacity: 0;
-  /* 입력 요소를 보이지 않도록 투명도 0으로 설정 */
-  position: absolute;
-  /* 입력 요소의 위치를 절대 위치로 설정 */
-  top: 0;
-  /* 입력 요소를 상단에 위치 */
-  width: var(--switch-width, 100px);
-  /* 스위치 입력의 너비를 100px로 설정 */
-  z-index: 2;
-  /* 입력 요소를 다른 요소보다 앞에 표시 (레이어 순서 설정) */
-}
-
-.switch input:checked~label:nth-of-type(1) {
-  color: #fff;
-  /* 첫 번째 라벨의 텍스트 색상을 흰색으로 설정 (스위치가 선택되었을 때) */
-}
-
-.switch input:checked~label:nth-of-type(2) {
-  color: #808080;
-  /* 두 번째 라벨의 텍스트 색상을 회색으로 설정 (스위치가 선택되었을 때) */
-}
-
-.switch input~ :checked~label:nth-of-type(1) {
-  color: #808080;
-  /* 첫 번째 라벨의 텍스트 색상을 회색으로 설정 (스위치가 선택되지 않았을 때) */
-}
-
-.switch input~ :checked~label:nth-of-type(2) {
-  color: #fff;
-  /* 두 번째 라벨의 텍스트 색상을 흰색으로 설정 (스위치가 선택되지 않았을 때) */
-}
-
-.switch input:checked~.toggle {
-  left: 10px;
-  /* 스위치가 선택되었을 때 토글이 왼쪽에 위치 */
-}
-
-.switch input~ :checked~.toggle {
-  left: 40px;
-  /* 스위치가 선택되지 않았을 때 토글이 오른쪽에 위치 */
-}
-
-.switch input:checked {
-  z-index: 0;
-  /* 입력 요소의 z-index를 0으로 설정하여 다른 요소보다 뒤로 감 */
-}
-
-.toggle {
-  background: #4a4a4a;
-  /* 토글의 배경색을 어두운 회색으로 설정 */
-  border-radius: 50%;
-  /* 토글의 모양을 원형으로 설정 (50% 반경) */
-  height: calc(var(--switch-height, 20px) - 8px);
-  /* 토글의 높이를 스위치 높이보다 약간 작게 설정 */
-  left: 0;
-  /* 토글을 왼쪽에 위치 */
-  position: absolute;
-  /* 토글의 위치를 절대 위치로 설정 */
-  top: 4px;
-  /* 토글을 위에서 4px 내려서 위치 */
-  transition: left 0.2s ease;
-  /* 토글이 이동할 때 0.2초의 전환 효과 적용 */
-  width: calc(var(--switch-height, 20px) - 8px);
-  /* 토글의 너비를 스위치 높이와 비슷하게 설정 */
-  z-index: 1;
-  /* 토글을 다른 요소보다 앞에 표시 */
-}
-
-.toggle.checked {
-  left: calc(var(--switch-width, 100px) - calc(var(--switch-height, 20px) - 8px));
-  /* 스위치가 선택되었을 때 토글이 오른쪽에 위치 */
 }
 
 
-/* chat bar부분 */
-.chat-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: rgb(228, 228, 228);
-  padding: 10px;
-  width: 50%;
-  /* Set the width to 50% */
-  border-radius: 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  position: absolute;
-  /* Absolute positioning */
-  left: 50%;
-  /* Center it horizontally relative to .leftbox */
-  transform: translateX(-50%);
-  /* Adjust for perfect centering */
-  bottom: 20px;
-  /* Position at the bottom of .leftbox */
+
+
+/* Report 관련 CSS */
+
+.report-container {
+  width: 100%;
+  height: 100%;
 }
 
-.chat-bar input {
-  flex-grow: 1;
+.v-card-title {
+  word-break: keep-all;
+}
+
+.progress-ring circle {
+  transition: stroke-dashoffset 0.35s;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+.auto-expand-textarea {
+  min-height: 100px;
+  transition: height 0.3s ease;
+}
+
+.v-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.team-table {
+  width: 100%;
+}
+
+.equal-width {
+  width: 33.33%;
+  padding: 12px;
+  text-align: center;
+}
+
+.table {
+  table-layout: fixed;
+}
+
+
+
+
+
+/* btn */
+
+.backlog-btn {
+  font-weight: bold;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  color: white;
+  border: 1px solid white;
+  background-color: transparent;
+}
+
+.Refresh {
+  background-color: transparent;
+  color: white;  /* 아이콘 색상을 흰색으로 설정 */
+  font-size: 20px;
+}
+
+.example_btn {
+  background-color: rgb(255, 255, 255);
+  padding: 5px 10px;
   border: none;
-  outline: none;
-  padding: 5px;
-  font-size: 14px;
+  cursor: pointer;
+  font-size: 14 px;
+  font-weight: bold;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  color: white;
+  border: 1px solid white;
+  background-color: transparent;
 }
 
-.chat-bar a {
-  background-color: rgba(204, 159, 1);
-  border-radius: 50%;
-  padding: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 10px;
+.Report-btn{
+  font-weight: bold;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  color: white;
+  border: 1px solid white;
+  background-color: transparent;
 }
 
-.chat-bar a svg {
-  width: 20px;
-  height: 20px;
-  fill: white;
-}
-
-
-.select-container {
-  display: flex;
-  justify-content: space-between;
-  padding: 0 5px;
-  margin-top: 20px;
-  gap: 20px;
-  color: rgb(248, 235, 54);
+.commitlist-btn{
+  font-weight: bold;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  color: white;
+  border: 1px solid white;
+  background-color: transparent;
 }
 
 
-.example_backlog {
-  width: 95%;
-  height: 50%;
-  margin-left: 15px;
+
+
+/* btn-hover 관련 */
+.Report-btn:hover,
+.example_btn:hover,
+.commitlist-btn:hover,
+.backlog-btn:hover {
+  background-color: rgb(238, 222, 0) !important; /* 노란색 배경 */
+  color: rgb(255, 255, 255) !important; /* 흰색 글씨 */
+}
+
+.Report-btn:hover .v-icon,
+.example_btn:hover .v-icon,
+.commitlist-btn:hover .v-icon,
+.backlog-btn:hover .v-icon {
+  color: rgb(255, 255, 255) !important;
 }
 </style>

@@ -1,81 +1,111 @@
 <template>
-    <!-- <a class="scroll" href="#">If you want to know more about NOODLE</a> -->
-    <a class="scroll" href="#">스크롤을 내려서 NOODLE에 대해서 더 알아보세요!</a>
+  <!-- <a class="scroll" href="#">If you want to know more about NOODLE</a> -->
+  <a class="scroll" href="#">Read more</a>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-    name: 'ScrollAnimation'
+  name: 'ScrollAnimation'
 })
 </script>
 
 <style scoped>
- *, *:before, *:after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-  position:relative;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items:center;
-  align-content: center;
-  justify-content: center;
-  font-family: "Helvetica", sans-serif;
-  font-size:14px;
-  line-height:1;
-  color: rgba(255,255,255,1);
-  background:rgba(108,34,245,1);
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .scroll {
   position: relative;
   display: block;
-  font-size: 0.933rem;
-  color: rgba(255,255,255,1);
+  font-size: 1.5vh;
+  color: rgba(255, 255, 255, 1);
   text-decoration: none;
-  padding: 10px 10px 10px 40px;
-  &::before {
-    display: block;
-    position: absolute;
-    top:-2px;
-    left:0;
-    width: 24px;
-    height: 40px;
-    border: 2px solid rgba(255,255,255,1);
-    border-radius: 12px;
-    content:"";
-  }
-  &::after {
-    display: block;
-    position: absolute;
-    top:9px;
-    left:11px;
-    width: 2px;
-    height: 8px;
-    background: rgba(255,255,255,1);
-    border-radius: 1px;
-    content:"";
-    animation-name: scroll;
-    animation-duration: 2s;
-    animation-iteration-count: infinite;
-    animation-delay: 2s;
-  }
+  padding: 1vh 1vh 1vh 4vh;
+}
+
+.scroll::before {
+  display: block;
+  position: absolute;
+  top: -0.2vh;
+  left: 0;
+  width: 2.5vh;
+  height: 4vh;
+  border: 0.2vh solid rgba(255, 255, 255, 1);
+  border-radius: 1.2vh;
+  content: "";
+}
+
+.scroll::after {
+  display: block;
+  position: absolute;
+  top: 0.9vh;
+  left: 1.1vh;
+  width: 0.2vh;
+  height: 0.8vh;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 0.1vh;
+  content: "";
+  animation-name: scroll;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-delay: 2s;
 }
 
 @keyframes scroll {
-  0% { opacity: 1; height: 8px;}
-  20% { opacity: 1; height: 8px;}
-  30% { transform: translateY(0); opacity: 1; height: 19px;}
-  40% { opacity: 1;}
-  80% { transform: translateY(19px); opacity: 0; height: 0;}
-  81% { transform: translateY(0); opacity: 0; height: 8px;}
-  100% { opacity: 1; height: 8px;}
+  0% {
+    opacity: 1;
+    height: 0.8vh;
+  }
+
+  20% {
+    opacity: 1;
+    height: 0.8vh;
+  }
+
+  30% {
+    transform: translateY(0);
+    opacity: 1;
+    height: 1.9vh;
+  }
+
+  40% {
+    opacity: 1;
+  }
+
+  80% {
+    transform: translateY(1.9vh);
+    opacity: 0;
+    height: 0;
+  }
+
+  81% {
+    transform: translateY(0);
+    opacity: 0;
+    height: 0.8vh;
+  }
+
+  100% {
+    opacity: 1;
+    height: 0.8vh;
+  }
 }
 
+/* 미디어 쿼리는 필요한 경우에만 미세 조정을 위해 사용 */
+@media (max-width: 768px) {
+  .scroll {
+    font-size: 1.8vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .scroll {
+    font-size: 2vh;
+  }
+}
 </style>

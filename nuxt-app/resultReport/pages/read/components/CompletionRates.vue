@@ -17,7 +17,7 @@
       </v-col>
       <v-col cols="8">
         <v-card-text class="pa-0">
-          {{ completionFeedback[index] }}
+          <div v-html="completionFeedback[index]" class="markdown-preview mt-4" style="color: white"></div>
         </v-card-text>
       </v-col>
     </v-row>

@@ -10,12 +10,11 @@
           </div>
           <transition name="fade">
             <div class="sub-introduce" :class="{ 'visible': showElements }">
-              <p>개발자들의 원활한 협업과 효율적인 프로젝트 진행을 위해 GitHub와 연동을 통해</p>
-              <p>AI를 활용하여 Baklog와 Project Report를 생성해드리는 서비스입니다.</p>
+              <p>AI를 활용하여 업무의 효율을 높이는 세상</p>
             </div>
           </transition>
         </div>
-        <SearchBox class="searchbox" :class="{ 'fade-in': showElements }" />
+        <!-- <SearchBox class="searchbox" :class="{ 'fade-in': showElements }" /> -->
       </div>
       <RecentReport class="recentreport" :class="{ 'fade-in': showElements }" />
       <ScrollAnimation class="scrollanimation" :class="{ 'fade-in': showElements }" @click="goToHomeSecond"/>
@@ -26,14 +25,14 @@
 <script>
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import SearchBox from './SearchBox.vue';
+// import SearchBox from './SearchBox.vue';
 import RecentReport from './RecentReport.vue';
 import ScrollAnimation from './ScrollAnimation.vue'
 
 export default {
   name: 'HomeMain',
   components: {
-    SearchBox,
+    // SearchBox,
     RecentReport,
     ScrollAnimation
   },
@@ -111,7 +110,7 @@ export default {
 }
 
 .main-title {
-  color: #ffffff;
+  color: rgb(255, 240, 30);
   font-size: 140px;
   animation: fadeDown 0.8s ease-out;
   line-height: 0.8;

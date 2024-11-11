@@ -1,5 +1,6 @@
 <template>
   <div class="home-main-body">
+    <div class="background-image"></div>
     <div class="content-area">
       <div class="title-area">
         <transition name="fade-down">
@@ -10,39 +11,37 @@
         </div>
         <transition name="fade">
           <div class="sub-introduce" :class="{ 'visible': showElements }">
-            <p>개발자들의 원활한 협업과 효율적인 프로젝트 진행을 위해 GitHub와 연동을 통해</p>
-            <p>AI를 활용하여 Baklog와 Project Report를 생성해드리는 서비스입니다.</p>
+            <p>AI를 활용하여 업무의 효율을 높이는 세상</p>
           </div>
         </transition>
       </div>
-      <SearchBox class="searchbox" :class="{ 'fade-in': showElements }" />
     </div>
     <RecentReport class="recentreport" :class="{ 'fade-in': showElements }" />
-    <ScrollAnimation class="scrollanimation" :class="{ 'fade-in': showElements }" />
+    <ScrollAnimation class="scrollanimation" :class="{ 'fade-in': showElements }" @click="goToHomeSecond" />
   </div>
 </template>
-
-
 <script>
-import AOS from 'aos';
+import AOS from 'aos'
 import 'aos/dist/aos.css';
-import SearchBox from './SearchBox.vue';
+import { defineComponent, getCurrentInstance, onMounted, ref, nextTick, onUnmounted } from 'vue';
 import RecentReport from './RecentReport.vue';
-import ScrollAnimation from './ScrollAnimation.vue'
-import { defineComponent, onMounted } from 'vue';
+import ScrollAnimation from './ScrollAnimation.vue';
 
 export default defineComponent({
   name: 'HomeMain',
   components: {
-    SearchBox,
     RecentReport,
     ScrollAnimation,
   },
   setup() {
+    const { emit } = getCurrentInstance()
+
     const fullText = ref('Use Your Noodle!')
     const typedText = ref('')
     const typeIndex = ref(0)
     const showElements = ref(false)
+    const rotationAngle = ref(0)
+    let animationFrameId = null
 
     function typeText() {
       if (typeIndex.value < fullText.value.length) {
@@ -52,21 +51,43 @@ export default defineComponent({
       } else {
         showElements.value = true
         nextTick(() => {
-          AOS.refresh();
+          AOS.refresh()
         })
       }
+    }
+    function goToHomeSecond() {
+      emit('scroll-to-home-second')
+    }
+
+    function animate() {
+      rotationAngle.value = (rotationAngle.value + 0.02) % 360
+      const backgroundImage = document.querySelector('.background-image')
+      if (backgroundImage) {
+        backgroundImage.style.transform = `translateX(-50%) rotate(${rotationAngle.value}deg)`
+      }
+      animationFrameId = requestAnimationFrame(animate)
     }
 
     onMounted(() => {
       typeText()
+      animate()
     })
+
+    onUnmounted(() => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId)
+      }
+    })
+
     return {
       fullText,
       typedText,
       typeIndex,
       showElements,
+      rotationAngle,
 
       typeText,
+      goToHomeSecond
     }
   }
 })
@@ -74,36 +95,37 @@ export default defineComponent({
 
 <style scoped>
 .home-main-body {
-  background-image: url('/fixed/main.png');
-  background-size: auto 100%;
-  background-position: 0% center;
-  background-repeat: repeat-x;
-  animation: moveBackgroundX 30s linear infinite;
+  background-color: black;
   display: flex;
   align-items: center;
   justify-content: center;
-  
-  height: calc(100vh - 64px);
+  height: calc(100vh - var(--navigation-bar-height));
   width: 100vw;
   overflow: hidden;
   position: relative;
 }
 
-@keyframes moveBackgroundX {
-  0% {
-    background-position: 0% center;
-  }
-
-  100% {
-    background-position: 100% center;
-  }
+.background-image {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) rotate(0deg);
+  width: 50vw;
+  height: 100vh;
+  background-image: url('/fixed/home-background-image.jpg');
+  background-size: 54vw 112vh;
+  background-position: center center;
+  background-repeat: no-repeat;
+  z-index: 0;
 }
 
 .content-area {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 50vh;
+  height: 72.5vh;
   width: 40%;
   margin-left: 10%;
   margin-top: 20vh;
@@ -113,28 +135,27 @@ export default defineComponent({
   height: 30vh;
   width: 100%;
   text-align: left;
-  /* margin-bottom: 0; */
 }
 
 .main-title {
-  color: #ffffff;
-  font-size: 140px;
+  color: rgb(255, 240, 30);
+  font-size: 8vw;
   animation: fadeDown 0.8s ease-out;
-  line-height: 0.8;
+  line-height: 1;
   margin: 0;
   padding: 0;
 }
 
 .sub-title {
   color: #ffffff;
-  font-size: 60px;
+  font-size: 3.5vw;
   margin: 0;
   padding: 0;
 }
 
 .sub-introduce {
   color: #ffffff;
-  font-size: 16px;
+  font-size: 1.2rem;
   margin: 0;
   padding: 0;
 }
@@ -205,8 +226,84 @@ export default defineComponent({
 
 .scrollanimation {
   position: absolute;
-  bottom: 30px;
+  bottom: 5vh;
   left: 50%;
   transform: translateX(-50%);
+  animation: bounce 6s ease 0s infinite;
+  animation-delay: 5s;
+}
+
+@keyframes bounce {
+
+  0%,
+  10%,
+  20%,
+  95%,
+  100% {
+    transform: translateY(0);
+  }
+
+  5%,
+  15% {
+    transform: translateY(-10px);
+  }
+}
+
+@media (max-width: 1200px) {
+  .content-area {
+    width: 60%;
+    margin-left: 5%;
+  }
+
+  .main-title {
+    font-size: 10vw;
+  }
+
+  .sub-title {
+    font-size: 4vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .content-area {
+    width: 80%;
+    margin-left: 5%;
+  }
+
+  .main-title {
+    font-size: 12vw;
+  }
+
+  .sub-title {
+    font-size: 5vw;
+  }
+
+  .sub-introduce {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .content-area {
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 10vh;
+  }
+
+  .main-title {
+    font-size: 14vw;
+  }
+
+  .sub-title {
+    font-size: 6vw;
+  }
+
+  .sub-introduce {
+    font-size: 0.9rem;
+  }
+
+  .scrollanimation {
+    bottom: 3vh;
+  }
 }
 </style>

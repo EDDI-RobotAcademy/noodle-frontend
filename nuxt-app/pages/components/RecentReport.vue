@@ -1,19 +1,19 @@
 <template>
   <v-container class="half-width">
-    <div class="active-title">최근 보고서</div>
-    <h2>최근 보고서</h2>
+    <div style="color: #ffffff" class="active-title">최근 보고서</div>
     <v-row>
-      <v-col v-for="report in recentReports" :key="report.id" cols="12" sm="6">
-        <v-card class="custom-card-spacing" @click="goToReport(report.id)">
+      <v-col v-for="report in recentReports" :key="report.resultReportId" cols="12" sm="6">
+        <v-card style="border-radius: 15px;" @click="goToReport(report.resultReportId)" color="#1f1f1f">
+          <v-img src="/public/fixed/python_logo.png"
+            style="position: absolute; top: 50%; left: 0; transform: translateY(-50%);" />
           <v-card-text class="report-content">
-            <div class="image-container">
-              <div class="image"></div>
-            </div>
             <div class="report-info">
-              <v-card-subtitle class="department">개발3팀</v-card-subtitle>
-              <v-card-title class="report-title">{{ report.title }}</v-card-title>
-              <v-card-subtitle class="member">구성원: {{ report.author }}</v-card-subtitle>
-              <v-card-text class="function">ㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹ</v-card-text>
+              <v-card-subtitle class="department"
+                style="color: rgb(255, 240, 30)">{{ report.creatorDepartment }}</v-card-subtitle>
+              <v-card-title class="report-title" style="color: #ffffff">{{ report.resultReportTitle }}</v-card-title>
+              <v-card-subtitle class="member" style="color: rgb(255, 240, 30)">구성원: {{ report.creator
+                }}</v-card-subtitle>
+              <!-- <v-card-text class="function" style="color: #ffffff">보고서 확인하러 가기</v-card-text> -->
             </div>
           </v-card-text>
         </v-card>
@@ -24,25 +24,33 @@
 
 <script>
 import { useRouter } from 'vue-router';
+import { useResultReportStore } from '../../resultReport/stores/resultReportStore'
+
 
 export default defineComponent({
   name: 'RecentReport',
   setup() {
     const router = useRouter();
-
+    const resultReportStore = useResultReportStore()
     const reports = ref([
-      { id: 1, title: '감자 여행 결과 보고서', author: ['김지민', '김철수', '김영희'], date: '2024-10-14' },
-      { id: 2, title: '없는 보고서', author: '김철수', date: '2024-10-13' },
-      { id: 3, title: '없는 보고서', author: '김철수', date: '2024-10-13' },
-      { id: 4, title: '없는 보고서', author: '김철수', date: '2024-10-13' },
-      { id: 5, title: '없는 보고서', author: '김철수', date: '2024-10-13' },
-      { id: 6, title: '없는 보고서', author: '김철수', date: '2024-10-13' },
     ])
-    const recentReports = computed(() => reports.value.slice(0, 4))
+    const recentReports = computed(() => reports.value.slice(0, 4).reverse())
 
     function goToReport(id) {
       router.push(`/resultReport/read/${id}`)
     }
+
+    async function fetchRecentResultReports() {
+      const payload = { page: 1, perPage: 4, SQ: "" }
+      const response = await resultReportStore.requestResultReportListToDjango(payload)
+      reports.value.push(...Object.values(response.resultReports))
+      console.log(reports.value)
+    }
+
+    onMounted(async () => {
+      await fetchRecentResultReports()
+      console.log(recentReports)
+    })
 
     return {
       reports,
@@ -55,29 +63,33 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.title-area {
-  display: none;
+.half-width {
+  width: 40%;
+  height: 80vh;
+  overflow-y: auto;
+  max-width: 800px;
+  min-width: 300px;
 }
 
 .active-title {
   display: inline-block;
-  background-color: #ffffff;
+  background-color: #1f1f1f;
   color: #333;
-  font-size: 14px;
+  font-size: 2vh;
   font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 15px 15px 0px 0px;
-  margin-bottom: 16px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1vh 1.5vh;
+  border-radius: 2vh 2vh 0 0;
+  margin-bottom: 2vh;
+  box-shadow: 0 0.1vh 0.3vh rgba(0, 0, 0, 0.1);
 }
 
 .inactive-title {
-  width: 100px;
-  height: 30px;
+  width: 12vh;
+  height: 4vh;
   background-color: #f0d0d0;
-  margin-right: 10px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  margin-right: 1.5vh;
+  border-top-left-radius: 1.5vh;
+  border-top-right-radius: 1.5vh;
 }
 
 h2 {
@@ -91,18 +103,18 @@ h2 {
 }
 
 .image-container {
-  width: 80px;
+  width: 10vh;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 16px;
+  margin-right: 2vh;
   flex-shrink: 0;
 }
 
 .image {
-  width: 80px;
-  height: 80px;
+  width: 10vh;
+  height: 10vh;
   background-color: #f0f0f0;
 }
 
@@ -129,33 +141,37 @@ h2 {
 }
 
 .report-title {
-  font-size: 18px;
+  font-size: 2.5vh;
   font-weight: bold;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding-top: 0.4vh;
+  margin-top: 0.3vh;
 }
 
 .function {
-  font-size: 14px;
+  font-size: 1.8vh;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .v-card {
-  height: 100%;
+  height: 20vh;
   cursor: pointer;
   transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+  border-radius: 2vh;
 }
 
 .v-card:hover {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  transform: translateY(-5px);
+  transform: translateY(-0.7vh);
 }
 
 .open-btn {
   display: none;
+  border-radius: 6vh;
 }
 
 .section1,
@@ -187,6 +203,8 @@ h2 {
   width: 40%;
   height: auto;
   overflow-y: visible;
+  max-width: 800px;
+  min-width: 300px;
 }
 
 .report-title,
@@ -226,5 +244,73 @@ h2 {
 .section2 {
   width: 30%;
   overflow: hidden;
+}
+
+
+
+@media (max-width: 1200px) {
+  .half-width {
+    width: 50%;
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 768px) {
+  .half-width {
+    width: 100%;
+    height: 60vh;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .report-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .v-col {
+    sm: 12;
+  }
+
+  .report-image {
+    position: static;
+    transform: none;
+    margin-bottom: 1.5vh;
+  }
+
+  .v-card {
+    height: 15vh;
+  }
+
+  .report-title {
+    font-size: 2.2vh;
+  }
+
+  .function {
+    font-size: 1.6vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .active-title {
+    font-size: 1.8vh;
+    padding: 0.6vh 1.2vh;
+  }
+
+  .report-title {
+    font-size: 2vh;
+  }
+
+  .function {
+    font-size: 1.4vh;
+  }
+
+  .half-width {
+    height: 50vh;
+  }
+
+  .v-card {
+    height: 12vh;
+  }
 }
 </style>

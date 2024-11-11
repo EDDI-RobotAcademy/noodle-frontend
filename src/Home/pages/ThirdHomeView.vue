@@ -6,14 +6,11 @@
     <section id="HomeSecond">
       <HomeSecond />
     </section>
-    <section id="Home_content_section2">
-      <HomeContentSection2 />
+    <section id="HomeThird">
+      <HomeThird/>
     </section>
-    <section id="Home_content_section3">
-      <HomeContentSection3 />
-    </section>
-    <section id="Home_content_section4">
-      <HomeContentSection4 />
+    <section id="HomeFooter">
+      <HomeFooter />
     </section>
   </div>
 </template>
@@ -23,24 +20,17 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import HomeMain from '@/Home/pages/HomeComponents/HomeMain.vue';
 import HomeSecond from '@/Home/pages/HomeComponents/HomeSecond.vue';
-import HomeContentSection2 from '@/Home/pages/HomeComponents/HomeThird.vue';
-import HomeContentSection3 from '@/Home/pages/HomeComponents/HomeFourth.vue';
-import HomeContentSection4 from '@/Home/pages/HomeComponents/HomeFifth.vue';
-import SearchBox from '@/Home/pages/HomeComponents/SearchBox.vue';
+import HomeThird from '@/Home/pages/HomeComponents/HomeThird.vue';
+import HomeFooter from '@/Home/pages/HomeComponents/HomeFifth.vue';
+// import SearchBox from '@/Home/pages/HomeComponents/SearchBox.vue';
 
 export default {
   name: 'ThirdHomeView',
   components: {
     HomeMain,
     HomeSecond,
-    HomeContentSection2,
-    HomeContentSection3,
-    HomeContentSection4,
-  },
-  mounted() {
-    AOS.init({
-      duration: 1000, // 애니메이션 발동 총 시간
-    });
+    HomeThird,
+    HomeFooter,
   },
   methods: {
     goToHomeSecond() {
@@ -67,9 +57,4 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
-
-/* section {
-  padding: 0 0 0 0;
-  min-height: 100vh;
-} */
 </style>

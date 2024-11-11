@@ -4,38 +4,38 @@ import ResultReportReadPage from "@/resultReport/pages/read/ResultReportReadPage
 import ResultReportListPage2 from "../pages/list/ResultReportListPage2.vue"
 import ResultReportModifyPage from "../pages/modify/ResultReportModifyPage.vue"
 import ResultReportReadPage12 from "../pages/read/ResultReportReadPage12.vue"
+import ResultReportListPage3 from "@/resultReport/pages/list/ResultReportListPage3.vue"
 
 const ResultReportRoutes = [
     {
-        path: "/result-report/register",
+        path: "/report/register",
         name: "ResultReportRegisterPage",
         component: ResultReportRegisterPage,
     },
-
     {
-        path: "/result-report/list",
+        path: "/report/list",
         name: "ResultReportListPage",
         component: ResultReportListPage
     },
     {
-        path: "/result-report/list2",
-        name: "ResultReportListPage2",
-        component: ResultReportListPage2
+        path: "/report/list3",
+        name: "ResultReportListPage3",
+        component: ResultReportListPage3
     },
     {
-        path: "/result-report/read/1",
+        path: "/report/read/:resultReportId",
         name: "ResultReportReadPage",
-        component: ResultReportReadPage
+        components: {
+            default: ResultReportReadPage
+        },
+        props: {
+            default: true
+        }
     },
     {
         path: "/result-report/modify/1",
         name: "ResultReportModifyPage",
         component: ResultReportModifyPage
-    },
-    {
-        path: "/result-report/read/12",
-        name: "ResultReportReadPage12",
-        component: ResultReportReadPage12
     },
 ]
 

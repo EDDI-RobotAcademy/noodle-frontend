@@ -5,6 +5,20 @@
         <v-card-title class="text-h4 font-weight-bold text-center pa-4">
           {{ projectTitle }}
         </v-card-title>
+
+        <!-- 개요 섹션 -->
+        <v-card-text>
+          <h2 class="text-h5 mb-4">개요</h2>
+          <v-list dense>
+            <v-list-item v-for="(overview, index) in overviews" :key="index">
+              <v-list-item-content>
+                <v-list-item-title>{{ overview }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-card-text>
+
+        <v-divider></v-divider>
   
         <!-- 팀 구성 섹션 -->
         <v-card-text>
@@ -20,9 +34,9 @@
               </thead> -->
               <tbody>
                 <tr v-for="(member, index) in teamMembers" :key="index">
-                  <td class="equal-width">{{ member.department }}</td>
-                  <td class="equal-width">{{ member.name }}</td>
-                  <td class="equal-width">{{ member.role }}</td>
+                  <td class="equal-width">{{ member[2] }}</td>
+                  <td class="equal-width">{{ member[0] }}</td>
+                  <td class="equal-width">{{ member[1] }}</td>
                 </tr>
               </tbody>
             </template>
@@ -102,31 +116,31 @@
                   :cy="center"
                 />
                 <circle
-                  :stroke="item.color"
+                  :stroke="item[3]"
                   :stroke-width="strokeWidth"
                   fill="transparent"
                   :r="radius"
                   :cx="center"
                   :cy="center"
                   :stroke-dasharray="circumference"
-                  :stroke-dashoffset="dashOffset(item.rate)"
+                  :stroke-dashoffset="dashOffset(item[1])"
                 />
                 <text
                   :x="center"
                   :y="center"
                   text-anchor="middle"
-                  :fill="item.color"
+                  :fill="item[3]"
                   font-size="20"
                   font-weight="bold"
                   dy=".3em"
                 >
-                {{ item.rate }}%
+                {{ item[1] }}%
                 </text>
               </svg>
             </v-col>
             <v-col cols="8">
                 <v-card-text class="pa-0">
-                    {{ completionFeedback[index] }}
+                    {{ item[2] }}
                 </v-card-text>
             </v-col>
           </v-row>
@@ -144,58 +158,58 @@
             </v-card-text>
         </v-card>
 
-        <v-row justify="space-between" class="mt-4 mx-0">
+        <v-row justify="end" class="mt-4 mx-0">
+            <!-- 수정 버튼 -->
+            <v-col cols="auto">
+              <router-link :to="{ name: 'ResultReportModifyPage', params: {resultReportId} }">
+                <v-btn color="primary">수정</v-btn>
+              </router-link>
+            </v-col>
+
+            <!-- 삭제 버튼 -->
+            <v-col cols="auto">
+              <v-btn color="error" @click="onDelete">삭제</v-btn>
+            </v-col>
+
+            
             <!-- 목록 버튼 -->
             <v-col cols="auto">
-                <v-btn color="primary" large @click="goToList">목록</v-btn>
+              <router-link :to="{ name: 'ResultReportListPage' }">
+                <v-btn color="secondary">목록</v-btn>
+              </router-link>
             </v-col>
-            <!-- 수정 버튼 -->
-        
-            <v-col cols="auto">
-                <v-btn color="secondary" large @click="editReport">수정</v-btn>
-            </v-col>
+            
         </v-row>
     </v-container>
 </template>
 
 <script>
+
+import { mapActions, mapState } from 'vuex'
+const resultReportModule = 'resultReportModule'
 export default {
-  name: 'ProjectReport',
+  props: {
+    resultReportId: {
+      type: String,
+      required: true,
+    }
+  },
   data() {
     return {
-      projectTitle: '감자 여행 결과 보고서',
-      teamMembers: [
-        { department: '개발3팀', name: '김지민', role: '팀장' },
-        { department: '개발3팀', name: '이호준', role: '팀원' },
-        { department: '개발3팀', name: '이현석', role: '팀원' },
-        { department: '개발3팀', name: '정원형', role: '팀원' },
-        { department: '개발3팀', name: '정아람', role: '팀원' },
-
-      ],
-      techStack: ['Vue.js', 'Python', 'Django', 'FastAPI'],
-      features: ['여행지 추천', '패키지 상품을 통한 손쉬운 예약과 일정 관리', '리뷰 페이지로 확인 가능한 사용자들의 피드백'],
-      usagePlans: [
-        {
-          title: '서비스 확장',
-          description: '현재 서비스를 기반으로 추가 기능을 개발하여 서비스 범위 확대'
-        }
-      ],
-      improvements: ['성능 최적화 필요'],
-      completionRates: [
-        { label: '보안', rate: 85, color: 'red' },
-        { label: '유지보수', rate: 70, color: 'green' },
-        { label: '전체', rate: 75, color: 'blue' },
-      ],
-      completionFeedback: [
-        '보안 측면에서 추가적인 암호화 적용이 필요합니다.',
-        '유지보수성 향상을 위해 코드 리팩토링이 권장됩니다.',
-        '전반적으로 양호하나 일부 기능의 개선이 필요합니다.'
-      ],
+      projectTitle: '',
+      overviews: '',
+      teamMembers: [],
+      techStack: [],
+      features: [],
+      usagePlans: [],
+      improvements: [],
+      completionRates: [],
       size: 120,
       strokeWidth: 10
     }
   },
   computed: {
+    ...mapState(resultReportModule, ['resultReport']),
     radius() {
       return (this.size / 2) - (this.strokeWidth / 2);
     },
@@ -207,19 +221,26 @@ export default {
     }
   },
   methods: {
-    submitReport() {
-      console.log('프로젝트 보고서가 등록되었습니다.')
-    },
     dashOffset(rate) {
       return this.circumference - (rate / 100 * this.circumference);
     },
-    goToList() {
-        this.$router.push(`/result-report/list2`)
-    },
-    editReport() {
-      this.$router.push(`/result-report/modify/1`)
-      console.log('프로젝트 보고서 수정 페이지로 넘어갑니다.')
-    },
+    ...mapActions(resultReportModule, ['requestResultReportToDjango', 'requestDeleteResultReportToDjango']),
+    async onDelete() {
+      console.log('삭제를 누르셨습니다!')
+      await this.requestDeleteResultReportToDjango(this.resultReportId)
+      await this.$router.push({name: 'ResultReportListPage'})
+    }
+  },
+  async created () {
+    this.resultReport = await this.requestResultReportToDjango(this.resultReportId)
+    this.projectTitle = this.resultReport.title
+    this.overviews = this.resultReport.overview
+    this.teamMembers = this.resultReport.teamMemberList
+    this.techStack = this.resultReport.skillList
+    this.features = this.resultReport.featureList
+    this.usagePlans = this.resultReport.usage
+    this.improvements = this.resultReport.improvementList
+    this.completionRates = this.resultReport.completionList
   }
 }
 </script>
