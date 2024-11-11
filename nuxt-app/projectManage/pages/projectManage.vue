@@ -754,7 +754,8 @@ export default defineComponent({
                 userToken: localStorage.getItem('userToken')
             }
             const resultReportId = await resultReportStore.requestCreateResultReportToDjango(payload)
-            router.push(`/resultReport/read/${resultReportId.id}`)
+            console.log(resultReportId)
+            router.push(`/resultReport/read/${resultReportId}`)
         }
         async function checkSubsciption() {
             const response = await subscriptionPaymentStore.requestCheckSubscription(localStorage.getItem('userToken'))

@@ -27,8 +27,6 @@
             <v-progress-circular v-if="isRecording == true" indeterminate color="red" size="40"
               class="my-3"></v-progress-circular>
           </div>
-          <v-progress-circular v-if="isInferencing == true" indeterminate color="yellow" size="40"
-            style="left:42%; top:-10%"></v-progress-circular>
 
 
           <div :class="['recording-button', isRecording ? 'red' : 'primary']" @click="toggleRecording" role="button"
@@ -56,7 +54,9 @@
         <div class="analysis-button" v-if="recordingComplete == true && userToken != null" role="button" tabindex="0"
           @click="analyzeRecording">
           <div class="analysis-button-icon">
-            <v-icon size="9vw">
+            <v-progress-circular v-if="isInferencing == true" indeterminate color="yellow" size="40"
+              style="left:0%; top:0%"></v-progress-circular>
+            <v-icon v-else size="9vw">
               mdi-robot
             </v-icon>
           </div>
